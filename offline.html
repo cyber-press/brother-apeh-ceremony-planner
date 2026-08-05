@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2a44">
+  <title>Offline · Brother Apeh Planner</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#e8edf2;color:#102a43;font-family:Segoe UI,Roboto,system-ui,sans-serif}.card{width:min(100%,620px);background:#fff;border:1px solid #dbe5ee;border-radius:28px;padding:40px;box-shadow:0 24px 60px rgba(11,42,68,.16)}.mark{width:64px;height:64px;display:grid;place-items:center;border-radius:18px;background:#0b2a44;color:#fff;font-size:30px}.eyebrow{margin:24px 0 8px;color:#54718b;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}h1{margin:0;font-size:clamp(2rem,6vw,3rem);line-height:1.05}p{font-size:1.05rem;line-height:1.7;color:#486581}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}a,button{border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.primary{background:#0b2a44;color:#fff}.secondary{background:#e9eff6;color:#163a59}@media(max-width:520px){.card{padding:28px}.actions>*{width:100%;text-align:center}}</style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark" aria-hidden="true">🕊️</div>
+    <div class="eyebrow">Offline mode</div>
+    <h1>The planner is temporarily unavailable.</h1>
+    <p>The installed planner normally works offline after it has been opened successfully at least once. Reconnect briefly, load the planner, and it will cache the latest version for future offline use.</p>
+    <div class="actions">
+      <a class="primary" href="./">Try the planner again</a>
+      <button class="secondary" type="button" onclick="location.reload()">Retry connection</button>
+    </div>
+  </main>
+</body>
+</html>

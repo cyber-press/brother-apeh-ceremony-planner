@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0b2a44">
+    <meta name="application-name" content="Brother Apeh Planner">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Apeh Planner">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-32.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
     <title>Burial Ceremony Planner · Professional Command Center</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -844,6 +856,72 @@
             .section.is-filtered { display:block !important; }
         }
 
+
+        /* ===== PWA INSTALLATION & CONNECTIVITY ===== */
+        .pwa-install-btn {
+            background: #6d4c1d;
+            color: #fff;
+            border: 0;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            transition: transform .15s ease, background .15s ease;
+        }
+        .pwa-install-btn.is-visible { display: inline-flex; }
+        .pwa-install-btn:hover { background: #553812; transform: translateY(-1px); }
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #e6f4ea;
+            color: #176536;
+            font-size: .76rem;
+            font-weight: 700;
+        }
+        .connection-status.offline { background: #fff0d9; color: #7a4b00; }
+        .connection-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+        .pwa-update-banner {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: min(92vw, 560px);
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: #0b2a44;
+            color: #fff;
+            box-shadow: 0 18px 48px rgba(0,0,0,.3);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .pwa-update-banner.is-visible { display: flex; }
+        .pwa-update-banner button {
+            border: 0;
+            border-radius: 999px;
+            background: #fff;
+            color: #0b2a44;
+            padding: 8px 14px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .pwa-update-banner { align-items: stretch; flex-direction: column; }
+            .pwa-update-banner button { width: 100%; }
+        }
+        @media print { .pwa-install-btn, .connection-status, .pwa-update-banner { display:none !important; } }
+
     </style>
 </head>
 <body>
@@ -861,7 +939,7 @@
                     <div class="sub"><i class="fas fa-leaf"></i> A comprehensive guide for a dignified farewell</div>
                 </div>
                 <div class="cover-badge">
-                    <i class="fas fa-file-alt"></i> Professional Command Center v3.0
+                    <i class="fas fa-file-alt"></i> Professional Command Center v3.2 · Offline PWA
                 </div>
             </div>
 
@@ -890,6 +968,12 @@
         <!-- TOP BAR -->
         <!-- ============================================================ -->
         <div class="top-actions">
+            <span class="connection-status" id="connectionStatus" role="status" aria-live="polite">
+                <span class="connection-dot" aria-hidden="true"></span><span id="connectionText">Online</span>
+            </span>
+            <button type="button" class="pwa-install-btn" id="pwaInstallBtn">
+                <i class="fas fa-download" aria-hidden="true"></i> Install app
+            </button>
             <span class="save-indicator" id="saveIndicator">
                 <i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Auto-saved
             </span>
@@ -1360,6 +1444,48 @@
 
     <script>
         (function() {
+            'use strict';
+
+            const SECURITY = Object.freeze({
+                schemaVersion: 1,
+                maxBackupBytes: 2 * 1024 * 1024,
+                maxRowsPerTable: 250,
+                maxTextLength: 5000,
+                allowedCurrencies: new Set(['USD', 'NGN', 'EUR', 'GBP']),
+                forbiddenKeys: new Set(['__proto__', 'prototype', 'constructor'])
+            });
+
+            function safeText(value, maxLength = SECURITY.maxTextLength) {
+                if (value === null || value === undefined) return '';
+                return String(value).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').slice(0, maxLength);
+            }
+
+            function validateBackup(data) {
+                if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Backup root must be an object.');
+                for (const key of Object.keys(data)) {
+                    if (SECURITY.forbiddenKeys.has(key)) throw new Error('Unsafe backup key detected.');
+                }
+                const tableKeys = ['orderRows','transportRows','budgetRows','contribRows','payoutRows'];
+                for (const key of tableKeys) {
+                    if (data[key] !== undefined && !Array.isArray(data[key])) throw new Error(`${key} must be an array.`);
+                    if (Array.isArray(data[key]) && data[key].length > SECURITY.maxRowsPerTable) throw new Error(`${key} exceeds the row limit.`);
+                    for (const row of (data[key] || [])) {
+                        if (!row || typeof row !== 'object' || Array.isArray(row)) throw new Error(`Invalid row in ${key}.`);
+                        for (const rowKey of Object.keys(row)) {
+                            if (SECURITY.forbiddenKeys.has(rowKey)) throw new Error('Unsafe row key detected.');
+                        }
+                    }
+                }
+                if (data.currency && !SECURITY.allowedCurrencies.has(data.currency)) throw new Error('Unsupported currency.');
+                return data;
+            }
+
+            function csvCell(value) {
+                let text = safeText(value);
+                if (/^[=+\-@]/.test(text)) text = "'" + text;
+                return '"' + text.replace(/"/g, '""') + '"';
+            }
+
             const now = new Date();
             const todayStr = now.toISOString().split('T')[0];
             const displayDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -1719,7 +1845,7 @@
             const SAVE_KEY = 'burialPlannerData';
 
             function collectAllData() {
-                const data = {};
+                const data = { __schemaVersion: SECURITY.schemaVersion, __exportedAt: new Date().toISOString() };
                 const inputs = document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea');
                 inputs.forEach(el => {
                     if (el.id) {
@@ -1759,13 +1885,14 @@
             }
 
             function restoreAllData(data) {
+                data = validateBackup(data);
                 Object.keys(data).forEach(key => {
                     const el = document.getElementById(key);
                     if (el) {
                         if (el.type === 'checkbox') {
                             el.checked = data[key] === true || data[key] === 'true';
                         } else {
-                            el.value = data[key] || '';
+                            el.value = safeText(data[key]);
                         }
                     }
                 });
@@ -1824,7 +1951,7 @@
                                 input.type = 'text';
                                 input.style.maxWidth = '60px';
                             }
-                            input.value = rowData[col] || '';
+                            input.value = safeText(rowData[col]);
                             if (col === 'Estimated') {
                                 input.className = 'budget-est';
                                 input.oninput = function() { updateDashboard();
@@ -1880,6 +2007,9 @@
                         indicator.className = 'save-indicator saved';
                     } catch (e) {
                         console.warn('Auto-save failed:', e);
+                        const indicator = document.getElementById('saveIndicator');
+                        indicator.textContent = 'Auto-save unavailable';
+                        indicator.className = 'save-indicator';
                     }
                 }, 500);
             };
@@ -1889,7 +2019,7 @@
                 try {
                     const raw = localStorage.getItem(SAVE_KEY);
                     if (raw) {
-                        const data = JSON.parse(raw);
+                        const data = validateBackup(JSON.parse(raw));
                         restoreAllData(data);
                         const indicator = document.getElementById('saveIndicator');
                         indicator.innerHTML =
@@ -1922,10 +2052,20 @@
             window.cloudRestore = function(event) {
                 const file = event.target.files[0];
                 if (!file) return;
+                if (file.size > SECURITY.maxBackupBytes) {
+                    alert('Backup rejected: file is larger than 2 MB.');
+                    event.target.value = '';
+                    return;
+                }
+                if (!/\.json$/i.test(file.name) || !['application/json', 'text/json', ''].includes(file.type)) {
+                    alert('Backup rejected: select a JSON backup file.');
+                    event.target.value = '';
+                    return;
+                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     try {
-                        const data = JSON.parse(e.target.result);
+                        const data = validateBackup(JSON.parse(e.target.result));
                         restoreAllData(data);
                         localStorage.setItem(SAVE_KEY, JSON.stringify(data));
                         const indicator = document.getElementById('saveIndicator');
@@ -1934,7 +2074,8 @@
                         indicator.className = 'save-indicator saved';
                         alert('Backup restored successfully!');
                     } catch (err) {
-                        alert('Invalid backup file. Please select a valid JSON file.');
+                        console.warn('Restore rejected:', err);
+                        alert('Backup rejected. The file is invalid, unsafe, or incompatible.');
                     }
                 };
                 reader.readAsText(file);
@@ -2076,7 +2217,7 @@
                 function addSection(title, data) {
                     csv += title + '\n';
                     Object.keys(data).forEach(key => {
-                        csv += '"' + key + '","' + (data[key] || '') + '"\n';
+                        csv += csvCell(key) + ',' + csvCell(data[key]) + '\n';
                     });
                     csv += '\n';
                 }
@@ -2096,40 +2237,35 @@
                 csv += 'ORDER OF SERVICE\n';
                 csv += '"Time","Segment","Person","Notes"\n';
                 orderRows.forEach(row => {
-                    csv += '"' + (row.Time || '') + '","' + (row.Segment || '') + '","' + (row.Person || '') +
-                        '","' + (row.Notes || '') + '"\n';
+                    csv += [row.Time, row.Segment, row.Person, row.Notes].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'TRANSPORTATION LOGISTICS\n';
                 csv += '"Vehicle","Capacity","Pick-up","Departure","Destination"\n';
                 transportRows.forEach(row => {
-                    csv += '"' + (row.Vehicle || '') + '","' + (row.Capacity || '') + '","' + (row['Pick-up'] ||
-                        '') + '","' + (row.Departure || '') + '","' + (row.Destination || '') + '"\n';
+                    csv += [row.Vehicle, row.Capacity, row['Pick-up'], row.Departure, row.Destination].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'BUDGET & PAYMENT TRACKER (' + currency + ')\n';
                 csv += '"Category","Estimated","Actual","Paid","Balance"\n';
                 budgetRows.forEach(row => {
-                    csv += '"' + (row.Category || '') + '","' + (row.Estimated || '') + '","' + (row.Actual ||
-                        '') + '","' + (row.Paid || '') + '","' + (row.Balance || '') + '"\n';
+                    csv += [row.Category, row.Estimated, row.Actual, row.Paid, row.Balance].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'CONTRIBUTIONS (' + currency + ')\n';
                 csv += '"Date","Contributor","Amount","Method","Notes"\n';
                 contribRows.forEach(row => {
-                    csv += '"' + (row.Date || '') + '","' + (row.Contributor || '') + '","' + (row.Amount ||
-                        '') + '","' + (row.Method || '') + '","' + (row.Notes || '') + '"\n';
+                    csv += [row.Date, row.Contributor, row.Amount, row.Method, row.Notes].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'PAYOUT RECORD (' + currency + ')\n';
                 csv += '"Date","Payee","Amount","Purpose","Approved By"\n';
                 payoutRows.forEach(row => {
-                    csv += '"' + (row.Date || '') + '","' + (row.Payee || '') + '","' + (row.Amount || '') +
-                        '","' + (row.Purpose || '') + '","' + (row['Approved By'] || '') + '"\n';
+                    csv += [row.Date, row.Payee, row.Amount, row.Purpose, row['Approved By']].map(csvCell).join(',') + '\n';
                 });
 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2143,6 +2279,10 @@
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
             };
+
+            window.addEventListener('beforeunload', () => {
+                try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectAllData())); } catch (_) {}
+            });
 
             // ----- Attach events -----
             document.getElementById('deceasedName').addEventListener('input', function() { updateCover();
@@ -2388,6 +2528,93 @@
         });
 
         window.setTimeout(updateCompletion, 700);
+    })();
+    </script>
+
+    <div class="pwa-update-banner" id="pwaUpdateBanner" role="status" aria-live="polite">
+        <span><strong>Update available.</strong> Reload to use the newest planner version.</span>
+        <button type="button" id="pwaUpdateBtn">Update now</button>
+    </div>
+    <script>
+    (() => {
+        'use strict';
+        const installBtn = document.getElementById('pwaInstallBtn');
+        const status = document.getElementById('connectionStatus');
+        const statusText = document.getElementById('connectionText');
+        const updateBanner = document.getElementById('pwaUpdateBanner');
+        const updateBtn = document.getElementById('pwaUpdateBtn');
+        let deferredInstallPrompt = null;
+        let waitingWorker = null;
+
+        const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        const updateConnectivity = () => {
+            const online = navigator.onLine;
+            status.classList.toggle('offline', !online);
+            statusText.textContent = online ? 'Online' : 'Offline ready';
+            status.title = online ? 'Connected to the internet' : 'The cached planner remains available offline';
+        };
+
+        window.addEventListener('online', updateConnectivity);
+        window.addEventListener('offline', updateConnectivity);
+        updateConnectivity();
+
+        window.addEventListener('beforeinstallprompt', event => {
+            event.preventDefault();
+            deferredInstallPrompt = event;
+            if (!isStandalone()) installBtn.classList.add('is-visible');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                await deferredInstallPrompt.userChoice;
+                deferredInstallPrompt = null;
+                installBtn.classList.remove('is-visible');
+                return;
+            }
+            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+            alert(isIOS
+                ? 'On iPhone or iPad: tap Share, then choose “Add to Home Screen.”'
+                : 'Use your browser menu and choose “Install app” or “Add to Home screen.”');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.classList.remove('is-visible');
+            deferredInstallPrompt = null;
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('./service-worker.js', { scope: './' });
+                    if (registration.waiting) {
+                        waitingWorker = registration.waiting;
+                        updateBanner.classList.add('is-visible');
+                    }
+                    registration.addEventListener('updatefound', () => {
+                        const installing = registration.installing;
+                        if (!installing) return;
+                        installing.addEventListener('statechange', () => {
+                            if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+                                waitingWorker = installing;
+                                updateBanner.classList.add('is-visible');
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.warn('Offline support could not be enabled:', error);
+                }
+            });
+
+            navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+        }
+
+        updateBtn.addEventListener('click', () => {
+            if (waitingWorker) waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+            else window.location.reload();
+        });
+
+        if (isStandalone()) installBtn.classList.remove('is-visible');
     })();
     </script>
 

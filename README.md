@@ -10,10 +10,40 @@ brother-apeh-planner/
 ├── .nojekyll
 ├── 404.html
 ├── README.md
+├── manifest.webmanifest
+├── service-worker.js
+├── offline.html
+├── assets/
+│   └── icons/
+│       ├── icon-32.png
+│       ├── icon-192.png
+│       ├── icon-512.png
+│       ├── icon-maskable-192.png
+│       └── icon-maskable-512.png
 └── .github/
     └── workflows/
         └── pages.yml
 ```
+
+
+## Progressive Web App
+
+This build can be installed as an application on supported phones, tablets, and computers. After the first successful online visit, the service worker caches the planner shell so it can reopen during an internet interruption.
+
+### Install
+
+- **Chrome / Edge on desktop or Android:** select **Install app** when the planner offers it, or use the browser installation icon.
+- **iPhone / iPad:** open the Share menu and select **Add to Home Screen**.
+- **Offline test:** load the site once, close it, disable the network, and reopen it from the installed icon.
+
+### PWA files
+
+- `manifest.webmanifest` defines the installed application name, colors, icons, scope, and display mode.
+- `service-worker.js` caches the application shell and approved CDN assets.
+- `offline.html` provides a controlled fallback when a requested page is not yet cached.
+- `assets/icons/` contains standard and maskable installation icons.
+
+When updating cached application files, increment the `VERSION` constant in `service-worker.js` so prior caches are removed cleanly.
 
 ## Privacy model
 
