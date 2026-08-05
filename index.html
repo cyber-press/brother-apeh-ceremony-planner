@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
     <title>Burial Ceremony Planner · Professional Command Center</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -1363,48 +1360,6 @@
 
     <script>
         (function() {
-            'use strict';
-
-            const SECURITY = Object.freeze({
-                schemaVersion: 1,
-                maxBackupBytes: 2 * 1024 * 1024,
-                maxRowsPerTable: 250,
-                maxTextLength: 5000,
-                allowedCurrencies: new Set(['USD', 'NGN', 'EUR', 'GBP']),
-                forbiddenKeys: new Set(['__proto__', 'prototype', 'constructor'])
-            });
-
-            function safeText(value, maxLength = SECURITY.maxTextLength) {
-                if (value === null || value === undefined) return '';
-                return String(value).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').slice(0, maxLength);
-            }
-
-            function validateBackup(data) {
-                if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Backup root must be an object.');
-                for (const key of Object.keys(data)) {
-                    if (SECURITY.forbiddenKeys.has(key)) throw new Error('Unsafe backup key detected.');
-                }
-                const tableKeys = ['orderRows','transportRows','budgetRows','contribRows','payoutRows'];
-                for (const key of tableKeys) {
-                    if (data[key] !== undefined && !Array.isArray(data[key])) throw new Error(`${key} must be an array.`);
-                    if (Array.isArray(data[key]) && data[key].length > SECURITY.maxRowsPerTable) throw new Error(`${key} exceeds the row limit.`);
-                    for (const row of (data[key] || [])) {
-                        if (!row || typeof row !== 'object' || Array.isArray(row)) throw new Error(`Invalid row in ${key}.`);
-                        for (const rowKey of Object.keys(row)) {
-                            if (SECURITY.forbiddenKeys.has(rowKey)) throw new Error('Unsafe row key detected.');
-                        }
-                    }
-                }
-                if (data.currency && !SECURITY.allowedCurrencies.has(data.currency)) throw new Error('Unsupported currency.');
-                return data;
-            }
-
-            function csvCell(value) {
-                let text = safeText(value);
-                if (/^[=+\-@]/.test(text)) text = "'" + text;
-                return '"' + text.replace(/"/g, '""') + '"';
-            }
-
             const now = new Date();
             const todayStr = now.toISOString().split('T')[0];
             const displayDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -1764,7 +1719,7 @@
             const SAVE_KEY = 'burialPlannerData';
 
             function collectAllData() {
-                const data = { __schemaVersion: SECURITY.schemaVersion, __exportedAt: new Date().toISOString() };
+                const data = {};
                 const inputs = document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea');
                 inputs.forEach(el => {
                     if (el.id) {
@@ -1804,14 +1759,13 @@
             }
 
             function restoreAllData(data) {
-                data = validateBackup(data);
                 Object.keys(data).forEach(key => {
                     const el = document.getElementById(key);
                     if (el) {
                         if (el.type === 'checkbox') {
                             el.checked = data[key] === true || data[key] === 'true';
                         } else {
-                            el.value = safeText(data[key]);
+                            el.value = data[key] || '';
                         }
                     }
                 });
@@ -1870,7 +1824,7 @@
                                 input.type = 'text';
                                 input.style.maxWidth = '60px';
                             }
-                            input.value = safeText(rowData[col]);
+                            input.value = rowData[col] || '';
                             if (col === 'Estimated') {
                                 input.className = 'budget-est';
                                 input.oninput = function() { updateDashboard();
@@ -1926,9 +1880,6 @@
                         indicator.className = 'save-indicator saved';
                     } catch (e) {
                         console.warn('Auto-save failed:', e);
-                        const indicator = document.getElementById('saveIndicator');
-                        indicator.textContent = 'Auto-save unavailable';
-                        indicator.className = 'save-indicator';
                     }
                 }, 500);
             };
@@ -1938,7 +1889,7 @@
                 try {
                     const raw = localStorage.getItem(SAVE_KEY);
                     if (raw) {
-                        const data = validateBackup(JSON.parse(raw));
+                        const data = JSON.parse(raw);
                         restoreAllData(data);
                         const indicator = document.getElementById('saveIndicator');
                         indicator.innerHTML =
@@ -1971,20 +1922,10 @@
             window.cloudRestore = function(event) {
                 const file = event.target.files[0];
                 if (!file) return;
-                if (file.size > SECURITY.maxBackupBytes) {
-                    alert('Backup rejected: file is larger than 2 MB.');
-                    event.target.value = '';
-                    return;
-                }
-                if (!/\.json$/i.test(file.name) || !['application/json', 'text/json', ''].includes(file.type)) {
-                    alert('Backup rejected: select a JSON backup file.');
-                    event.target.value = '';
-                    return;
-                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     try {
-                        const data = validateBackup(JSON.parse(e.target.result));
+                        const data = JSON.parse(e.target.result);
                         restoreAllData(data);
                         localStorage.setItem(SAVE_KEY, JSON.stringify(data));
                         const indicator = document.getElementById('saveIndicator');
@@ -1993,8 +1934,7 @@
                         indicator.className = 'save-indicator saved';
                         alert('Backup restored successfully!');
                     } catch (err) {
-                        console.warn('Restore rejected:', err);
-                        alert('Backup rejected. The file is invalid, unsafe, or incompatible.');
+                        alert('Invalid backup file. Please select a valid JSON file.');
                     }
                 };
                 reader.readAsText(file);
@@ -2136,7 +2076,7 @@
                 function addSection(title, data) {
                     csv += title + '\n';
                     Object.keys(data).forEach(key => {
-                        csv += csvCell(key) + ',' + csvCell(data[key]) + '\n';
+                        csv += '"' + key + '","' + (data[key] || '') + '"\n';
                     });
                     csv += '\n';
                 }
@@ -2156,35 +2096,40 @@
                 csv += 'ORDER OF SERVICE\n';
                 csv += '"Time","Segment","Person","Notes"\n';
                 orderRows.forEach(row => {
-                    csv += [row.Time, row.Segment, row.Person, row.Notes].map(csvCell).join(',') + '\n';
+                    csv += '"' + (row.Time || '') + '","' + (row.Segment || '') + '","' + (row.Person || '') +
+                        '","' + (row.Notes || '') + '"\n';
                 });
                 csv += '\n';
 
                 csv += 'TRANSPORTATION LOGISTICS\n';
                 csv += '"Vehicle","Capacity","Pick-up","Departure","Destination"\n';
                 transportRows.forEach(row => {
-                    csv += [row.Vehicle, row.Capacity, row['Pick-up'], row.Departure, row.Destination].map(csvCell).join(',') + '\n';
+                    csv += '"' + (row.Vehicle || '') + '","' + (row.Capacity || '') + '","' + (row['Pick-up'] ||
+                        '') + '","' + (row.Departure || '') + '","' + (row.Destination || '') + '"\n';
                 });
                 csv += '\n';
 
                 csv += 'BUDGET & PAYMENT TRACKER (' + currency + ')\n';
                 csv += '"Category","Estimated","Actual","Paid","Balance"\n';
                 budgetRows.forEach(row => {
-                    csv += [row.Category, row.Estimated, row.Actual, row.Paid, row.Balance].map(csvCell).join(',') + '\n';
+                    csv += '"' + (row.Category || '') + '","' + (row.Estimated || '') + '","' + (row.Actual ||
+                        '') + '","' + (row.Paid || '') + '","' + (row.Balance || '') + '"\n';
                 });
                 csv += '\n';
 
                 csv += 'CONTRIBUTIONS (' + currency + ')\n';
                 csv += '"Date","Contributor","Amount","Method","Notes"\n';
                 contribRows.forEach(row => {
-                    csv += [row.Date, row.Contributor, row.Amount, row.Method, row.Notes].map(csvCell).join(',') + '\n';
+                    csv += '"' + (row.Date || '') + '","' + (row.Contributor || '') + '","' + (row.Amount ||
+                        '') + '","' + (row.Method || '') + '","' + (row.Notes || '') + '"\n';
                 });
                 csv += '\n';
 
                 csv += 'PAYOUT RECORD (' + currency + ')\n';
                 csv += '"Date","Payee","Amount","Purpose","Approved By"\n';
                 payoutRows.forEach(row => {
-                    csv += [row.Date, row.Payee, row.Amount, row.Purpose, row['Approved By']].map(csvCell).join(',') + '\n';
+                    csv += '"' + (row.Date || '') + '","' + (row.Payee || '') + '","' + (row.Amount || '') +
+                        '","' + (row.Purpose || '') + '","' + (row['Approved By'] || '') + '"\n';
                 });
 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2198,10 +2143,6 @@
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
             };
-
-            window.addEventListener('beforeunload', () => {
-                try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectAllData())); } catch (_) {}
-            });
 
             // ----- Attach events -----
             document.getElementById('deceasedName').addEventListener('input', function() { updateCover();
