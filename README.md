@@ -90,3 +90,8 @@ Replace `index.html` with the newer approved build, commit the change, and push 
 - Browser storage is not encrypted
 
 A private authenticated backend should be introduced before adding multi-user collaboration, online contribution processing, or centralized family records.
+
+
+## Mobile-first iPhone experience
+
+Version 3.3 adds safe-area support, 44–48 px touch targets, 16 px form controls to prevent Safari zoom, a five-action bottom navigation bar, compact dashboard cards, swipeable utility controls, and improved table scrolling.

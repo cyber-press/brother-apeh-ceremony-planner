@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION = 'brother-apeh-planner-v3.2.0';
+const VERSION = 'brother-apeh-planner-v3.3.0';
 const APP_CACHE = `${VERSION}-app`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 const PRECACHE = [

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="referrer" content="no-referrer">
     <meta name="theme-color" content="#0b2a44">
     <meta name="application-name" content="Brother Apeh Planner">
@@ -922,6 +922,221 @@
         }
         @media print { .pwa-install-btn, .connection-status, .pwa-update-banner { display:none !important; } }
 
+
+        /* ===== V3.3 MOBILE-FIRST / iPHONE EXPERIENCE ===== */
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+        }
+        html { -webkit-text-size-adjust: 100%; }
+        body { min-height: 100dvh; }
+        button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+        input, select, textarea { font-size: 16px; }
+        .mobile-nav { display: none; }
+        .mobile-sheet-handle { display:none; }
+
+        @media (max-width: 700px) {
+            body {
+                padding: calc(.45rem + var(--safe-top)) var(--safe-right) calc(5.7rem + var(--safe-bottom)) var(--safe-left);
+                align-items: stretch;
+                background: var(--surface-soft);
+            }
+            .planner-container {
+                width: 100%;
+                max-width: none;
+                margin: 0;
+                padding: .55rem;
+                border-radius: 0;
+                box-shadow: none;
+                background: var(--surface-soft);
+            }
+            .cover-page {
+                min-height: 0;
+                margin-bottom: .7rem;
+                padding: 1.15rem 1rem 1rem;
+                border-radius: 20px;
+                box-shadow: 0 10px 26px rgba(8,32,52,.18);
+            }
+            .cover-decoration { display:block; padding-bottom:.85rem; margin-bottom:.85rem; }
+            .cover-title h1 { font-size: 1.75rem; letter-spacing:.02em; font-weight:400; }
+            .cover-title h1 span { display:inline; font-size:1.75rem; letter-spacing:.02em; margin-left:.18rem; }
+            .cover-title .sub { font-size:.78rem; letter-spacing:.03em; line-height:1.35; margin-top:.4rem; }
+            .cover-badge { display:inline-flex; margin-top:.75rem; padding:.4rem .7rem; font-size:.68rem; text-align:left; }
+            .cover-page::after { font-size:7rem; right:-1rem; bottom:-1.5rem; }
+            .cover-meta-grid { grid-template-columns: 1fr 1fr; gap:.7rem; margin-top:.6rem; }
+            .cover-meta-item { padding-left:.65rem; }
+            .cover-meta-item:last-child { grid-column: 1 / -1; }
+            .cover-meta-item .value { font-size:.94rem; overflow-wrap:anywhere; }
+            .cover-footer { margin-top:.85rem; padding-top:.7rem; font-size:.7rem; gap:.35rem; }
+
+            .top-actions {
+                margin: 0 -.05rem .7rem;
+                padding: .15rem .05rem .45rem;
+                border: 0;
+                display:flex;
+                flex-wrap:nowrap;
+                justify-content:flex-start;
+                overflow-x:auto;
+                overscroll-behavior-inline:contain;
+                scroll-snap-type:x proximity;
+                scrollbar-width:none;
+                -webkit-overflow-scrolling:touch;
+            }
+            .top-actions::-webkit-scrollbar { display:none; }
+            .top-actions > * { flex:0 0 auto; scroll-snap-align:start; }
+            .top-actions button, .top-actions select, .top-actions .save-indicator, .connection-status {
+                min-height:44px;
+            }
+            .top-actions .currency-group { padding:0; }
+            .top-actions .currency-group label { display:none; }
+            .top-actions .currency-group select { min-width:112px; padding:.55rem .75rem; border-radius:12px; }
+            .btn-sync, .btn-sync-restore, .btn-export, .pwa-install-btn {
+                border-radius:12px; padding:.6rem .78rem; font-size:.78rem;
+            }
+            .save-indicator, .connection-status { display:inline-flex; align-items:center; padding:.45rem .7rem; }
+
+            .command-center {
+                position:relative; top:auto; z-index:10;
+                margin:0 0 .7rem; padding:.72rem;
+                border-radius:18px; box-shadow:0 7px 22px rgba(12,42,68,.09);
+                backdrop-filter:none;
+            }
+            .command-row { gap:.5rem; }
+            .command-row + .command-row { margin-top:.55rem; }
+            .command-title { width:100%; font-size:.92rem; }
+            .status-chip { margin-left:auto; }
+            .command-control { min-height:46px; border-radius:12px; font-size:16px; }
+            .command-search { flex:1 1 100%; min-width:0; }
+            #sectionJump { flex:1 1 calc(100% - 48px); min-width:0; }
+            .command-btn { min-width:46px; width:46px; height:46px; min-height:46px; border-radius:12px; }
+            #reviewMissingBtn { width:46px; }
+            #expandAllBtn, #collapseAllBtn { display:none; }
+            .completion-track { flex-basis:calc(100% - 90px); }
+            .completion-label { font-size:.76rem; }
+
+            .completion-panel {
+                margin:0 0 .7rem;
+                padding:.55rem;
+                gap:.5rem;
+                grid-template-columns:1fr 1fr;
+                border-radius:18px;
+            }
+            .completion-stat { padding:.65rem; min-height:74px; }
+            .completion-stat span { font-size:.62rem; line-height:1.25; }
+            .completion-stat strong { font-size:1.08rem; }
+
+            .dashboard {
+                grid-template-columns:1fr 1fr !important;
+                gap:.55rem;
+                margin-bottom:.75rem;
+            }
+            .dash-card { border-radius:16px; padding:.78rem; min-height:88px; }
+            .dash-card:nth-child(5) { grid-column:1 / -1; }
+            .dash-card .dash-label { font-size:.61rem; line-height:1.2; }
+            .dash-card .dash-value { font-size:1.05rem; overflow-wrap:anywhere; }
+
+            .charts-section { gap:.7rem; margin-bottom:.8rem; }
+            .chart-box { padding:.9rem; border-radius:18px; }
+            .chart-wrapper { height:190px; }
+            .chart-wrapper canvas { max-height:190px; }
+
+            .section {
+                margin-bottom:.65rem;
+                padding:.85rem;
+                border-radius:18px;
+                scroll-margin-top:12px;
+                box-shadow:0 3px 12px rgba(12,42,68,.04);
+            }
+            .section-header-v3 { margin-bottom:.8rem; gap:.5rem; }
+            .section-title {
+                font-size:1rem;
+                line-height:1.25;
+                border-left-width:4px;
+                padding-left:.65rem;
+                gap:.5rem;
+            }
+            .section-title i { font-size:1rem; width:1.3rem; }
+            .section-toggle { min-width:44px; width:44px; height:44px; }
+            .grid-2, .grid-3 { grid-template-columns:1fr; gap:.25rem; }
+            .field-group { gap:5px; margin-bottom:.7rem; }
+            .field-group label { font-size:.72rem; line-height:1.25; }
+            .field-group input, .field-group select, .field-group textarea {
+                min-height:48px;
+                padding:.72rem .8rem;
+                border-radius:12px;
+                font-size:16px;
+            }
+            .field-group textarea { min-height:92px; }
+            .checkbox-group { display:grid; grid-template-columns:1fr 1fr; gap:.45rem; }
+            .checkbox-group label { min-height:44px; padding:.55rem; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+            .checkbox-group input[type="checkbox"] { width:22px; height:22px; }
+
+            .table-wrap {
+                margin:.15rem -.15rem .2rem;
+                border-radius:14px;
+                box-shadow: inset -18px 0 18px -22px rgba(16,42,67,.45);
+            }
+            table { min-width:760px; font-size:.82rem; }
+            th, td { padding:.55rem .45rem; }
+            td input, td select { min-height:44px; font-size:16px; border-radius:10px; }
+            .btn-add-row { min-height:44px; width:100%; justify-content:center; border-radius:12px; margin-top:.55rem; }
+            .btn-remove-row { min-width:44px; min-height:44px; }
+            .signature-area { align-items:stretch; gap:.7rem; }
+            .signature-item { width:100%; }
+            .btn-group { display:grid; grid-template-columns:1fr; gap:.6rem; }
+            .btn { min-height:48px; justify-content:center; border-radius:14px; }
+
+            .mobile-nav {
+                position:fixed;
+                left:0; right:0; bottom:0;
+                z-index:900;
+                display:grid;
+                grid-template-columns:repeat(5,1fr);
+                gap:2px;
+                padding:.38rem max(.4rem,var(--safe-right)) calc(.38rem + var(--safe-bottom)) max(.4rem,var(--safe-left));
+                background:rgba(255,255,255,.96);
+                border-top:1px solid var(--line);
+                box-shadow:0 -10px 28px rgba(10,31,45,.12);
+                backdrop-filter:blur(16px);
+                -webkit-backdrop-filter:blur(16px);
+            }
+            body.theme-dark .mobile-nav { background:rgba(16,40,58,.96); }
+            .mobile-nav button {
+                min-height:54px;
+                border:0;
+                background:transparent;
+                color:var(--muted);
+                border-radius:12px;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:.2rem;
+                font:inherit;
+                font-size:.62rem;
+                font-weight:700;
+            }
+            .mobile-nav button i { font-size:1.05rem; }
+            .mobile-nav button:active, .mobile-nav button.is-active { background:var(--surface-soft); color:var(--brand-2); }
+            .mobile-nav .mobile-primary { background:var(--brand); color:#fff; }
+            .mobile-nav .mobile-primary:active { background:var(--brand-2); color:#fff; }
+
+            .toast-stack { left:.7rem; right:.7rem; bottom:calc(5.3rem + var(--safe-bottom)); }
+            .toast-v3 { max-width:none; text-align:center; }
+            .back-to-top-v3 { display:none !important; }
+            .pwa-update-banner { bottom:calc(5.4rem + var(--safe-bottom)); width:calc(100vw - 1rem); }
+        }
+
+        @media (max-width: 380px) {
+            .cover-title h1, .cover-title h1 span { font-size:1.5rem; }
+            .mobile-nav button { font-size:.56rem; }
+            .completion-stat strong { font-size:1rem; }
+        }
+
+        @media print { .mobile-nav { display:none !important; } }
+
     </style>
 </head>
 <body>
@@ -939,7 +1154,7 @@
                     <div class="sub"><i class="fas fa-leaf"></i> A comprehensive guide for a dignified farewell</div>
                 </div>
                 <div class="cover-badge">
-                    <i class="fas fa-file-alt"></i> Professional Command Center v3.2 · Offline PWA
+                    <i class="fas fa-file-alt"></i> Professional Command Center v3.3 · Mobile PWA
                 </div>
             </div>
 
@@ -2383,6 +2598,14 @@
     </script>
 
 
+    <nav class="mobile-nav" aria-label="Mobile planner navigation">
+        <button type="button" id="mobileHomeBtn" aria-label="Go to planner dashboard"><i class="fas fa-home" aria-hidden="true"></i><span>Home</span></button>
+        <button type="button" id="mobileSectionsBtn" aria-label="Choose a planner section"><i class="fas fa-list" aria-hidden="true"></i><span>Sections</span></button>
+        <button type="button" class="mobile-primary" id="mobileReviewBtn" aria-label="Review next incomplete field"><i class="fas fa-check-circle" aria-hidden="true"></i><span>Review</span></button>
+        <button type="button" id="mobileBackupBtn" aria-label="Download planner backup"><i class="fas fa-cloud-download-alt" aria-hidden="true"></i><span>Backup</span></button>
+        <button type="button" id="mobileMoreBtn" aria-label="Scroll to planner tools"><i class="fas fa-ellipsis-h" aria-hidden="true"></i><span>Tools</span></button>
+    </nav>
+
     <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
     <button type="button" class="back-to-top-v3" id="backToTopV3" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
     <script>
@@ -2615,6 +2838,40 @@
         });
 
         if (isStandalone()) installBtn.classList.remove('is-visible');
+    })();
+    </script>
+
+    <script>
+    (() => {
+        'use strict';
+        const byId = id => document.getElementById(id);
+        const home = byId('mobileHomeBtn');
+        const sectionsBtn = byId('mobileSectionsBtn');
+        const review = byId('mobileReviewBtn');
+        const backup = byId('mobileBackupBtn');
+        const more = byId('mobileMoreBtn');
+        if (!home) return;
+
+        const vibrate = () => { if (navigator.vibrate) navigator.vibrate(12); };
+        home.addEventListener('click', () => { vibrate(); byId('dashboard')?.scrollIntoView({behavior:'smooth', block:'start'}); });
+        sectionsBtn.addEventListener('click', () => {
+            vibrate();
+            const jump = byId('sectionJump');
+            jump?.scrollIntoView({behavior:'smooth', block:'center'});
+            window.setTimeout(() => jump?.focus(), 350);
+        });
+        review.addEventListener('click', () => { vibrate(); byId('reviewMissingBtn')?.click(); });
+        backup.addEventListener('click', () => { vibrate(); if (typeof cloudSave === 'function') cloudSave(); });
+        more.addEventListener('click', () => { vibrate(); document.querySelector('.top-actions')?.scrollIntoView({behavior:'smooth', block:'center'}); });
+
+        const sectionNodes = [...document.querySelectorAll('.section')];
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                const active = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
+                sectionsBtn.classList.toggle('is-active', Boolean(active));
+            }, {threshold:[.15,.4], rootMargin:'-15% 0px -55%'});
+            sectionNodes.forEach(section => observer.observe(section));
+        }
     })();
     </script>
 
