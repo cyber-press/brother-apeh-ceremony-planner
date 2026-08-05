@@ -1,3 +1,7 @@
+# Brother Apeh Ceremony Planner — v3.4.2 UI Repair
+
+This build repairs malformed section-title markup that caused sections to nest inside one another, producing narrow tables, missing headings, excessive whitespace, and command-center overflow.
+
 # Brother Apeh Ceremony Planner
 
 A hardened, standalone burial ceremony planning dashboard prepared for the Brother Apeh family.
@@ -95,3 +99,16 @@ A private authenticated backend should be introduced before adding multi-user co
 ## Mobile-first iPhone experience
 
 Version 3.3 adds safe-area support, 44–48 px touch targets, 16 px form controls to prevent Safari zoom, a five-action bottom navigation bar, compact dashboard cards, swipeable utility controls, and improved table scrolling.
+
+
+## Version 3.4 — Professional Print & PDF Suite
+
+- Cover prints as a dedicated first page.
+- Executive dashboard and charts print as a structured summary page.
+- Dove artwork is resized and kept clear of the confidentiality footer.
+- Ceremony and burial dates use consistent full-date formatting.
+- Print controls support Full Planner, Executive Summary, Ceremony-Day Brief, and Finance reports.
+- Tables repeat headings and avoid splitting individual rows where supported.
+- Mobile, PWA, navigation, and interactive controls are hidden in PDF output.
+
+For clean PDF output in Chrome or Edge, open **More settings**, turn off **Headers and footers**, and turn on **Background graphics**.

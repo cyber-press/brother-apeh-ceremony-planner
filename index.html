@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-32.png">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
-    <title>Burial Ceremony Planner · Professional Command Center</title>
+    <title>Burial Ceremony Planner · Professional Print Suite</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Chart.js -->
@@ -1138,6 +1138,334 @@
         @media print { .mobile-nav { display:none !important; } }
 
     </style>
+
+
+    <style id="ui-repair-v342">
+        /* V3.4.2 structural and responsive repair */
+        .command-center, .section, .table-wrap { min-width: 0; }
+        .command-row > * { min-width: 0; }
+        .command-center .command-row:nth-child(2) {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.5fr) minmax(190px, 1fr) auto auto auto;
+            align-items: center;
+        }
+        #sectionJump, #sectionSearch { width: 100%; max-width: 100%; }
+        .table-wrap { width: 100%; max-width: 100%; }
+        .table-wrap table { width: 100%; min-width: 760px; }
+        .section > .grid-2, .section > .grid-3, .section > .table-wrap { width: 100%; }
+        @media (max-width: 980px) {
+            .command-center .command-row:nth-child(2) {
+                grid-template-columns: minmax(0, 1fr) minmax(180px, .75fr) auto;
+            }
+            #expandAllBtn, #collapseAllBtn { display: none; }
+        }
+        @media (max-width: 700px) {
+            .command-center .command-row:nth-child(2) {
+                display: grid;
+                grid-template-columns: 1fr 48px;
+            }
+            #sectionSearch, #sectionJump { grid-column: 1 / -1; }
+            #reviewMissingBtn { grid-column: 2; grid-row: 3; }
+            .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .table-wrap table { min-width: 720px; }
+        }
+    </style>
+
+    <style id="print-suite-v341">
+        /* ===== V3.4.1 CLEAN PRINT & PDF LAYOUT ===== */
+        .print-document-header,
+        .print-overview-title { display: none; }
+
+        .print-suite-controls {
+            max-width: 760px;
+            margin: 1rem auto .4rem;
+            padding: .85rem 1rem;
+            display: grid;
+            grid-template-columns: auto minmax(210px, 1fr);
+            gap: .4rem .8rem;
+            align-items: center;
+            background: #f4f7fa;
+            border: 1px solid #d9e2ea;
+            border-radius: 14px;
+        }
+        .print-suite-controls label { font-weight: 800; color: #173b59; }
+        .print-suite-controls select {
+            min-height: 44px;
+            border: 1px solid #becbd7;
+            border-radius: 10px;
+            padding: .55rem .75rem;
+            background: #fff;
+            color: #102a43;
+            font: inherit;
+            font-weight: 700;
+        }
+        .print-suite-controls span {
+            grid-column: 1 / -1;
+            color: #607487;
+            font-size: .78rem;
+            line-height: 1.45;
+        }
+        @media (max-width: 700px) {
+            .print-suite-controls { grid-template-columns: 1fr; margin: .8rem .2rem .35rem; }
+            .print-suite-controls span { grid-column: auto; }
+        }
+
+        @page { size: Letter portrait; margin: .5in; }
+
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html, body {
+                width: auto !important;
+                min-height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #fff !important;
+            }
+
+            body {
+                display: block !important;
+                color: #172b3a !important;
+                font-size: 9pt !important;
+                line-height: 1.35 !important;
+            }
+
+            .planner-container {
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #fff !important;
+                border: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .top-actions, .command-center, .completion-panel, .mobile-nav,
+            .btn-group, .print-suite-controls, .pwa-install-btn,
+            .connection-status, .pwa-update-banner, .back-to-top-v3,
+            .toast-stack, .skip-link, .section-toggle, .btn-add-row,
+            .btn-remove-row, body > .mobile-nav {
+                display: none !important;
+            }
+
+            /* Page 1: restrained cover */
+            .cover-page {
+                display: flex !important;
+                flex-direction: column !important;
+                min-height: 9.3in !important;
+                margin: 0 !important;
+                padding: .62in !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                overflow: hidden !important;
+                background: #0b2a44 !important;
+                break-after: page !important;
+                page-break-after: always !important;
+            }
+            .cover-page::after { display: none !important; content: none !important; }
+            .cover-decoration {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 0 .3in !important;
+                border-bottom: 1px solid rgba(255,255,255,.22) !important;
+            }
+            .cover-title h1 {
+                margin: 0 !important;
+                font-size: 31pt !important;
+                line-height: 1.02 !important;
+                letter-spacing: .02em !important;
+            }
+            .cover-title h1 span {
+                margin-top: .08in !important;
+                font-size: 24pt !important;
+                letter-spacing: .12em !important;
+            }
+            .cover-title .sub {
+                margin-top: .16in !important;
+                font-size: 9pt !important;
+                letter-spacing: .08em !important;
+                opacity: .82 !important;
+            }
+            .cover-badge {
+                display: inline-flex !important;
+                width: fit-content !important;
+                margin-top: .24in !important;
+                padding: .09in .18in !important;
+                border-radius: 999px !important;
+                font-size: 7.5pt !important;
+                text-align: left !important;
+            }
+            .cover-meta-grid {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: .22in !important;
+                margin: auto 0 !important;
+                max-width: 5.8in !important;
+            }
+            .cover-meta-item {
+                padding-left: .16in !important;
+                border-left: 2px solid rgba(255,255,255,.3) !important;
+            }
+            .cover-meta-item .label { font-size: 7pt !important; }
+            .cover-meta-item .value { margin-top: .03in !important; font-size: 13pt !important; }
+            .cover-footer {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                gap: .2in !important;
+                margin: 0 !important;
+                padding-top: .18in !important;
+                border-top: 1px solid rgba(255,255,255,.18) !important;
+                font-size: 7.5pt !important;
+                opacity: .82 !important;
+            }
+
+            /* Page 2: planning overview */
+            .print-document-header {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                margin: 0 0 .12in !important;
+                padding-bottom: .08in !important;
+                border-bottom: 1px solid #c9d5df !important;
+                color: #5b6f80 !important;
+                font-size: 7pt !important;
+                text-transform: uppercase !important;
+                letter-spacing: .08em !important;
+            }
+            .print-overview-title {
+                display: block !important;
+                margin: 0 0 .16in !important;
+            }
+            .print-overview-title p {
+                margin: 0 0 .03in !important;
+                color: #4b718d !important;
+                font-size: 7pt !important;
+                font-weight: 800 !important;
+                letter-spacing: .12em !important;
+                text-transform: uppercase !important;
+            }
+            .print-overview-title h2 {
+                margin: 0 !important;
+                color: #0b2a44 !important;
+                font-size: 18pt !important;
+                line-height: 1.15 !important;
+            }
+            .print-overview-title span { color: #687b8a !important; font-size: 8pt !important; }
+
+            #dashboard {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: .12in !important;
+                margin: 0 0 .18in !important;
+                break-inside: avoid !important;
+            }
+            .dash-card {
+                min-width: 0 !important;
+                padding: .14in .16in !important;
+                border-radius: 9px !important;
+                box-shadow: none !important;
+            }
+            .dash-card:last-child { grid-column: 1 / -1 !important; }
+            .dash-card .dash-label { font-size: 6.6pt !important; line-height: 1.25 !important; }
+            .dash-card .dash-value { margin-top: .03in !important; font-size: 12pt !important; overflow-wrap: anywhere !important; }
+
+            #chartsSection {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: .15in !important;
+                margin: 0 !important;
+                break-after: page !important;
+                page-break-after: always !important;
+            }
+            .chart-box {
+                padding: .14in !important;
+                border-radius: 10px !important;
+                box-shadow: none !important;
+                break-inside: avoid !important;
+            }
+            .chart-box h3 { margin-bottom: .06in !important; font-size: 8.5pt !important; }
+            .chart-wrapper { height: 2.05in !important; }
+            .chart-wrapper canvas { width: 100% !important; max-height: 2.05in !important; }
+            .chart-summary { margin-top: .05in !important; font-size: 6.8pt !important; }
+
+            /* Planner content */
+            .section {
+                display: block !important;
+                margin: 0 0 .14in !important;
+                padding: .16in .18in !important;
+                border: 1px solid #d2dbe3 !important;
+                border-radius: 8px !important;
+                box-shadow: none !important;
+                background: #fff !important;
+                break-inside: auto !important;
+                page-break-inside: auto !important;
+            }
+            .section.is-collapsed > :not(.section-header-v3),
+            .section.is-filtered { display: block !important; }
+            .section-header-v3, .section-title {
+                break-after: avoid !important;
+                page-break-after: avoid !important;
+            }
+            .section-title {
+                margin-bottom: .1in !important;
+                padding-left: .1in !important;
+                border-left-width: 3px !important;
+                font-size: 11pt !important;
+            }
+            .grid-2 { grid-template-columns: 1fr 1fr !important; gap: .08in .16in !important; }
+            .grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: .08in .12in !important; }
+            .field-group { gap: 2px !important; margin-bottom: .035in !important; break-inside: avoid !important; }
+            .field-group label { font-size: 6.6pt !important; }
+            .field-group input, .field-group select, .field-group textarea,
+            td input, td select {
+                min-height: 0 !important;
+                padding: .045in .06in !important;
+                border: 1px solid #b8c4ce !important;
+                border-radius: 4px !important;
+                background: #fff !important;
+                color: #172b3a !important;
+                font-size: 7.6pt !important;
+                box-shadow: none !important;
+            }
+            .field-group textarea { min-height: .38in !important; }
+            .checkbox-group { gap: .05in .12in !important; }
+            .checkbox-group label { font-size: 7.4pt !important; }
+            .table-wrap { overflow: visible !important; border-radius: 6px !important; break-inside: auto !important; }
+            table { width: 100% !important; table-layout: fixed !important; font-size: 6.8pt !important; }
+            thead { display: table-header-group !important; }
+            tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+            th { padding: .055in .04in !important; font-size: 6.5pt !important; }
+            td { padding: .04in !important; }
+            .signature-area { break-inside: avoid !important; }
+
+            /* Report visibility */
+            body[data-print-mode="overview"] .section { display: none !important; }
+            body[data-print-mode="overview"] #chartsSection { break-after: auto !important; page-break-after: auto !important; }
+
+            body[data-print-mode="finance"] .section { display: none !important; }
+            body[data-print-mode="finance"] .section[data-print-section="14"],
+            body[data-print-mode="finance"] .section[data-print-section="15"],
+            body[data-print-mode="finance"] .section[data-print-section="16"] { display: block !important; }
+
+            body[data-print-mode="ceremony"] #chartsSection { display: none !important; }
+            body[data-print-mode="ceremony"] #dashboard { break-after: page !important; page-break-after: always !important; }
+            body[data-print-mode="ceremony"] .section { display: none !important; }
+            body[data-print-mode="ceremony"] .section[data-print-section="1"],
+            body[data-print-mode="ceremony"] .section[data-print-section="2"],
+            body[data-print-mode="ceremony"] .section[data-print-section="4"],
+            body[data-print-mode="ceremony"] .section[data-print-section="5"],
+            body[data-print-mode="ceremony"] .section[data-print-section="6"],
+            body[data-print-mode="ceremony"] .section[data-print-section="8"],
+            body[data-print-mode="ceremony"] .section[data-print-section="12"],
+            body[data-print-mode="ceremony"] .section[data-print-section="17"] { display: block !important; }
+        }
+    </style>
+
 </head>
 <body>
     <a class="skip-link" href="#plannerApp">Skip to planner content</a>
@@ -1154,7 +1482,7 @@
                     <div class="sub"><i class="fas fa-leaf"></i> A comprehensive guide for a dignified farewell</div>
                 </div>
                 <div class="cover-badge">
-                    <i class="fas fa-file-alt"></i> Professional Command Center v3.3 · Mobile PWA
+                    <i class="fas fa-file-alt"></i> Professional Command Center v3.4.2 · UI Repair
                 </div>
             </div>
 
@@ -1177,6 +1505,16 @@
                 <span><i class="far fa-clock"></i> Prepared on: <span id="coverPreparedDate"></span></span>
                 <span><i class="fas fa-print"></i> For official use · private & confidential</span>
             </div>
+        </div>
+
+        <header class="print-document-header" aria-hidden="true">
+            <span>Brother Apeh Ceremony Planner</span>
+            <span>Private &amp; Confidential</span>
+        </header>
+        <div class="print-overview-title" aria-hidden="true">
+            <p>Planning overview</p>
+            <h2>Executive Ceremony Summary</h2>
+            <span>Key dates, attendance, financial position, and planning indicators</span>
         </div>
 
         <!-- ============================================================ -->
@@ -1297,7 +1635,7 @@
         </div>
 
         <!-- ====== SECTION 1: DECEASED ====== -->
-        <div class="section">
+        <div class="section" data-print-section="1">
             <div class="section-title"><i class="fas fa-user-circle"></i> 1. Deceased information</div>
             <div class="grid-2">
                 <div class="field-group"><label><i class="far fa-id-card"></i> Full legal name</label><input type="text" id="deceasedName" placeholder="e.g. John Robert Smith" oninput="updateCover(); autoSave();"></div>
@@ -1315,7 +1653,7 @@
         </div>
 
         <!-- ====== SECTION 2: FAMILY CONTACT ====== -->
-        <div class="section">
+        <div class="section" data-print-section="2">
             <div class="section-title"><i class="fas fa-address-book"></i> 2. Family / Next of kin</div>
             <div class="grid-3">
                 <div class="field-group"><label>Primary decision maker</label><input type="text" id="primaryContact" placeholder="Full name" oninput="updateCover(); autoSave();"></div>
@@ -1328,7 +1666,7 @@
         </div>
 
         <!-- ====== SECTION 3: FUNERAL HOME & LEGAL ====== -->
-        <div class="section">
+        <div class="section" data-print-section="3">
             <div class="section-title"><i class="fas fa-gavel"></i> 3. Funeral home & legal services</div>
             <div class="grid-2">
                 <div class="field-group"><label>Funeral home</label><input type="text" id="funeralHome" placeholder="Name" oninput="autoSave();"></div>
@@ -1345,7 +1683,7 @@
         </div>
 
         <!-- ====== SECTION 4: CEREMONY LOGISTICS ====== -->
-        <div class="section">
+        <div class="section" data-print-section="4">
             <div class="section-title"><i class="fas fa-map-marked-alt"></i> 4. Ceremony logistics</div>
             <div class="grid-2">
                 <div class="field-group"><label>Date of ceremony</label><input type="date" id="ceremonyDate" oninput="updateDashboard(); updateCover(); autoSave(); updateCharts();"></div>
@@ -1362,7 +1700,7 @@
         </div>
 
         <!-- ====== SECTION 5: ORDER OF SERVICE ====== -->
-        <div class="section">
+        <div class="section" data-print-section="5">
             <div class="section-title"><i class="fas fa-list-ol"></i> 5. Order of service (flow)</div>
             <div class="table-wrap">
                 <table id="orderTable">
@@ -1386,7 +1724,7 @@
         </div>
 
         <!-- ====== SECTION 6: BURIAL SITE ====== -->
-        <div class="section">
+        <div class="section" data-print-section="6">
             <div class="section-title"><i class="fas fa-cross"></i> 6. Burial site / graveside details</div>
             <div class="grid-2">
                 <div class="field-group"><label>Cemetery name</label><input type="text" id="cemeteryName" placeholder="Cemetery name" oninput="autoSave();"></div>
@@ -1409,7 +1747,7 @@
         </div>
 
         <!-- ====== SECTION 7: FLORAL ====== -->
-        <div class="section">
+        <div class="section" data-print-section="7">
             <div class="section-title"><i class="fas fa-seedling"></i> 7. Floral arrangements</div>
             <div class="grid-2">
                 <div class="field-group"><label>Casket spray</label><input type="text" id="floralCasket" placeholder="Description / colors" oninput="autoSave();"></div>
@@ -1422,7 +1760,7 @@
         </div>
 
         <!-- ====== SECTION 8: TRANSPORTATION ====== -->
-        <div class="section">
+        <div class="section" data-print-section="8">
             <div class="section-title"><i class="fas fa-car"></i> 8. Transportation logistics</div>
             <div class="table-wrap">
                 <table id="transportTable">
@@ -1438,7 +1776,7 @@
         </div>
 
         <!-- ====== SECTION 9: MUSIC / AV ====== -->
-        <div class="section">
+        <div class="section" data-print-section="9">
             <div class="section-title"><i class="fas fa-music"></i> 9. Music & audiovisual</div>
             <div class="grid-2">
                 <div class="field-group"><label>Prelude</label><input type="text" id="musicPrelude" placeholder="Song / hymn" oninput="autoSave();"></div>
@@ -1459,7 +1797,7 @@
         </div>
 
         <!-- ====== SECTION 10: MEMORIAL ITEMS ====== -->
-        <div class="section">
+        <div class="section" data-print-section="10">
             <div class="section-title"><i class="fas fa-box-open"></i> 10. Memorial items & remains</div>
             <div class="grid-2">
                 <div class="field-group"><label>Urn (if cremation)</label><input type="text" id="urnDetails" placeholder="Material / inscription" oninput="autoSave();"></div>
@@ -1474,7 +1812,7 @@
         </div>
 
         <!-- ====== SECTION 11: RECEPTION ====== -->
-        <div class="section">
+        <div class="section" data-print-section="11">
             <div class="section-title"><i class="fas fa-utensils"></i> 11. Reception / catering</div>
             <div class="grid-2">
                 <div class="field-group"><label>Caterer name</label><input type="text" id="caterer" placeholder="Name" oninput="autoSave();"></div>
@@ -1489,7 +1827,7 @@
         </div>
 
         <!-- ====== SECTION 12: OFFICIANT ====== -->
-        <div class="section">
+        <div class="section" data-print-section="12">
             <div class="section-title"><i class="fas fa-pray"></i> 12. Officiant / clergy / celebrant</div>
             <div class="grid-2">
                 <div class="field-group"><label>Name</label><input type="text" id="officiantName" placeholder="Full name" oninput="autoSave();"></div>
@@ -1504,7 +1842,7 @@
         </div>
 
         <!-- ====== SECTION 13: PRESS ====== -->
-        <div class="section">
+        <div class="section" data-print-section="13">
             <div class="section-title"><i class="fas fa-newspaper"></i> 13. Press / social media notice</div>
             <div class="grid-2">
                 <div class="field-group"><label>Obituary / death notice</label>
@@ -1521,7 +1859,7 @@
         </div>
 
         <!-- ====== SECTION 14: BUDGET ====== -->
-        <div class="section">
+        <div class="section" data-print-section="14">
             <div class="section-title"><i class="fas fa-coins"></i> 14. Budget & payment tracker</div>
             <div class="table-wrap">
                 <table id="budgetTable">
@@ -1543,7 +1881,7 @@
         </div>
 
         <!-- ====== SECTION 15: CONTRIBUTIONS ====== -->
-        <div class="section">
+        <div class="section" data-print-section="15">
             <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 15. Contributions — member donations</div>
             <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
                 <i class="fas fa-info-circle"></i> Track all contributions to ensure funds are available when needed.
@@ -1576,8 +1914,8 @@
         </div>
 
         <!-- ====== SECTION 16: PAYOUT RECORD ====== -->
-        <div class="section">
-            <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> 16. Payout record — claims & disbursements</div>
+        <div class="section" data-print-section="16">
+            <div class="section-title"><i class="fas fa-money-check-alt"></i> 16. Payout record — claims & disbursements</div>
             <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
                 <i class="fas fa-info-circle"></i> Record all claims and payouts to maintain transparency and proper financial tracking.
                 <span class="stat-badge" style="margin-left:12px;">Total Payouts: <span class="currency-symbol">₦</span><span id="payoutTotalDisplay">0</span></span>
@@ -1609,8 +1947,8 @@
         </div>
 
         <!-- ====== SECTION 17: EMERGENCY ====== -->
-        <div class="section">
-            <div class="section-title"><i class="fas fa-umbrella"></i> 17. Emergency contingencies & rain plan</div>
+        <div class="section" data-print-section="17">
+            <div class="section-title"><i class="fas fa-cloud-rain"></i> 17. Emergency contingencies & rain plan</div>
             <div class="grid-2">
                 <div class="field-group"><label>Rain location (indoor alternative)</label><input type="text" id="rainLocation" placeholder="Building / chapel name" oninput="autoSave();"></div>
                 <div class="field-group"><label>Emergency medical contact (on-site)</label><input type="text" id="emergencyMed" placeholder="Name / phone" oninput="autoSave();"></div>
@@ -1618,8 +1956,8 @@
         </div>
 
         <!-- ====== SECTION 18: POST-CEREMONY ====== -->
-        <div class="section">
-            <div class="section-title"><i class="fas fa-check-double"></i> 18. Post-ceremony checklist</div>
+        <div class="section" data-print-section="18">
+            <div class="section-title"><i class="fas fa-clipboard-check"></i> 18. Post-ceremony checklist</div>
             <div class="grid-2" style="grid-template-columns:1fr 1fr;">
                 <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Return all rented items (suits, flowers, AV)</label></div>
                 <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Send thank you notes to clergy, musicians, pallbearers</label></div>
@@ -1648,6 +1986,16 @@
         </div>
 
         <!-- BUTTONS -->
+        <div class="print-suite-controls" aria-label="Print report options">
+            <label for="printMode"><i class="fas fa-file-pdf" aria-hidden="true"></i> PDF report</label>
+            <select id="printMode" aria-label="Choose report to print">
+                <option value="full">Full master planner</option>
+                <option value="overview">Executive summary only</option>
+                <option value="ceremony">Ceremony-day brief</option>
+                <option value="finance">Budget and contributions</option>
+            </select>
+            <span>For the cleanest PDF, disable browser headers and footers and enable background graphics.</span>
+        </div>
         <div class="btn-group">
             <button class="btn" id="printBtn"><i class="fas fa-print"></i> Print / Save as PDF</button>
             <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset fields</button>
@@ -1749,7 +2097,7 @@
                 const ceremonyDate = document.getElementById('ceremonyDate').value;
                 if (ceremonyDate) {
                     const d = new Date(ceremonyDate + 'T00:00:00');
-                    document.getElementById('dashCeremonyDate').textContent = d.toLocaleDateString('en-US', { month: 'short',
+                    document.getElementById('dashCeremonyDate').textContent = d.toLocaleDateString('en-US', { month: 'long',
                         day: 'numeric', year: 'numeric' });
                 } else {
                     document.getElementById('dashCeremonyDate').textContent = '—';
@@ -1758,7 +2106,7 @@
                 const burialTime = document.getElementById('gravesideTime').value;
                 if (ceremonyDate) {
                     const d = new Date(ceremonyDate + 'T00:00:00');
-                    let label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    let label = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                     if (burialTime) label += ' at ' + burialTime;
                     document.getElementById('dashBurialDate').textContent = label;
                 } else {
@@ -2536,8 +2884,24 @@
                 setTimeout(updateCharts, 500);
             }
 
-            // ----- PRINT -----
+            // ----- PROFESSIONAL PRINT SUITE -----
+            const printModeSelect = document.getElementById('printMode');
+            const applyPrintMode = () => {
+                const mode = printModeSelect?.value || 'full';
+                document.body.dataset.printMode = mode;
+            };
+            printModeSelect?.addEventListener('change', applyPrintMode);
+            window.addEventListener('beforeprint', () => {
+                applyPrintMode();
+                updateCover();
+                updateDashboard();
+                updateCharts();
+            });
+            window.addEventListener('afterprint', () => {
+                document.body.dataset.printMode = 'screen';
+            });
             document.getElementById('printBtn').addEventListener('click', function() {
+                applyPrintMode();
                 window.print();
             });
 
