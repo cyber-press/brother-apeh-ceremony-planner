@@ -1,0 +1,2454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
+    <title>Burial Ceremony Planner · Professional Command Center</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e8edf2;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .planner-container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+            padding: 2rem 2.5rem;
+            margin-bottom: 2rem;
+            transition: 0.2s;
+        }
+
+        /* ===== COVER PAGE ===== */
+        .cover-page {
+            background: #0b2a44;
+            background-image: radial-gradient(circle at 20% 30%, #1e4a6e, #082034);
+            color: white;
+            border-radius: 28px;
+            padding: 3rem 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .cover-page::after {
+            content: "🕊️";
+            font-size: 12rem;
+            opacity: 0.04;
+            position: absolute;
+            right: -20px;
+            bottom: -40px;
+            transform: rotate(10deg);
+            pointer-events: none;
+        }
+        .cover-decoration {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .cover-title h1 {
+            font-size: 3.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+        .cover-title h1 span {
+            font-weight: 600;
+            display: block;
+            font-size: 2.6rem;
+            letter-spacing: 4px;
+            color: #b8d4e8;
+        }
+        .cover-title .sub {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+        .cover-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            text-align: right;
+        }
+        .cover-badge i {
+            margin-right: 8px;
+            color: #b8d4e8;
+        }
+        .cover-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .cover-meta-item {
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 1.2rem;
+        }
+        .cover-meta-item .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+        .cover-meta-item .value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        .cover-footer {
+            margin-top: 2.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.2rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e2e9f2;
+        }
+        .top-actions .currency-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .top-actions .currency-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2e4b6b;
+        }
+        .top-actions .currency-group select {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid #d5dfe9;
+            background: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .btn-export {
+            background: #1e7a5e;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-export:hover {
+            background: #14634b;
+            transform: scale(1.02);
+        }
+        .btn-sync {
+            background: #2b5c7c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-sync:hover {
+            background: #1e4a6e;
+            transform: scale(1.02);
+        }
+        .btn-sync-restore {
+            background: #8a6d1b;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-sync-restore:hover {
+            background: #6f5516;
+            transform: scale(1.02);
+        }
+        .save-indicator {
+            font-size: 0.75rem;
+            color: #4a6a8a;
+            background: #e9eff6;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .save-indicator.saved {
+            color: #1e7a5e;
+            background: #e6f4ea;
+        }
+        .file-input-hidden {
+            display: none;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 2.2rem;
+        }
+        .dash-card {
+            background: #f2f7fc;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #e2eaf3;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .dash-card .dash-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #4a6a8a;
+            font-weight: 600;
+        }
+        .dash-card .dash-value {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #0b2a44;
+            margin-top: 4px;
+        }
+        .dash-card.total {
+            background: #0b2a44;
+            border-color: #0b2a44;
+        }
+        .dash-card.total .dash-label {
+            color: #aac2db;
+        }
+        .dash-card.total .dash-value {
+            color: white;
+        }
+        .dash-card i {
+            color: #2b5c7c;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .dash-card.total i {
+            color: #b8d4e8;
+        }
+        .dash-card.success {
+            background: #e6f4ea;
+            border-color: #b7dcc8;
+        }
+        .dash-card.success .dash-value {
+            color: #1e6b3b;
+        }
+        .dash-card.warning {
+            background: #fef6e6;
+            border-color: #f5ddb3;
+        }
+        .dash-card.warning .dash-value {
+            color: #8a6d1b;
+        }
+
+        /* ===== CHARTS SECTION ===== */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+        .chart-box {
+            background: #f9fbfd;
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            border: 1px solid #e2e9f2;
+            box-shadow: 0 2px 6px rgba(0, 20, 40, 0.02);
+        }
+        .chart-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chart-box h3 i {
+            color: #2b5c7c;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 220px;
+        }
+        .chart-wrapper canvas {
+            max-height: 220px;
+            max-width: 100%;
+        }
+        .chart-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.6rem;
+            font-size: 0.85rem;
+            color: #2e4b6b;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .chart-summary .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .chart-summary .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.blue {
+            background: #2b5c7c;
+        }
+        .dot.green {
+            background: #1e7a5e;
+        }
+        .dot.gold {
+            background: #c49b2b;
+        }
+        .dot.red {
+            background: #b33c3c;
+        }
+
+        /* ===== sections ===== */
+        .section {
+            background: #f9fbfd;
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e9f2;
+            box-shadow: 0 2px 6px rgba(0, 20, 40, 0.02);
+            transition: 0.15s;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin-bottom: 1.4rem;
+            border-left: 6px solid #4a7c9e;
+            padding-left: 14px;
+        }
+
+        .section-title i {
+            color: #2b5c7c;
+            font-size: 1.2rem;
+            width: 1.8rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.2rem 1.5rem;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 0.6rem;
+        }
+
+        .field-group label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #2e4b6b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-group input,
+        .field-group select,
+        .field-group textarea {
+            padding: 10px 14px;
+            border: 1px solid #d5dfe9;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.15s;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .field-group input:focus,
+        .field-group select:focus,
+        .field-group textarea:focus {
+            outline: none;
+            border-color: #1e5a7e;
+            box-shadow: 0 0 0 3px rgba(30, 90, 126, 0.15);
+        }
+
+        .field-group textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 24px;
+            padding: 6px 0;
+        }
+
+        .checkbox-group label {
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 0.95rem;
+            color: #1a2e44;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1e5a7e;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 0.5rem 0 0.2rem;
+            border-radius: 16px;
+            border: 1px solid #e0e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        th {
+            background: #e9eff6;
+            color: #1a3a5c;
+            font-weight: 600;
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 2px solid #cbd8e8;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e5edf5;
+        }
+
+        td input,
+        td select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #d5dfe9;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        td input:focus {
+            outline: none;
+            border-color: #1e5a7e;
+            box-shadow: 0 0 0 2px rgba(30, 90, 126, 0.1);
+        }
+
+        .btn-add-row {
+            background: transparent;
+            border: 2px dashed #b0c8dd;
+            color: #1e3a5f;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .btn-add-row:hover {
+            background: #e9eff6;
+            border-color: #1e5a7e;
+        }
+        .btn-remove-row {
+            background: none;
+            border: none;
+            color: #b33c3c;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.1s;
+        }
+        .btn-remove-row:hover {
+            background: #fde8e8;
+        }
+
+        .signature-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed #c7d8e8;
+        }
+
+        .signature-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .signature-item label {
+            font-weight: 600;
+            color: #1a3a5c;
+        }
+
+        .btn {
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 8px rgba(0, 20, 40, 0.1);
+        }
+
+        .btn:hover {
+            background: #143048;
+            transform: scale(1.01);
+            box-shadow: 0 8px 14px rgba(0, 20, 40, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a5f;
+            border: 1.5px solid #1e3a5f;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: #e9eff6;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            background: #e9eff6;
+            border-radius: 30px;
+            padding: 0.2rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a3a5c;
+        }
+
+        @media (max-width: 780px) {
+            .planner-container {
+                padding: 1.2rem;
+            }
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .cover-meta-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            .cover-title h1 {
+                font-size: 2.2rem;
+            }
+            .cover-title h1 span {
+                font-size: 1.8rem;
+            }
+            .signature-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .top-actions {
+                justify-content: center;
+            }
+            .chart-wrapper {
+                height: 180px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0.1in;
+            }
+            .planner-container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0.1in;
+            }
+            .btn-group,
+            .btn,
+            .btn-add-row,
+            .btn-remove-row,
+            .top-actions {
+                display: none !important;
+            }
+            .section {
+                break-inside: avoid;
+                border: 1px solid #ccc;
+                background: #fafcff;
+            }
+            .cover-page {
+                background: #0b2a44 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .dash-card.total {
+                background: #0b2a44 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .dash-card {
+                background: #f2f7fc !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .field-group input,
+            .field-group select,
+            .field-group textarea,
+            td input {
+                border: 1px solid #aaa;
+                background: white !important;
+            }
+            .chart-box {
+                break-inside: avoid;
+            }
+        }
+
+
+        /* ===== V3 PROFESSIONAL COMMAND CENTER ===== */
+        :root {
+            --ink: #102a43;
+            --muted: #5d7185;
+            --surface: #ffffff;
+            --surface-soft: #f4f7fb;
+            --line: #d9e3ed;
+            --brand: #123d5a;
+            --brand-2: #236b8e;
+            --accent: #b68a2c;
+            --success: #237a57;
+            --danger: #a33c3c;
+            --focus: #0b76b7;
+        }
+        html { scroll-behavior: smooth; }
+        body { color: var(--ink); }
+        body.theme-dark {
+            --ink: #eaf2f8;
+            --muted: #a8bac9;
+            --surface: #10283a;
+            --surface-soft: #16354a;
+            --line: #315168;
+            --brand: #0a1e2d;
+            --brand-2: #65b8df;
+            --accent: #e0ba60;
+            --success: #6ed3a8;
+            background: #081923;
+        }
+        body.theme-dark .planner-container,
+        body.theme-dark .section,
+        body.theme-dark .chart-box,
+        body.theme-dark table,
+        body.theme-dark input,
+        body.theme-dark select,
+        body.theme-dark textarea { background: var(--surface); color: var(--ink); border-color: var(--line); }
+        body.theme-dark th,
+        body.theme-dark .command-center,
+        body.theme-dark .completion-panel { background: var(--surface-soft); color: var(--ink); border-color: var(--line); }
+        body.theme-dark .section-title,
+        body.theme-dark .field-group label,
+        body.theme-dark .chart-box h3 { color: var(--ink); }
+        body.theme-dark td { border-color: var(--line); }
+
+        .skip-link {
+            position: fixed; left: 1rem; top: -80px; z-index: 9999;
+            background: #fff; color: #0b2a44; padding: .75rem 1rem;
+            border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.22);
+        }
+        .skip-link:focus { top: 1rem; }
+
+        .command-center {
+            position: sticky; top: 12px; z-index: 100;
+            background: rgba(255,255,255,.94); backdrop-filter: blur(14px);
+            border: 1px solid var(--line); border-radius: 18px;
+            box-shadow: 0 12px 32px rgba(12,42,68,.12);
+            padding: .85rem; margin: 0 0 1.35rem;
+        }
+        .command-row { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; }
+        .command-row + .command-row { margin-top: .7rem; }
+        .command-title { font-weight: 750; color: var(--ink); margin-right: auto; display:flex; align-items:center; gap:.55rem; }
+        .command-title small { font-weight: 500; color: var(--muted); }
+        .command-control {
+            min-height: 40px; border: 1px solid var(--line); border-radius: 12px;
+            background: var(--surface); color: var(--ink); padding: .55rem .8rem;
+            font: inherit; font-size: .88rem;
+        }
+        .command-control:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 3px solid rgba(11,118,183,.28); outline-offset: 2px;
+        }
+        .command-search { flex: 1 1 240px; min-width: 180px; }
+        .command-btn {
+            min-height: 40px; border: 1px solid var(--line); border-radius: 12px;
+            background: var(--surface); color: var(--ink); padding: .55rem .8rem;
+            cursor: pointer; font-weight: 650; display:inline-flex; align-items:center; gap:.45rem;
+        }
+        .command-btn:hover { border-color: var(--brand-2); transform: translateY(-1px); }
+        .command-btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+        .completion-track { height: 10px; flex: 1 1 260px; background: #dfe8f0; border-radius: 999px; overflow: hidden; }
+        .completion-fill { width: 0; height: 100%; background: linear-gradient(90deg,var(--brand-2),var(--success)); transition: width .25s ease; }
+        .completion-label { font-size: .82rem; color: var(--muted); min-width: 128px; text-align:right; }
+
+        .section { scroll-margin-top: 160px; }
+        .section-header-v3 { display:flex; align-items:center; gap:.7rem; margin-bottom: 1.2rem; }
+        .section-header-v3 .section-title { flex: 1; margin-bottom: 0; }
+        .section-toggle {
+            border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+            width: 38px; height: 38px; border-radius: 11px; cursor:pointer;
+        }
+        .section.is-collapsed > :not(.section-header-v3) { display:none !important; }
+        .section.is-collapsed { padding-bottom: 1rem; }
+        .section.is-filtered { display:none !important; }
+        .section-match { box-shadow: 0 0 0 3px rgba(35,107,142,.16), 0 10px 28px rgba(12,42,68,.08); }
+
+        .completion-panel {
+            border: 1px solid var(--line); background: var(--surface-soft); border-radius: 18px;
+            padding: 1rem 1.1rem; margin: 0 0 1.4rem;
+            display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:.8rem;
+        }
+        .completion-stat { padding:.75rem; border-radius:14px; background:var(--surface); border:1px solid var(--line); }
+        .completion-stat span { display:block; color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+        .completion-stat strong { display:block; font-size:1.25rem; margin-top:.25rem; color:var(--ink); }
+
+        .toast-stack { position:fixed; right:1rem; bottom:1rem; z-index:9999; display:grid; gap:.55rem; }
+        .toast-v3 { background:#102a43; color:#fff; border-radius:12px; padding:.75rem 1rem; box-shadow:0 10px 30px rgba(0,0,0,.24); animation:toastIn .2s ease; max-width:340px; }
+        @keyframes toastIn { from {opacity:0; transform:translateY(8px)} to {opacity:1; transform:none} }
+        .back-to-top-v3 { position:fixed; right:1rem; bottom:1rem; z-index:90; width:46px; height:46px; border:none; border-radius:50%; background:var(--brand); color:#fff; box-shadow:0 8px 24px rgba(0,0,0,.22); cursor:pointer; display:none; }
+        .back-to-top-v3.visible { display:block; }
+        .status-chip { padding:.35rem .65rem; border-radius:999px; font-size:.76rem; font-weight:700; background:#e8f4ef; color:#1d6b4c; }
+
+        @media (max-width: 900px) {
+            body { padding: .75rem; }
+            .planner-container { border-radius: 22px; padding: 1rem; }
+            .command-center { top: 6px; }
+            .completion-panel { grid-template-columns: 1fr 1fr; }
+            .command-title small { display:none; }
+        }
+        @media (max-width: 560px) {
+            .dashboard { grid-template-columns: 1fr !important; }
+            .completion-panel { grid-template-columns: 1fr 1fr; }
+            .command-btn span { display:none; }
+            .command-btn { width:40px; padding:0; justify-content:center; }
+            .command-search { flex-basis:100%; }
+            .cover-page { padding: 1.6rem 1.25rem; }
+            .section { padding: 1rem; }
+            .completion-label { min-width:auto; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+        }
+        @media print {
+            .command-center, .completion-panel, .section-toggle, .back-to-top-v3, .toast-stack, .skip-link { display:none !important; }
+            .section.is-collapsed > :not(.section-header-v3) { display:block !important; }
+            .section.is-filtered { display:block !important; }
+        }
+
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#plannerApp">Skip to planner content</a>
+
+    <div class="planner-container" id="plannerApp">
+
+        <!-- ============================================================ -->
+        <!-- COVER PAGE -->
+        <!-- ============================================================ -->
+        <div class="cover-page" id="coverPage">
+            <div class="cover-decoration">
+                <div class="cover-title">
+                    <h1>Burial Ceremony <span>Planner</span></h1>
+                    <div class="sub"><i class="fas fa-leaf"></i> A comprehensive guide for a dignified farewell</div>
+                </div>
+                <div class="cover-badge">
+                    <i class="fas fa-file-alt"></i> Professional Command Center v3.0
+                </div>
+            </div>
+
+            <div class="cover-meta-grid">
+                <div class="cover-meta-item">
+                    <div class="label"><i class="far fa-calendar-alt"></i> Ceremony Date</div>
+                    <div class="value" id="coverCeremonyDate">—</div>
+                </div>
+                <div class="cover-meta-item">
+                    <div class="label"><i class="fas fa-user-circle"></i> Deceased</div>
+                    <div class="value" id="coverDeceasedName">—</div>
+                </div>
+                <div class="cover-meta-item">
+                    <div class="label"><i class="fas fa-phone-alt"></i> Family Contact</div>
+                    <div class="value" id="coverFamilyContact">—</div>
+                </div>
+            </div>
+
+            <div class="cover-footer">
+                <span><i class="far fa-clock"></i> Prepared on: <span id="coverPreparedDate"></span></span>
+                <span><i class="fas fa-print"></i> For official use · private & confidential</span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TOP BAR -->
+        <!-- ============================================================ -->
+        <div class="top-actions">
+            <span class="save-indicator" id="saveIndicator">
+                <i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Auto-saved
+            </span>
+            <div class="currency-group">
+                <label><i class="fas fa-money-bill-wave"></i> Currency:</label>
+                <select id="currencySelector" onchange="updateAllCurrencies(); autoSave(); updateCharts();">
+                    <option value="USD">🇺🇸 USD ($)</option>
+                    <option value="NGN" selected>🇳🇬 Naira (₦)</option>
+                    <option value="EUR">🇪🇺 Euro (€)</option>
+                    <option value="GBP">🇬🇧 GBP (£)</option>
+                </select>
+            </div>
+            <button class="btn-sync" onclick="cloudSave()" title="Download backup file">
+                <i class="fas fa-cloud-upload-alt"></i> Backup
+            </button>
+            <button class="btn-sync-restore" onclick="document.getElementById('restoreInput').click()" title="Restore from backup file">
+                <i class="fas fa-cloud-download-alt"></i> Restore
+            </button>
+            <input type="file" id="restoreInput" class="file-input-hidden" accept=".json" onchange="cloudRestore(event)">
+            <button class="btn-export" onclick="exportCSV()">
+                <i class="fas fa-file-csv"></i> CSV
+            </button>
+        </div>
+
+
+
+        <!-- V3 COMMAND CENTER -->
+        <nav class="command-center" aria-label="Planner command center">
+            <div class="command-row">
+                <div class="command-title"><i class="fas fa-compass"></i> Planner Command Center <small>Navigate, review, and complete</small></div>
+                <span class="status-chip" id="plannerStatusChip">In progress</span>
+                <button type="button" class="command-btn" id="themeToggle" title="Toggle display theme" aria-label="Toggle dark mode"><i class="fas fa-moon"></i><span>Theme</span></button>
+            </div>
+            <div class="command-row">
+                <input class="command-control command-search" id="sectionSearch" type="search" placeholder="Search sections or fields…" aria-label="Search planner sections">
+                <select class="command-control" id="sectionJump" aria-label="Jump to planner section"><option value="">Jump to section…</option></select>
+                <button type="button" class="command-btn" id="expandAllBtn"><i class="fas fa-expand-alt"></i><span>Expand all</span></button>
+                <button type="button" class="command-btn" id="collapseAllBtn"><i class="fas fa-compress-alt"></i><span>Collapse all</span></button>
+                <button type="button" class="command-btn primary" id="reviewMissingBtn"><i class="fas fa-clipboard-check"></i><span>Review gaps</span></button>
+            </div>
+            <div class="command-row" aria-live="polite">
+                <div class="completion-track" aria-hidden="true"><div class="completion-fill" id="completionFill"></div></div>
+                <div class="completion-label" id="completionLabel">0% complete</div>
+            </div>
+        </nav>
+
+        <section class="completion-panel" aria-label="Planner completion summary">
+            <div class="completion-stat"><span>Fields completed</span><strong id="fieldsCompleted">0</strong></div>
+            <div class="completion-stat"><span>Fields remaining</span><strong id="fieldsRemaining">0</strong></div>
+            <div class="completion-stat"><span>Sections started</span><strong id="sectionsStarted">0 / 18</strong></div>
+            <div class="completion-stat"><span>Last saved</span><strong id="lastSavedV3">Not yet</strong></div>
+        </section>
+
+
+        <!-- ============================================================ -->
+        <!-- DASHBOARD -->
+        <!-- ============================================================ -->
+        <div class="dashboard" id="dashboard">
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-calendar-check"></i> Ceremony</div>
+                <div class="dash-value" id="dashCeremonyDate">—</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-cross"></i> Burial</div>
+                <div class="dash-value" id="dashBurialDate">—</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-users"></i> Est. Guests</div>
+                <div class="dash-value" id="dashGuests">—</div>
+            </div>
+            <div class="dash-card total">
+                <div class="dash-label"><i class="fas fa-coins"></i> Total Est. Cost</div>
+                <div class="dash-value" id="dashTotalCost"><span class="currency-symbol">₦</span>0</div>
+            </div>
+            <div class="dash-card success">
+                <div class="dash-label"><i class="fas fa-hand-holding-heart"></i> Total Contributions</div>
+                <div class="dash-value" id="dashTotalContributions"><span class="currency-symbol">₦</span>0</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CHARTS SECTION -->
+        <!-- ============================================================ -->
+        <div class="charts-section" id="chartsSection">
+            <div class="chart-box">
+                <h3><i class="fas fa-chart-pie"></i> Budget vs. Contributions</h3>
+                <div class="chart-wrapper">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div class="chart-summary">
+                    <span class="stat-item"><span class="dot blue"></span> Total Est. Cost</span>
+                    <span class="stat-item"><span class="dot green"></span> Total Contributions</span>
+                    <span class="stat-item" id="chartBalanceDisplay"><span class="dot gold"></span> Balance: <span class="currency-symbol">₦</span>0</span>
+                </div>
+            </div>
+            <div class="chart-box">
+                <h3><i class="fas fa-chart-bar"></i> Budget Breakdown by Category</h3>
+                <div class="chart-wrapper">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="chart-summary">
+                    <span class="stat-item" id="barTotalDisplay">Total: <span class="currency-symbol">₦</span>0</span>
+                    <span class="stat-item" id="barCategoriesCount">Categories: 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 1: DECEASED ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-user-circle"></i> 1. Deceased information</div>
+            <div class="grid-2">
+                <div class="field-group"><label><i class="far fa-id-card"></i> Full legal name</label><input type="text" id="deceasedName" placeholder="e.g. John Robert Smith" oninput="updateCover(); autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-day"></i> Preferred name / nickname</label><input type="text" id="preferredName" placeholder="Nickname" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-alt"></i> Date of birth</label><input type="date" id="dob" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-times"></i> Date of passing</label><input type="date" id="dop" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-map-pin"></i> Place of passing</label><input type="text" id="placePassing" placeholder="City, State" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-venus-mars"></i> Age at passing</label><input type="number" id="agePassing" placeholder="Years" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-shield-alt"></i> Veteran status</label>
+                    <select id="veteranStatus" onchange="autoSave();"><option value="No">No</option><option value="Yes">Yes</option></select>
+                </div>
+                <div class="field-group"><label><i class="fas fa-church"></i> Religious affiliation</label><input type="text" id="religion" placeholder="e.g. Catholic, Baptist, None" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-user-tag"></i> Requested title</label><input type="text" id="title" placeholder="Mr. / Mrs. / Dr. / Rev." oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 2: FAMILY CONTACT ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-address-book"></i> 2. Family / Next of kin</div>
+            <div class="grid-3">
+                <div class="field-group"><label>Primary decision maker</label><input type="text" id="primaryContact" placeholder="Full name" oninput="updateCover(); autoSave();"></div>
+                <div class="field-group"><label>Phone</label><input type="text" id="primaryPhone" placeholder="(123) 456-7890" oninput="autoSave();"></div>
+                <div class="field-group"><label>Email</label><input type="email" id="primaryEmail" placeholder="family@example.com" oninput="autoSave();"></div>
+                <div class="field-group"><label>Spouse / partner</label><input type="text" id="spouse" placeholder="Name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Eldest child</label><input type="text" id="eldestChild" placeholder="Name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Clergy / celebrant liaison</label><input type="text" id="clergyLiaison" placeholder="Name" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 3: FUNERAL HOME & LEGAL ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-gavel"></i> 3. Funeral home & legal services</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Funeral home</label><input type="text" id="funeralHome" placeholder="Name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Contact phone</label><input type="text" id="funeralPhone" placeholder="Phone" oninput="autoSave();"></div>
+                <div class="field-group"><label>Transportation service (body)</label><input type="text" id="transportService" placeholder="Company name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Embalming / cremation authorization</label>
+                    <select id="authStatus" onchange="autoSave();"><option value="Signed">Signed</option><option value="Pending">Pending</option></select>
+                </div>
+                <div class="field-group"><label>Death certificates ordered (Qty)</label><input type="number" id="certQty" value="5" min="0" oninput="autoSave();"></div>
+                <div class="field-group"><label>Permit for burial/disposition</label>
+                    <select id="permitStatus" onchange="autoSave();"><option value="Obtained">Obtained</option><option value="Pending">Pending</option></select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 4: CEREMONY LOGISTICS ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-map-marked-alt"></i> 4. Ceremony logistics</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Date of ceremony</label><input type="date" id="ceremonyDate" oninput="updateDashboard(); updateCover(); autoSave(); updateCharts();"></div>
+                <div class="field-group"><label>Time (start – end)</label><input type="text" id="ceremonyTime" placeholder="10:00 AM – 11:30 AM" oninput="autoSave();"></div>
+                <div class="field-group"><label>Viewing / wake time</label><input type="text" id="viewingTime" placeholder="9:00 AM – 10:00 AM" oninput="autoSave();"></div>
+                <div class="field-group"><label>Ceremony venue</label><input type="text" id="ceremonyVenue" placeholder="Church / Chapel / Home" oninput="autoSave();"></div>
+                <div class="field-group"><label>Venue address</label><input type="text" id="venueAddress" placeholder="Street, City, State" oninput="autoSave();"></div>
+                <div class="field-group"><label>Venue contact & phone</label><input type="text" id="venueContact" placeholder="Name / Phone" oninput="autoSave();"></div>
+                <div class="field-group"><label>Reception venue</label><input type="text" id="receptionVenue" placeholder="Name / Address" oninput="autoSave();"></div>
+                <div class="field-group"><label>Handicap accessibility</label>
+                    <select id="handicap" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 5: ORDER OF SERVICE ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-list-ol"></i> 5. Order of service (flow)</div>
+            <div class="table-wrap">
+                <table id="orderTable">
+                    <thead><tr><th>Time</th><th>Segment</th><th>Person responsible</th><th>Notes (music / scripture)</th><th style="width:40px;"></th></tr></thead>
+                    <tbody id="orderBody">
+                        <tr><td><input type="text" value=":00" placeholder=":00" class="order-input"></td><td><input type="text" value="Opening Prayer/Words" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="Details" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":05" placeholder=":05" class="order-input"></td><td><input type="text" value="Eulogy / Speaker 1" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":10" placeholder=":10" class="order-input"></td><td><input type="text" value="Eulogy / Speaker 2" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":15" placeholder=":15" class="order-input"></td><td><input type="text" value="Musical performance" class="order-input"></td><td><input type="text" placeholder="Performer" class="order-input"></td><td><input type="text" placeholder="Song title" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":20" placeholder=":20" class="order-input"></td><td><input type="text" value="Scripture / Reading 1" class="order-input"></td><td><input type="text" placeholder="Reader" class="order-input"></td><td><input type="text" placeholder="Reference" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":30" placeholder=":30" class="order-input"></td><td><input type="text" value="Sermon / Reflection" class="order-input"></td><td><input type="text" placeholder="Clergy" class="order-input"></td><td><input type="text" placeholder="Theme" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":40" placeholder=":40" class="order-input"></td><td><input type="text" value="Closing Prayer / Rite" class="order-input"></td><td><input type="text" placeholder="Officiant" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value=":45" placeholder=":45" class="order-input"></td><td><input type="text" value="Viewing / Committal" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-add-row" onclick="addOrderRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add row to Order of Service</button>
+            <div style="margin-top: 12px; display: flex; gap: 20px; flex-wrap: wrap;">
+                <label style="display: flex; align-items:center; gap:6px;"><input type="checkbox" id="avTest" onchange="autoSave();"> ☐ AV equipment tested (mic, speakers, projector)</label>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 6: BURIAL SITE ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-cross"></i> 6. Burial site / graveside details</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Cemetery name</label><input type="text" id="cemeteryName" placeholder="Cemetery name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Plot / section number</label><input type="text" id="plotSection" placeholder="Section, Lot, Grave" oninput="autoSave();"></div>
+                <div class="field-group"><label>Grave opening fee (paid?)</label>
+                    <select id="graveFeePaid" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="field-group"><label>Burial vault required?</label>
+                    <select id="vaultRequired" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="field-group"><label>Interment type</label>
+                    <select id="intermentType" onchange="autoSave();"><option value="In-Ground">In-Ground</option><option value="Mausoleum">Mausoleum</option><option value="Cremains Burial">Cremains Burial</option></select>
+                </div>
+                <div class="field-group"><label>Graveside service time</label><input type="text" id="gravesideTime" placeholder="e.g. 11:45 AM" oninput="updateDashboard(); autoSave();"></div>
+                <div class="field-group"><label>Tent and chairs ordered</label>
+                    <select id="tentChairs" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="field-group"><label>Committal rite leader</label><input type="text" id="committalLeader" placeholder="Name" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 7: FLORAL ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-seedling"></i> 7. Floral arrangements</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Casket spray</label><input type="text" id="floralCasket" placeholder="Description / colors" oninput="autoSave();"></div>
+                <div class="field-group"><label>Standing easel spray</label><input type="text" id="floralEasel" placeholder="Description" oninput="autoSave();"></div>
+                <div class="field-group"><label>Wreath / cross</label><input type="text" id="floralWreath" placeholder="Type" oninput="autoSave();"></div>
+                <div class="field-group"><label>Bouquets for family</label><input type="text" id="floralBouquets" placeholder="Qty / colors" oninput="autoSave();"></div>
+                <div class="field-group"><label>Grave blanket (winter)</label><input type="text" id="floralBlanket" placeholder="Yes / No / details" oninput="autoSave();"></div>
+                <div class="field-group"><label>Florist delivery date/time</label><input type="text" id="floralDelivery" placeholder="Date / time" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 8: TRANSPORTATION ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-car"></i> 8. Transportation logistics</div>
+            <div class="table-wrap">
+                <table id="transportTable">
+                    <thead><tr><th>Vehicle</th><th>Capacity</th><th>Pick-up location</th><th>Departure time</th><th>Destination</th><th style="width:40px;"></th></tr></thead>
+                    <tbody id="transportBody">
+                        <tr><td><input type="text" value="Hearse" class="transport-input"></td><td><input type="text" value="-" class="transport-input"></td><td><input type="text" value="Funeral Home" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" value="Cemetery" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Lead Car (Family)" class="transport-input"></td><td><input type="text" value="3-4" class="transport-input"></td><td><input type="text" value="Family Home" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" value="Venue" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Limousine 1" class="transport-input"></td><td><input type="text" value="8" class="transport-input"></td><td><input type="text" placeholder="Location" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" placeholder="Destination" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-add-row" onclick="addTransportRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add vehicle / row</button>
+        </div>
+
+        <!-- ====== SECTION 9: MUSIC / AV ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-music"></i> 9. Music & audiovisual</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Prelude</label><input type="text" id="musicPrelude" placeholder="Song / hymn" oninput="autoSave();"></div>
+                <div class="field-group"><label>Processional</label><input type="text" id="musicProcessional" placeholder="Song" oninput="autoSave();"></div>
+                <div class="field-group"><label>During service</label><input type="text" id="musicDuring" placeholder="Song" oninput="autoSave();"></div>
+                <div class="field-group"><label>Recessional</label><input type="text" id="musicRecessional" placeholder="Song" oninput="autoSave();"></div>
+                <div class="field-group"><label>Post-service</label><input type="text" id="musicPost" placeholder="Song" oninput="autoSave();"></div>
+                <div class="field-group"><label>AV equipment required</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="Microphone" onchange="autoSave();"> Mic</label>
+                        <label><input type="checkbox" value="Speakers" onchange="autoSave();"> Speakers</label>
+                        <label><input type="checkbox" value="Projector" onchange="autoSave();"> Projector</label>
+                        <label><input type="checkbox" value="Screen" onchange="autoSave();"> Screen</label>
+                        <label><input type="checkbox" value="Laptop" onchange="autoSave();"> Laptop</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 10: MEMORIAL ITEMS ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-box-open"></i> 10. Memorial items & remains</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Urn (if cremation)</label><input type="text" id="urnDetails" placeholder="Material / inscription" oninput="autoSave();"></div>
+                <div class="field-group"><label>Casket model / style</label><input type="text" id="casketModel" placeholder="Color / material" oninput="autoSave();"></div>
+                <div class="field-group"><label>Pall (cloth over casket)</label><input type="text" id="pallColor" placeholder="Color" oninput="autoSave();"></div>
+                <div class="field-group"><label>Memorial cards / bulletins (Qty)</label><input type="number" id="memorialQty" value="100" oninput="autoSave();"></div>
+                <div class="field-group"><label>Guest register book</label>
+                    <select id="guestBook" onchange="autoSave();"><option value="Provided">Provided</option><option value="Not Needed">Not Needed</option></select>
+                </div>
+                <div class="field-group"><label>Thank you cards (Qty)</label><input type="number" id="thankYouQty" value="50" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 11: RECEPTION ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-utensils"></i> 11. Reception / catering</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Caterer name</label><input type="text" id="caterer" placeholder="Name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Menu type</label>
+                    <select id="menuType" onchange="autoSave();"><option value="Buffet">Buffet</option><option value="Plated">Plated</option><option value="Finger Foods">Finger Foods</option></select>
+                </div>
+                <div class="field-group"><label>Dietary restrictions</label><input type="text" id="dietary" placeholder="Vegetarian / Gluten-free" oninput="autoSave();"></div>
+                <div class="field-group"><label>Beverages</label><input type="text" id="beverages" value="Coffee, Tea, Water" oninput="autoSave();"></div>
+                <div class="field-group"><label>Estimated guest count</label><input type="number" id="guestCount" value="80" oninput="updateDashboard(); autoSave();"></div>
+                <div class="field-group"><label>Setup / cleanup time</label><input type="text" id="cateringTime" placeholder="Setup 9AM / Cleanup 3PM" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 12: OFFICIANT ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-pray"></i> 12. Officiant / clergy / celebrant</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Name</label><input type="text" id="officiantName" placeholder="Full name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Denomination / organization</label><input type="text" id="officiantOrg" placeholder="Church / Org" oninput="autoSave();"></div>
+                <div class="field-group"><label>Opening words (brief)</label><input type="text" id="openingWords" placeholder="Theme / sentence" oninput="autoSave();"></div>
+                <div class="field-group"><label>Closing committal words</label><input type="text" id="closingWords" placeholder="Scripture / phrase" oninput="autoSave();"></div>
+            </div>
+            <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:20px;">
+                <label><input type="checkbox" id="militaryFlag" onchange="autoSave();"> Military Flag Presentation requested</label>
+                <label><input type="checkbox" id="gunSalute" onchange="autoSave();"> 21-Gun Salute requested (check local)</label>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 13: PRESS ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-newspaper"></i> 13. Press / social media notice</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Obituary / death notice</label>
+                    <select id="obitPlace" onchange="autoSave();"><option value="Published in Paper">Published in Paper</option><option value="Online only">Online only</option></select>
+                </div>
+                <div class="field-group"><label>Charity in lieu of flowers</label>
+                    <select id="charityOption" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="field-group"><label>Charity name</label><input type="text" id="charityName" placeholder="Organization" oninput="autoSave();"></div>
+                <div class="field-group"><label>Social media policy</label>
+                    <select id="socialPolicy" onchange="autoSave();"><option value="Allow photos">Allow photos</option><option value="No photos">No photos</option><option value="Private ceremony only">Private ceremony only</option></select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 14: BUDGET ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-coins"></i> 14. Budget & payment tracker</div>
+            <div class="table-wrap">
+                <table id="budgetTable">
+                    <thead><tr><th>Category</th><th>Estimated</th><th>Actual</th><th>Paid (Y/N)</th><th>Balance</th><th style="width:40px;"></th></tr></thead>
+                    <tbody id="budgetBody">
+                        <tr><td><input type="text" value="Funeral Home Basic Fee" class="budget-cat"></td><td><input type="number" value="1200" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Cemetery Plot/Grave" class="budget-cat"></td><td><input type="number" value="800" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Casket / Urn" class="budget-cat"></td><td><input type="number" value="1500" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Flowers" class="budget-cat"></td><td><input type="number" value="400" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Venue rental" class="budget-cat"></td><td><input type="number" value="300" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Catering" class="budget-cat"></td><td><input type="number" value="750" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Transportation" class="budget-cat"></td><td><input type="number" value="500" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Memorial cards / printing" class="budget-cat"></td><td><input type="number" value="150" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" value="Officiant honorarium" class="budget-cat"></td><td><input type="number" value="200" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-add-row" onclick="addBudgetRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add budget item</button>
+        </div>
+
+        <!-- ====== SECTION 15: CONTRIBUTIONS ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 15. Contributions — member donations</div>
+            <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
+                <i class="fas fa-info-circle"></i> Track all contributions to ensure funds are available when needed.
+                <span class="stat-badge" style="margin-left:12px;">Total: <span class="currency-symbol">₦</span><span id="contribTotalDisplay">0</span></span>
+            </p>
+            <div class="table-wrap">
+                <table id="contribTable">
+                    <thead><tr><th>Date</th><th>Contributor Name</th><th>Amount</th><th>Payment Method</th><th>Notes / Reference</th><th style="width:40px;"></th></tr></thead>
+                    <tbody id="contribBody">
+                        <tr>
+                            <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
+                            <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
+                            <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-add-row" onclick="addContribRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add contribution</button>
+        </div>
+
+        <!-- ====== SECTION 16: PAYOUT RECORD ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> 16. Payout record — claims & disbursements</div>
+            <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
+                <i class="fas fa-info-circle"></i> Record all claims and payouts to maintain transparency and proper financial tracking.
+                <span class="stat-badge" style="margin-left:12px;">Total Payouts: <span class="currency-symbol">₦</span><span id="payoutTotalDisplay">0</span></span>
+            </p>
+            <div class="table-wrap">
+                <table id="payoutTable">
+                    <thead><tr><th>Date</th><th>Payee / Recipient</th><th>Amount</th><th>Claim / Purpose</th><th>Approved By</th><th style="width:40px;"></th></tr></thead>
+                    <tbody id="payoutBody">
+                        <tr>
+                            <td><input type="date" class="payout-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
+                            <td><input type="text" placeholder="e.g. Funeral home deposit" class="payout-purpose" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="date" class="payout-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
+                            <td><input type="text" placeholder="e.g. Cemetery fees" class="payout-purpose" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-add-row" onclick="addPayoutRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add payout record</button>
+        </div>
+
+        <!-- ====== SECTION 17: EMERGENCY ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-umbrella"></i> 17. Emergency contingencies & rain plan</div>
+            <div class="grid-2">
+                <div class="field-group"><label>Rain location (indoor alternative)</label><input type="text" id="rainLocation" placeholder="Building / chapel name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Emergency medical contact (on-site)</label><input type="text" id="emergencyMed" placeholder="Name / phone" oninput="autoSave();"></div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 18: POST-CEREMONY ====== -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-check-double"></i> 18. Post-ceremony checklist</div>
+            <div class="grid-2" style="grid-template-columns:1fr 1fr;">
+                <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Return all rented items (suits, flowers, AV)</label></div>
+                <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Send thank you notes to clergy, musicians, pallbearers</label></div>
+                <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Ensure grave marker / permanent headstone ordered</label></div>
+                <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Submit final insurance claims (if applicable)</label></div>
+                <div><label style="display:flex; gap:10px; align-items:center;"><input type="checkbox" onchange="autoSave();"> Transfer utilities / accounts of deceased</label></div>
+            </div>
+        </div>
+
+        <!-- ====== SIGNATURE & ACTIONS ====== -->
+        <div class="section" style="background: #f2f7fd;">
+            <div class="signature-area">
+                <div class="signature-item">
+                    <label><i class="fas fa-pen"></i> Planner coordinator:</label>
+                    <input type="text" id="plannerSig" placeholder="Signature / name" style="border:1px solid #bccddb; border-radius:30px; padding:8px 18px; width:200px;" oninput="autoSave();">
+                    <label style="margin-left:6px;">Date:</label>
+                    <input type="date" id="plannerDate" style="border:1px solid #bccddb; border-radius:30px; padding:8px 14px;" onchange="autoSave();">
+                </div>
+                <div class="signature-item">
+                    <label><i class="fas fa-user-check"></i> Family representative:</label>
+                    <input type="text" id="familySig" placeholder="Signature / name" style="border:1px solid #bccddb; border-radius:30px; padding:8px 18px; width:200px;" oninput="autoSave();">
+                    <label style="margin-left:6px;">Date:</label>
+                    <input type="date" id="familyDate" style="border:1px solid #bccddb; border-radius:30px; padding:8px 14px;" onchange="autoSave();">
+                </div>
+            </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btn-group">
+            <button class="btn" id="printBtn"><i class="fas fa-print"></i> Print / Save as PDF</button>
+            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset fields</button>
+        </div>
+        <p style="text-align:center; font-size:0.8rem; color:#4a6885; margin-top: 10px;">
+            <i class="fas fa-info-circle"></i> All data is auto-saved. Charts update automatically as you adjust budget and contributions.
+        </p>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const SECURITY = Object.freeze({
+                schemaVersion: 1,
+                maxBackupBytes: 2 * 1024 * 1024,
+                maxRowsPerTable: 250,
+                maxTextLength: 5000,
+                allowedCurrencies: new Set(['USD', 'NGN', 'EUR', 'GBP']),
+                forbiddenKeys: new Set(['__proto__', 'prototype', 'constructor'])
+            });
+
+            function safeText(value, maxLength = SECURITY.maxTextLength) {
+                if (value === null || value === undefined) return '';
+                return String(value).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').slice(0, maxLength);
+            }
+
+            function validateBackup(data) {
+                if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Backup root must be an object.');
+                for (const key of Object.keys(data)) {
+                    if (SECURITY.forbiddenKeys.has(key)) throw new Error('Unsafe backup key detected.');
+                }
+                const tableKeys = ['orderRows','transportRows','budgetRows','contribRows','payoutRows'];
+                for (const key of tableKeys) {
+                    if (data[key] !== undefined && !Array.isArray(data[key])) throw new Error(`${key} must be an array.`);
+                    if (Array.isArray(data[key]) && data[key].length > SECURITY.maxRowsPerTable) throw new Error(`${key} exceeds the row limit.`);
+                    for (const row of (data[key] || [])) {
+                        if (!row || typeof row !== 'object' || Array.isArray(row)) throw new Error(`Invalid row in ${key}.`);
+                        for (const rowKey of Object.keys(row)) {
+                            if (SECURITY.forbiddenKeys.has(rowKey)) throw new Error('Unsafe row key detected.');
+                        }
+                    }
+                }
+                if (data.currency && !SECURITY.allowedCurrencies.has(data.currency)) throw new Error('Unsupported currency.');
+                return data;
+            }
+
+            function csvCell(value) {
+                let text = safeText(value);
+                if (/^[=+\-@]/.test(text)) text = "'" + text;
+                return '"' + text.replace(/"/g, '""') + '"';
+            }
+
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const displayDate = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            document.getElementById('coverPreparedDate').textContent = displayDate;
+
+            // Set default dates
+            document.querySelectorAll('input[type="date"]').forEach(inp => {
+                if (!inp.value) inp.value = todayStr;
+            });
+
+            // ----- CURRENCY -----
+            const currencySymbols = {
+                USD: '$',
+                NGN: '₦',
+                EUR: '€',
+                GBP: '£'
+            };
+
+            window.updateAllCurrencies = function() {
+                const sel = document.getElementById('currencySelector');
+                const symbol = currencySymbols[sel.value] || '$';
+                document.querySelectorAll('.currency-symbol').forEach(el => {
+                    el.textContent = symbol;
+                });
+            };
+
+            // ----- UPDATE COVER -----
+            window.updateCover = function() {
+                const name = document.getElementById('deceasedName').value || '—';
+                document.getElementById('coverDeceasedName').textContent = name;
+                const contact = document.getElementById('primaryContact').value || '—';
+                document.getElementById('coverFamilyContact').textContent = contact;
+                const ceremonyDate = document.getElementById('ceremonyDate').value;
+                if (ceremonyDate) {
+                    const d = new Date(ceremonyDate + 'T00:00:00');
+                    document.getElementById('coverCeremonyDate').textContent = d.toLocaleDateString('en-US', { year: 'numeric',
+                        month: 'long', day: 'numeric' });
+                } else {
+                    document.getElementById('coverCeremonyDate').textContent = '—';
+                }
+            };
+
+            // ----- UPDATE DASHBOARD -----
+            window.updateDashboard = function() {
+                const ceremonyDate = document.getElementById('ceremonyDate').value;
+                if (ceremonyDate) {
+                    const d = new Date(ceremonyDate + 'T00:00:00');
+                    document.getElementById('dashCeremonyDate').textContent = d.toLocaleDateString('en-US', { month: 'short',
+                        day: 'numeric', year: 'numeric' });
+                } else {
+                    document.getElementById('dashCeremonyDate').textContent = '—';
+                }
+
+                const burialTime = document.getElementById('gravesideTime').value;
+                if (ceremonyDate) {
+                    const d = new Date(ceremonyDate + 'T00:00:00');
+                    let label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    if (burialTime) label += ' at ' + burialTime;
+                    document.getElementById('dashBurialDate').textContent = label;
+                } else {
+                    document.getElementById('dashBurialDate').textContent = '—';
+                }
+
+                const guests = document.getElementById('guestCount').value || '—';
+                document.getElementById('dashGuests').textContent = guests;
+
+                const estInputs = document.querySelectorAll('.budget-est');
+                let total = 0;
+                estInputs.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) total += val;
+                });
+                document.getElementById('dashTotalCost').innerHTML = '<span class="currency-symbol">₦</span>' + total
+                    .toLocaleString();
+
+                updateContributions();
+                updatePayouts();
+            };
+
+            // ----- CONTRIBUTIONS -----
+            window.updateContributions = function() {
+                const amounts = document.querySelectorAll('.contrib-amount');
+                let total = 0;
+                amounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) total += val;
+                });
+                document.getElementById('contribTotalDisplay').textContent = total.toLocaleString();
+                document.getElementById('dashTotalContributions').innerHTML = '<span class="currency-symbol">₦</span>' + total
+                    .toLocaleString();
+            };
+
+            // ----- PAYOUTS -----
+            window.updatePayouts = function() {
+                const amounts = document.querySelectorAll('.payout-amount');
+                let total = 0;
+                amounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) total += val;
+                });
+                document.getElementById('payoutTotalDisplay').textContent = total.toLocaleString();
+            };
+
+            // ================================================================
+            // ===== CHARTS =====
+            // ================================================================
+            let pieChartInstance = null;
+            let barChartInstance = null;
+
+            window.updateCharts = function() {
+                // Get budget categories and amounts
+                const catInputs = document.querySelectorAll('.budget-cat');
+                const estInputs = document.querySelectorAll('.budget-est');
+                const categories = [];
+                const amounts = [];
+                let totalBudget = 0;
+
+                catInputs.forEach((cat, idx) => {
+                    const name = cat.value.trim() || 'Unnamed';
+                    const val = parseFloat(estInputs[idx]?.value) || 0;
+                    if (val > 0) {
+                        categories.push(name);
+                        amounts.push(val);
+                        totalBudget += val;
+                    }
+                });
+
+                // Get total contributions
+                const contribAmounts = document.querySelectorAll('.contrib-amount');
+                let totalContrib = 0;
+                contribAmounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) totalContrib += val;
+                });
+
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
+
+                // ---- PIE CHART ----
+                const pieCtx = document.getElementById('pieChart').getContext('2d');
+                if (pieChartInstance) {
+                    pieChartInstance.destroy();
+                }
+
+                const pieData = {
+                    labels: ['Total Estimated Cost', 'Total Contributions'],
+                    datasets: [{
+                        data: [totalBudget, totalContrib],
+                        backgroundColor: ['#2b5c7c', '#1e7a5e'],
+                        borderColor: ['#1e4a6e', '#14634b'],
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                };
+
+                pieChartInstance = new Chart(pieCtx, {
+                    type: 'doughnut',
+                    data: pieData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { size: 11 },
+                                    padding: 10,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            }
+                        },
+                        cutout: '65%'
+                    }
+                });
+
+                // Update balance display
+                const balance = totalContrib - totalBudget;
+                const balanceEl = document.getElementById('chartBalanceDisplay');
+                balanceEl.innerHTML =
+                    `<span class="dot gold"></span> Balance: <span class="currency-symbol">${symbol}</span>${balance.toLocaleString()}`;
+                if (balance < 0) {
+                    balanceEl.style.color = '#b33c3c';
+                } else {
+                    balanceEl.style.color = '#1e6b3b';
+                }
+
+                // ---- BAR CHART ----
+                const barCtx = document.getElementById('barChart').getContext('2d');
+                if (barChartInstance) {
+                    barChartInstance.destroy();
+                }
+
+                // Generate colors
+                const colors = ['#2b5c7c', '#4a7c9e', '#6a9cbe', '#8ab8d4', '#aac8de',
+                    '#1e7a5e', '#3a9a7e', '#56ba9e', '#72d0b4', '#8ee0c8'
+                ];
+
+                const barData = {
+                    labels: categories.length > 0 ? categories : ['No budget items'],
+                    datasets: [{
+                        label: 'Estimated Amount',
+                        data: categories.length > 0 ? amounts : [0],
+                        backgroundColor: categories.length > 0 ? colors.slice(0, categories.length) : ['#d5dfe9'],
+                        borderColor: categories.length > 0 ? colors.slice(0, categories.length).map(c => c) : [
+                            '#b0c8dd'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                };
+
+                barChartInstance = new Chart(barCtx, {
+                    type: 'bar',
+                    data: barData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return symbol + value.toLocaleString();
+                                    },
+                                    font: { size: 10 }
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: { size: 9 },
+                                    maxRotation: 45,
+                                    minRotation: 30
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Update bar summary
+                document.getElementById('barTotalDisplay').innerHTML =
+                    `Total: <span class="currency-symbol">${symbol}</span>${totalBudget.toLocaleString()}`;
+                document.getElementById('barCategoriesCount').textContent =
+                    `Categories: ${categories.length}`;
+            };
+
+            // ----- ADD ROW FUNCTIONS -----
+            window.addOrderRow = function() {
+                const tbody = document.getElementById('orderBody');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" placeholder=":00" class="order-input"></td>
+                    <td><input type="text" placeholder="Segment name" class="order-input"></td>
+                    <td><input type="text" placeholder="Name" class="order-input"></td>
+                    <td><input type="text" placeholder="Notes" class="order-input"></td>
+                    <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+                attachSaveEvents(tr);
+            };
+
+            window.addTransportRow = function() {
+                const tbody = document.getElementById('transportBody');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" placeholder="Vehicle name" class="transport-input"></td>
+                    <td><input type="text" placeholder="Capacity" class="transport-input"></td>
+                    <td><input type="text" placeholder="Pick-up location" class="transport-input"></td>
+                    <td><input type="text" placeholder="Departure time" class="transport-input"></td>
+                    <td><input type="text" placeholder="Destination" class="transport-input"></td>
+                    <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+                attachSaveEvents(tr);
+            };
+
+            window.addBudgetRow = function() {
+                const tbody = document.getElementById('budgetBody');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" placeholder="Category name" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                    <td><input type="number" placeholder="0" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                    <td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td>
+                    <td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td>
+                    <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                    <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+                attachSaveEvents(tr);
+                updateDashboard();
+                updateCharts();
+            };
+
+            window.addContribRow = function() {
+                const tbody = document.getElementById('contribBody');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="date" class="contrib-date" value="${new Date().toISOString().split('T')[0]}" onchange="autoSave();"></td>
+                    <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
+                    <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
+                    <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
+                    <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
+                    <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+                attachSaveEvents(tr);
+                updateContributions();
+                updateCharts();
+            };
+
+            window.addPayoutRow = function() {
+                const tbody = document.getElementById('payoutBody');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="date" class="payout-date" value="${new Date().toISOString().split('T')[0]}" onchange="autoSave();"></td>
+                    <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
+                    <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
+                    <td><input type="text" placeholder="e.g. Funeral home deposit" class="payout-purpose" oninput="autoSave();"></td>
+                    <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
+                    <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+                attachSaveEvents(tr);
+                updatePayouts();
+            };
+
+            function attachSaveEvents(tr) {
+                const inputs = tr.querySelectorAll('input');
+                inputs.forEach(inp => {
+                    inp.addEventListener('input', autoSave);
+                    inp.addEventListener('change', autoSave);
+                });
+            }
+
+            // ----- REMOVE ROW -----
+            window.removeRow = function(btn) {
+                const tr = btn.closest('tr');
+                const tbody = tr.parentElement;
+                if (tbody.children.length <= 1) {
+                    alert('At least one row must remain.');
+                    return;
+                }
+                tr.remove();
+                updateDashboard();
+                updateCharts();
+                autoSave();
+            };
+
+            // ================================================================
+            // ===== SAVE / LOAD (localStorage) =====
+            // ================================================================
+            const SAVE_KEY = 'burialPlannerData';
+
+            function collectAllData() {
+                const data = { __schemaVersion: SECURITY.schemaVersion, __exportedAt: new Date().toISOString() };
+                const inputs = document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea');
+                inputs.forEach(el => {
+                    if (el.id) {
+                        data[el.id] = el.value;
+                    }
+                });
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    if (cb.id) {
+                        data[cb.id] = cb.checked;
+                    }
+                });
+                data.orderRows = getTableData('orderTable', ['Time', 'Segment', 'Person', 'Notes']);
+                data.transportRows = getTableData('transportTable', ['Vehicle', 'Capacity', 'Pick-up', 'Departure',
+                    'Destination'
+                ]);
+                data.budgetRows = getTableData('budgetTable', ['Category', 'Estimated', 'Actual', 'Paid', 'Balance']);
+                data.contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Method', 'Notes']);
+                data.payoutRows = getTableData('payoutTable', ['Date', 'Payee', 'Amount', 'Purpose', 'Approved By']);
+                data.currency = document.getElementById('currencySelector').value;
+                return data;
+            }
+
+            function getTableData(tableId, columns) {
+                const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+                const data = [];
+                rows.forEach(row => {
+                    const rowData = {};
+                    const inputs = row.querySelectorAll('input');
+                    inputs.forEach((input, idx) => {
+                        if (idx < columns.length) {
+                            rowData[columns[idx]] = input.value || '';
+                        }
+                    });
+                    data.push(rowData);
+                });
+                return data;
+            }
+
+            function restoreAllData(data) {
+                data = validateBackup(data);
+                Object.keys(data).forEach(key => {
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') {
+                            el.checked = data[key] === true || data[key] === 'true';
+                        } else {
+                            el.value = safeText(data[key]);
+                        }
+                    }
+                });
+                if (data.currency) {
+                    document.getElementById('currencySelector').value = data.currency;
+                    updateAllCurrencies();
+                }
+                restoreTableRows('orderTable', 'orderBody', data.orderRows, ['Time', 'Segment', 'Person', 'Notes'],
+                'order-input');
+                restoreTableRows('transportTable', 'transportBody', data.transportRows, ['Vehicle', 'Capacity',
+                    'Pick-up', 'Departure', 'Destination'
+                ], 'transport-input');
+                restoreTableRows('budgetTable', 'budgetBody', data.budgetRows, ['Category', 'Estimated', 'Actual',
+                    'Paid', 'Balance'
+                ], null);
+                restoreTableRows('contribTable', 'contribBody', data.contribRows, ['Date', 'Contributor', 'Amount',
+                    'Method', 'Notes'
+                ], null);
+                restoreTableRows('payoutTable', 'payoutBody', data.payoutRows, ['Date', 'Payee', 'Amount', 'Purpose',
+                    'Approved By'
+                ], null);
+                updateCover();
+                updateDashboard();
+                updateAllCurrencies();
+                setTimeout(updateCharts, 300);
+            }
+
+            function restoreTableRows(tableId, bodyId, rowsData, columns, inputClass) {
+                const tbody = document.getElementById(bodyId);
+                while (tbody.children.length > 1) {
+                    tbody.removeChild(tbody.lastChild);
+                }
+                if (rowsData && rowsData.length > 0) {
+                    rowsData.forEach((rowData, idx) => {
+                        let tr;
+                        if (idx === 0) {
+                            tr = tbody.children[0];
+                        } else {
+                            tr = document.createElement('tr');
+                            tbody.appendChild(tr);
+                        }
+                        tr.innerHTML = '';
+                        columns.forEach((col, colIdx) => {
+                            const td = document.createElement('td');
+                            const input = document.createElement('input');
+                            if (inputClass) input.className = inputClass;
+                            input.type = 'text';
+                            if (col === 'Estimated' || col === 'Actual' || col === 'Amount' || col ===
+                                'Balance') {
+                                input.type = 'number';
+                            }
+                            if (col === 'Date') {
+                                input.type = 'date';
+                            }
+                            if (col === 'Paid') {
+                                input.type = 'text';
+                                input.style.maxWidth = '60px';
+                            }
+                            input.value = safeText(rowData[col]);
+                            if (col === 'Estimated') {
+                                input.className = 'budget-est';
+                                input.oninput = function() { updateDashboard();
+                                    autoSave();
+                                    updateCharts(); };
+                            }
+                            if (col === 'Amount' && tableId === 'contribTable') {
+                                input.className = 'contrib-amount';
+                                input.oninput = function() { updateContributions();
+                                    autoSave();
+                                    updateCharts(); };
+                            }
+                            if (col === 'Amount' && tableId === 'payoutTable') {
+                                input.className = 'payout-amount';
+                                input.oninput = function() { updatePayouts();
+                                    autoSave(); };
+                            }
+                            if (col === 'Actual') {
+                                input.className = 'budget-actual';
+                            }
+                            if (col === 'Balance') {
+                                input.className = 'budget-balance';
+                            }
+                            if (col === 'Category') {
+                                input.className = 'budget-cat';
+                                input.oninput = function() { autoSave();
+                                    updateCharts(); };
+                            }
+                            input.oninput = autoSave;
+                            input.onchange = autoSave;
+                            td.appendChild(input);
+                            tr.appendChild(td);
+                        });
+                        const td = document.createElement('td');
+                        td.innerHTML =
+                            '<button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button>';
+                        tr.appendChild(td);
+                    });
+                }
+            }
+
+            // ----- AUTO-SAVE -----
+            let saveTimeout = null;
+            window.autoSave = function() {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    try {
+                        const data = collectAllData();
+                        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                        const indicator = document.getElementById('saveIndicator');
+                        indicator.innerHTML =
+                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Auto-saved';
+                        indicator.className = 'save-indicator saved';
+                    } catch (e) {
+                        console.warn('Auto-save failed:', e);
+                        const indicator = document.getElementById('saveIndicator');
+                        indicator.textContent = 'Auto-save unavailable';
+                        indicator.className = 'save-indicator';
+                    }
+                }, 500);
+            };
+
+            // ----- LOAD DATA -----
+            function loadSavedData() {
+                try {
+                    const raw = localStorage.getItem(SAVE_KEY);
+                    if (raw) {
+                        const data = validateBackup(JSON.parse(raw));
+                        restoreAllData(data);
+                        const indicator = document.getElementById('saveIndicator');
+                        indicator.innerHTML =
+                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Restored from browser';
+                        indicator.className = 'save-indicator saved';
+                        return true;
+                    }
+                } catch (e) {
+                    console.warn('Load failed:', e);
+                }
+                return false;
+            }
+
+            // ----- CLOUD SAVE -----
+            window.cloudSave = function() {
+                const data = collectAllData();
+                const json = JSON.stringify(data, null, 2);
+                const blob = new Blob([json], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'Burial_Planner_Backup_' + new Date().toISOString().split('T')[0] + '.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            };
+
+            // ----- CLOUD RESTORE -----
+            window.cloudRestore = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                if (file.size > SECURITY.maxBackupBytes) {
+                    alert('Backup rejected: file is larger than 2 MB.');
+                    event.target.value = '';
+                    return;
+                }
+                if (!/\.json$/i.test(file.name) || !['application/json', 'text/json', ''].includes(file.type)) {
+                    alert('Backup rejected: select a JSON backup file.');
+                    event.target.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = validateBackup(JSON.parse(e.target.result));
+                        restoreAllData(data);
+                        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                        const indicator = document.getElementById('saveIndicator');
+                        indicator.innerHTML =
+                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Restored from backup';
+                        indicator.className = 'save-indicator saved';
+                        alert('Backup restored successfully!');
+                    } catch (err) {
+                        console.warn('Restore rejected:', err);
+                        alert('Backup rejected. The file is invalid, unsafe, or incompatible.');
+                    }
+                };
+                reader.readAsText(file);
+                event.target.value = '';
+            };
+
+            // ================================================================
+            // ===== EXPORT CSV =====
+            // ================================================================
+            window.exportCSV = function() {
+                const currency = document.getElementById('currencySelector').value;
+                const symbol = currencySymbols[currency] || '$';
+
+                function getTableData(tableId, columns) {
+                    const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+                    const data = [];
+                    rows.forEach(row => {
+                        const rowData = {};
+                        const inputs = row.querySelectorAll('input');
+                        inputs.forEach((input, idx) => {
+                            if (idx < columns.length) {
+                                rowData[columns[idx]] = input.value || '';
+                            }
+                        });
+                        data.push(rowData);
+                    });
+                    return data;
+                }
+
+                const deceased = {
+                    'Full Legal Name': document.getElementById('deceasedName').value,
+                    'Preferred Name': document.getElementById('preferredName').value,
+                    'Date of Birth': document.getElementById('dob').value,
+                    'Date of Passing': document.getElementById('dop').value,
+                    'Place of Passing': document.getElementById('placePassing').value,
+                    'Age at Passing': document.getElementById('agePassing').value,
+                    'Veteran Status': document.getElementById('veteranStatus').value,
+                    'Religious Affiliation': document.getElementById('religion').value,
+                    'Title': document.getElementById('title').value,
+                };
+                const family = {
+                    'Primary Decision Maker': document.getElementById('primaryContact').value,
+                    'Phone': document.getElementById('primaryPhone').value,
+                    'Email': document.getElementById('primaryEmail').value,
+                    'Spouse/Partner': document.getElementById('spouse').value,
+                    'Eldest Child': document.getElementById('eldestChild').value,
+                    'Clergy Liaison': document.getElementById('clergyLiaison').value,
+                };
+                const funeral = {
+                    'Funeral Home': document.getElementById('funeralHome').value,
+                    'Contact Phone': document.getElementById('funeralPhone').value,
+                    'Transport Service': document.getElementById('transportService').value,
+                    'Authorization': document.getElementById('authStatus').value,
+                    'Death Certificates Qty': document.getElementById('certQty').value,
+                    'Permit Status': document.getElementById('permitStatus').value,
+                };
+                const logistics = {
+                    'Ceremony Date': document.getElementById('ceremonyDate').value,
+                    'Ceremony Time': document.getElementById('ceremonyTime').value,
+                    'Viewing Time': document.getElementById('viewingTime').value,
+                    'Ceremony Venue': document.getElementById('ceremonyVenue').value,
+                    'Venue Address': document.getElementById('venueAddress').value,
+                    'Venue Contact': document.getElementById('venueContact').value,
+                    'Reception Venue': document.getElementById('receptionVenue').value,
+                    'Handicap Access': document.getElementById('handicap').value,
+                };
+                const burial = {
+                    'Cemetery': document.getElementById('cemeteryName').value,
+                    'Plot/Section': document.getElementById('plotSection').value,
+                    'Grave Fee Paid': document.getElementById('graveFeePaid').value,
+                    'Vault Required': document.getElementById('vaultRequired').value,
+                    'Interment Type': document.getElementById('intermentType').value,
+                    'Graveside Time': document.getElementById('gravesideTime').value,
+                    'Tent & Chairs': document.getElementById('tentChairs').value,
+                    'Committal Leader': document.getElementById('committalLeader').value,
+                };
+                const floral = {
+                    'Casket Spray': document.getElementById('floralCasket').value,
+                    'Easel Spray': document.getElementById('floralEasel').value,
+                    'Wreath/Cross': document.getElementById('floralWreath').value,
+                    'Family Bouquets': document.getElementById('floralBouquets').value,
+                    'Grave Blanket': document.getElementById('floralBlanket').value,
+                    'Florist Delivery': document.getElementById('floralDelivery').value,
+                };
+                const music = {
+                    'Prelude': document.getElementById('musicPrelude').value,
+                    'Processional': document.getElementById('musicProcessional').value,
+                    'During Service': document.getElementById('musicDuring').value,
+                    'Recessional': document.getElementById('musicRecessional').value,
+                    'Post-Service': document.getElementById('musicPost').value,
+                };
+                const memorial = {
+                    'Urn Details': document.getElementById('urnDetails').value,
+                    'Casket Model': document.getElementById('casketModel').value,
+                    'Pall Color': document.getElementById('pallColor').value,
+                    'Memorial Cards Qty': document.getElementById('memorialQty').value,
+                    'Guest Book': document.getElementById('guestBook').value,
+                    'Thank You Cards Qty': document.getElementById('thankYouQty').value,
+                };
+                const reception = {
+                    'Caterer': document.getElementById('caterer').value,
+                    'Menu Type': document.getElementById('menuType').value,
+                    'Dietary Restrictions': document.getElementById('dietary').value,
+                    'Beverages': document.getElementById('beverages').value,
+                    'Est. Guest Count': document.getElementById('guestCount').value,
+                    'Setup/Cleanup Time': document.getElementById('cateringTime').value,
+                };
+                const officiant = {
+                    'Officiant Name': document.getElementById('officiantName').value,
+                    'Denomination/Org': document.getElementById('officiantOrg').value,
+                    'Opening Words': document.getElementById('openingWords').value,
+                    'Closing Words': document.getElementById('closingWords').value,
+                    'Military Flag': document.getElementById('militaryFlag').checked ? 'Yes' : 'No',
+                    '21-Gun Salute': document.getElementById('gunSalute').checked ? 'Yes' : 'No',
+                };
+                const press = {
+                    'Obituary': document.getElementById('obitPlace').value,
+                    'Charity Option': document.getElementById('charityOption').value,
+                    'Charity Name': document.getElementById('charityName').value,
+                    'Social Media Policy': document.getElementById('socialPolicy').value,
+                };
+                const emergency = {
+                    'Rain Location': document.getElementById('rainLocation').value,
+                    'Emergency Contact': document.getElementById('emergencyMed').value,
+                };
+                const orderRows = getTableData('orderTable', ['Time', 'Segment', 'Person', 'Notes']);
+                const transportRows = getTableData('transportTable', ['Vehicle', 'Capacity', 'Pick-up', 'Departure',
+                    'Destination'
+                ]);
+                const budgetRows = getTableData('budgetTable', ['Category', 'Estimated', 'Actual', 'Paid', 'Balance']);
+                const contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Method', 'Notes']);
+                const payoutRows = getTableData('payoutTable', ['Date', 'Payee', 'Amount', 'Purpose', 'Approved By']);
+
+                let csv = '\uFEFF';
+                csv += '=== BURIAL CEREMONY PLANNER ===\n';
+                csv += 'Currency: ' + currency + ' (' + symbol + ')\n';
+                csv += 'Exported: ' + new Date().toLocaleString() + '\n\n';
+
+                function addSection(title, data) {
+                    csv += title + '\n';
+                    Object.keys(data).forEach(key => {
+                        csv += csvCell(key) + ',' + csvCell(data[key]) + '\n';
+                    });
+                    csv += '\n';
+                }
+                addSection('DECEASED INFORMATION', deceased);
+                addSection('FAMILY CONTACT', family);
+                addSection('FUNERAL HOME & LEGAL', funeral);
+                addSection('CEREMONY LOGISTICS', logistics);
+                addSection('BURIAL SITE', burial);
+                addSection('FLORAL ARRANGEMENTS', floral);
+                addSection('MUSIC & AV', music);
+                addSection('MEMORIAL ITEMS', memorial);
+                addSection('RECEPTION / CATERING', reception);
+                addSection('OFFICIANT', officiant);
+                addSection('PRESS & SOCIAL MEDIA', press);
+                addSection('EMERGENCY PLAN', emergency);
+
+                csv += 'ORDER OF SERVICE\n';
+                csv += '"Time","Segment","Person","Notes"\n';
+                orderRows.forEach(row => {
+                    csv += [row.Time, row.Segment, row.Person, row.Notes].map(csvCell).join(',') + '\n';
+                });
+                csv += '\n';
+
+                csv += 'TRANSPORTATION LOGISTICS\n';
+                csv += '"Vehicle","Capacity","Pick-up","Departure","Destination"\n';
+                transportRows.forEach(row => {
+                    csv += [row.Vehicle, row.Capacity, row['Pick-up'], row.Departure, row.Destination].map(csvCell).join(',') + '\n';
+                });
+                csv += '\n';
+
+                csv += 'BUDGET & PAYMENT TRACKER (' + currency + ')\n';
+                csv += '"Category","Estimated","Actual","Paid","Balance"\n';
+                budgetRows.forEach(row => {
+                    csv += [row.Category, row.Estimated, row.Actual, row.Paid, row.Balance].map(csvCell).join(',') + '\n';
+                });
+                csv += '\n';
+
+                csv += 'CONTRIBUTIONS (' + currency + ')\n';
+                csv += '"Date","Contributor","Amount","Method","Notes"\n';
+                contribRows.forEach(row => {
+                    csv += [row.Date, row.Contributor, row.Amount, row.Method, row.Notes].map(csvCell).join(',') + '\n';
+                });
+                csv += '\n';
+
+                csv += 'PAYOUT RECORD (' + currency + ')\n';
+                csv += '"Date","Payee","Amount","Purpose","Approved By"\n';
+                payoutRows.forEach(row => {
+                    csv += [row.Date, row.Payee, row.Amount, row.Purpose, row['Approved By']].map(csvCell).join(',') + '\n';
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'Burial_Ceremony_Planner_' + new Date().toISOString().split('T')[0] +
+                '.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            };
+
+            window.addEventListener('beforeunload', () => {
+                try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectAllData())); } catch (_) {}
+            });
+
+            // ----- Attach events -----
+            document.getElementById('deceasedName').addEventListener('input', function() { updateCover();
+                autoSave(); });
+            document.getElementById('primaryContact').addEventListener('input', function() { updateCover();
+                autoSave(); });
+            document.getElementById('ceremonyDate').addEventListener('input', function() { updateCover();
+                updateDashboard();
+                autoSave();
+                updateCharts(); });
+            document.getElementById('gravesideTime').addEventListener('input', function() { updateDashboard();
+                autoSave(); });
+            document.getElementById('guestCount').addEventListener('input', function() { updateDashboard();
+                autoSave(); });
+
+            document.getElementById('budgetTable').addEventListener('input', function(e) {
+                if (e.target.classList.contains('budget-est')) {
+                    updateDashboard();
+                    autoSave();
+                    updateCharts();
+                }
+            });
+
+            // ----- Initial load -----
+            const hasSaved = loadSavedData();
+            if (!hasSaved) {
+                document.querySelectorAll('input[type="date"]').forEach(inp => {
+                    if (!inp.value) inp.value = todayStr;
+                });
+                updateCover();
+                updateDashboard();
+                updateAllCurrencies();
+                setTimeout(updateCharts, 400);
+                setTimeout(autoSave, 1000);
+            } else {
+                setTimeout(updateCharts, 500);
+            }
+
+            // ----- PRINT -----
+            document.getElementById('printBtn').addEventListener('click', function() {
+                window.print();
+            });
+
+            // ----- RESET -----
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (!confirm('Reset all fields to empty/default values? This will also clear saved data.'))
+                return;
+                localStorage.removeItem(SAVE_KEY);
+                const inputs = document.querySelectorAll(
+                    'input:not([type="checkbox"]):not([type="radio"]), select, textarea');
+                inputs.forEach(el => {
+                    if (el.tagName === 'SELECT') {
+                        const firstOption = el.querySelector('option');
+                        if (firstOption) el.selectedIndex = 0;
+                    } else if (el.type === 'text' || el.type === 'number' || el.type === 'email' || el
+                        .type === 'date') {
+                        if (el.type === 'date') {
+                            el.value = new Date().toISOString().split('T')[0];
+                        } else if (el.type === 'number') {
+                            if (el.id === 'certQty') el.value = 5;
+                            else if (el.id === 'memorialQty') el.value = 100;
+                            else if (el.id === 'thankYouQty') el.value = 50;
+                            else if (el.id === 'guestCount') el.value = 80;
+                            else if (el.classList.contains('budget-est')) {
+                                const defaultEsts = [1200, 800, 1500, 400, 300, 750, 500, 150, 200];
+                                const idx = Array.from(document.querySelectorAll('.budget-est'))
+                                    .indexOf(el);
+                                if (idx < defaultEsts.length) el.value = defaultEsts[idx];
+                                else el.value = 0;
+                            } else if (el.classList.contains('contrib-amount') || el.classList
+                                .contains('payout-amount')) {
+                                el.value = '';
+                            } else el.value = '';
+                        } else {
+                            el.value = '';
+                        }
+                    } else if (el.tagName === 'TEXTAREA') {
+                        el.value = '';
+                    }
+                });
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                const defaultEsts = [1200, 800, 1500, 400, 300, 750, 500, 150, 200];
+                const estInputs = document.querySelectorAll('.budget-est');
+                estInputs.forEach((inp, idx) => {
+                    if (idx < defaultEsts.length) inp.value = defaultEsts[idx];
+                });
+                updateCover();
+                updateDashboard();
+                updateAllCurrencies();
+                setTimeout(updateCharts, 300);
+                const indicator = document.getElementById('saveIndicator');
+                indicator.innerHTML =
+                    '<i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Reset complete';
+                indicator.className = 'save-indicator';
+            });
+
+        })();
+    </script>
+
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+    <button type="button" class="back-to-top-v3" id="backToTopV3" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+    <script>
+    (() => {
+        'use strict';
+        const sections = [...document.querySelectorAll('.section')];
+        const jump = document.getElementById('sectionJump');
+        const search = document.getElementById('sectionSearch');
+        const fill = document.getElementById('completionFill');
+        const label = document.getElementById('completionLabel');
+        const toastStack = document.getElementById('toastStack');
+        const backTop = document.getElementById('backToTopV3');
+        const ignoredIds = new Set(['restoreInput']);
+
+        const toast = (message) => {
+            const node = document.createElement('div');
+            node.className = 'toast-v3';
+            node.textContent = message;
+            toastStack.appendChild(node);
+            window.setTimeout(() => node.remove(), 2600);
+        };
+
+        sections.forEach((section, index) => {
+            section.id ||= `planner-section-${index + 1}`;
+            const originalTitle = section.querySelector('.section-title');
+            if (!originalTitle) return;
+            const titleText = originalTitle.textContent.trim();
+            const header = document.createElement('div');
+            header.className = 'section-header-v3';
+            originalTitle.parentNode.insertBefore(header, originalTitle);
+            header.appendChild(originalTitle);
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'section-toggle';
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.setAttribute('aria-controls', section.id);
+            toggle.setAttribute('aria-label', `Collapse ${titleText}`);
+            toggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            toggle.addEventListener('click', () => {
+                const collapsed = section.classList.toggle('is-collapsed');
+                toggle.setAttribute('aria-expanded', String(!collapsed));
+                toggle.setAttribute('aria-label', `${collapsed ? 'Expand' : 'Collapse'} ${titleText}`);
+                toggle.innerHTML = `<i class="fas fa-chevron-${collapsed ? 'down' : 'up'}"></i>`;
+            });
+            header.appendChild(toggle);
+            const option = document.createElement('option');
+            option.value = section.id;
+            option.textContent = titleText;
+            jump.appendChild(option);
+        });
+
+        jump.addEventListener('change', () => {
+            const section = document.getElementById(jump.value);
+            if (!section) return;
+            section.classList.remove('is-collapsed');
+            const btn = section.querySelector('.section-toggle');
+            if (btn) { btn.setAttribute('aria-expanded','true'); btn.innerHTML='<i class="fas fa-chevron-up"></i>'; }
+            section.scrollIntoView({behavior:'smooth', block:'start'});
+            section.classList.add('section-match');
+            window.setTimeout(() => section.classList.remove('section-match'), 1400);
+            jump.value = '';
+        });
+
+        search.addEventListener('input', () => {
+            const q = search.value.trim().toLowerCase();
+            let matches = 0;
+            sections.forEach(section => {
+                const match = !q || section.textContent.toLowerCase().includes(q);
+                section.classList.toggle('is-filtered', !match);
+                if (match) matches++;
+            });
+            if (q) toast(`${matches} section${matches === 1 ? '' : 's'} matched`);
+        });
+
+        const setAll = (collapsed) => sections.forEach(section => {
+            section.classList.toggle('is-collapsed', collapsed);
+            const btn = section.querySelector('.section-toggle');
+            if (btn) {
+                btn.setAttribute('aria-expanded', String(!collapsed));
+                btn.innerHTML = `<i class="fas fa-chevron-${collapsed ? 'down' : 'up'}"></i>`;
+            }
+        });
+        document.getElementById('expandAllBtn').addEventListener('click', () => { setAll(false); toast('All sections expanded'); });
+        document.getElementById('collapseAllBtn').addEventListener('click', () => { setAll(true); toast('All sections collapsed'); });
+
+        const meaningfulControls = () => [...document.querySelectorAll('#plannerApp input, #plannerApp select, #plannerApp textarea')]
+            .filter(el => !ignoredIds.has(el.id) && el.type !== 'file' && !el.closest('.command-center'));
+        const hasValue = (el) => el.type === 'checkbox' || el.type === 'radio' ? el.checked : String(el.value || '').trim() !== '';
+
+        function updateCompletion() {
+            const controls = meaningfulControls();
+            const completed = controls.filter(hasValue).length;
+            const pct = controls.length ? Math.round((completed / controls.length) * 100) : 0;
+            fill.style.width = `${pct}%`;
+            label.textContent = `${pct}% complete`;
+            document.getElementById('fieldsCompleted').textContent = completed;
+            document.getElementById('fieldsRemaining').textContent = Math.max(controls.length - completed, 0);
+            const started = sections.filter(s => [...s.querySelectorAll('input,select,textarea')].some(hasValue)).length;
+            document.getElementById('sectionsStarted').textContent = `${started} / ${sections.length}`;
+            const chip = document.getElementById('plannerStatusChip');
+            chip.textContent = pct >= 90 ? 'Ready for review' : pct >= 50 ? 'Good progress' : 'In progress';
+        }
+
+        document.getElementById('reviewMissingBtn').addEventListener('click', () => {
+            setAll(false);
+            const firstMissing = meaningfulControls().find(el => !hasValue(el));
+            if (!firstMissing) { toast('All tracked fields are complete'); return; }
+            firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
+            firstMissing.focus({preventScroll:true});
+            const group = firstMissing.closest('.field-group, td');
+            if (group) { group.classList.add('section-match'); setTimeout(() => group.classList.remove('section-match'), 1600); }
+            toast('Moved to the next incomplete field');
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const dark = document.body.classList.toggle('theme-dark');
+            localStorage.setItem('burialPlannerTheme', dark ? 'dark' : 'light');
+            document.getElementById('themeToggle').innerHTML = `<i class="fas fa-${dark ? 'sun' : 'moon'}"></i><span>Theme</span>`;
+            toast(`${dark ? 'Dark' : 'Light'} theme enabled`);
+        });
+        if (localStorage.getItem('burialPlannerTheme') === 'dark') document.getElementById('themeToggle').click();
+
+        document.addEventListener('input', updateCompletion, true);
+        document.addEventListener('change', updateCompletion, true);
+        const saveIndicator = document.getElementById('saveIndicator');
+        if (saveIndicator) new MutationObserver(() => {
+            const now = new Date();
+            document.getElementById('lastSavedV3').textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        }).observe(saveIndicator, {subtree:true, childList:true, characterData:true, attributes:true});
+
+        document.querySelectorAll('input, select, textarea, button').forEach(el => {
+            if (!el.getAttribute('aria-label') && !el.closest('label')) {
+                const labelEl = el.closest('.field-group')?.querySelector('label');
+                if (labelEl) el.setAttribute('aria-label', labelEl.textContent.trim());
+            }
+        });
+
+        window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 900), {passive:true});
+        backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); search.focus(); }
+            if (e.key === 'Escape' && document.activeElement === search) { search.value=''; search.dispatchEvent(new Event('input')); search.blur(); }
+        });
+
+        window.setTimeout(updateCompletion, 700);
+    })();
+    </script>
+
+</body>
+</html>
