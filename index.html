@@ -1098,6 +1098,18 @@
                 box-shadow: none;
                 background: var(--surface-soft);
             }
+            .funding-summary-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: .65rem;
+            }
+            .funding-summary-card {
+                min-height: 116px;
+            }
+            .chart-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
             .cover-page {
                 min-height: 0;
                 margin-bottom: .7rem;
@@ -1275,6 +1287,13 @@
             .pwa-update-banner { bottom:calc(5.4rem + var(--safe-bottom)); width:calc(100vw - 1rem); }
         }
 
+        @media (max-width: 420px) {
+            .funding-summary-grid { grid-template-columns: 1fr; }
+            .funding-summary-card strong { font-size: 1.2rem; }
+            .chart-summary { font-size: .75rem; }
+            .top-actions { flex-wrap: wrap; }
+            .top-actions > * { flex: 1 1 auto; }
+        }
         @media (max-width: 380px) {
             .cover-title h1, .cover-title h1 span { font-size:1.5rem; }
             .mobile-nav button { font-size:.56rem; }
@@ -1674,7 +1693,7 @@
                 <i class="fas fa-download" aria-hidden="true"></i> Install app
             </button>
             <span class="save-indicator" id="saveIndicator">
-                <i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Auto-saved
+                <i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Saved
             </span>
             <div class="currency-group">
                 <label><i class="fas fa-money-bill-wave"></i> Currency:</label>
@@ -1690,6 +1709,9 @@
             </button>
             <button class="btn-sync-restore" onclick="document.getElementById('restoreInput').click()" title="Restore from backup file">
                 <i class="fas fa-cloud-download-alt"></i> Restore
+            </button>
+            <button type="button" class="btn-sync" id="refreshFromServerBtn" onclick="refreshFromServer()" title="Refresh planner data from the shared server">
+                <i class="fas fa-rotate-right"></i> Refresh from server
             </button>
             <button type="button" class="btn-export" id="samplePlannerBtn" title="Load realistic sample planner">
                 <i class="fas fa-file-import"></i> Sample case
@@ -1904,7 +1926,6 @@
                 <div class="field-group"><label>Email</label><input type="email" id="primaryEmail" placeholder="family@example.com" oninput="autoSave();"></div>
                 <div class="field-group"><label>Spouse / partner</label><input type="text" id="spouse" placeholder="Name" oninput="autoSave();"></div>
                 <div class="field-group"><label>Eldest child</label><input type="text" id="eldestChild" placeholder="Name" oninput="autoSave();"></div>
-                <div class="field-group"><label>Clergy / celebrant liaison</label><input type="text" id="clergyLiaison" placeholder="Name" oninput="autoSave();"></div>
             </div>
         </div>
 
@@ -2918,6 +2939,62 @@
             // ===== SAVE / LOAD (localStorage) =====
             // ================================================================
             const SAVE_KEY = 'burialPlannerData';
+            const REMOTE_PLANNER_ID = 'default';
+            const REMOTE_PLANNER_URL = `/api/planner/${REMOTE_PLANNER_ID}`;
+
+            async function savePlannerToServer(data) {
+                try {
+                    const response = await fetch(REMOTE_PLANNER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ data })
+                    });
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.warn('Server save failed:', response.status, errorText);
+                        return false;
+                    }
+                    return true;
+                } catch (error) {
+                    console.warn('Server save unavailable:', error);
+                    return false;
+                }
+            }
+
+            async function loadPlannerFromServer() {
+                try {
+                    const response = await fetch(REMOTE_PLANNER_URL, {
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (!response.ok) return false;
+                    const payload = await response.json();
+                    const remoteData = payload && payload.data ? payload.data : payload;
+                    if (remoteData && typeof remoteData === 'object' && Object.keys(remoteData).length) {
+                        localStorage.setItem(SAVE_KEY, JSON.stringify(remoteData));
+                        restoreAllData(remoteData);
+                        return true;
+                    }
+                } catch (error) {
+                    console.warn('Server load unavailable:', error);
+                }
+                return false;
+            }
+
+            window.refreshFromServer = async function() {
+                const indicator = document.getElementById('saveIndicator');
+                indicator.innerHTML = '<i class="fas fa-circle" style="color:#e0b64a; font-size:0.5rem;"></i> Refreshing from server';
+                indicator.className = 'save-indicator';
+                const loaded = await loadPlannerFromServer();
+                if (loaded) {
+                    indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Saved';
+                    indicator.className = 'save-indicator saved';
+                    alert('Planner refreshed from the shared server.');
+                } else {
+                    indicator.innerHTML = '<i class="fas fa-circle" style="color:#c75b5b; font-size:0.5rem;"></i> Sync issue';
+                    indicator.className = 'save-indicator';
+                    alert('Server refresh failed. Please check that the backend is running.');
+                }
+            };
 
             function collectAllData() {
                 const data = { __schemaVersion: SECURITY.schemaVersion, __exportedAt: new Date().toISOString() };
@@ -3080,13 +3157,14 @@
             let saveTimeout = null;
             window.autoSave = function() {
                 clearTimeout(saveTimeout);
-                saveTimeout = setTimeout(() => {
+                saveTimeout = setTimeout(async () => {
                     try {
                         const data = collectAllData();
                         localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                        await savePlannerToServer(data);
                         const indicator = document.getElementById('saveIndicator');
                         indicator.innerHTML =
-                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Auto-saved';
+                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Saved';
                         indicator.className = 'save-indicator saved';
                     } catch (e) {
                         console.warn('Auto-save failed:', e);
@@ -3114,20 +3192,20 @@
                     __schemaVersion: SECURITY.schemaVersion,
                     __exportedAt: new Date().toISOString(),
                     currency: 'NGN',
-                    deceasedName: 'Mary Elizabeth Okafor',
-                    preferredName: 'Mama Mary',
-                    dob,
-                    dop,
-                    placePassing: 'Lagos, Nigeria',
-                    agePassing: '71',
+                    deceasedName: 'Mathias Apeh Elijah',
+                    preferredName: 'Apeh the Great',
+                    dob: '1963-10-23',
+                    dop: '2026-08-03',
+                    placePassing: 'Nasarawa state, Nigeria.',
+                    agePassing: '63',
                     veteranStatus: 'No',
-                    religion: 'Catholic',
-                    title: 'Mrs.',
+                    religion: 'Christianity',
+                    title: 'Mr.',
                     primaryContact: 'Ngozi Okafor',
-                    primaryPhone: '+234 803 555 9081',
-                    primaryEmail: 'ngozi.okafor@familymail.com',
-                    spouse: 'Emeka Okafor',
-                    eldestChild: 'Chinelo Okafor',
+                    primaryPhone: '08104668912',
+                    primaryEmail: 'officialelijahmathiaias@gmail.com',
+                    spouse: 'Nil',
+                    eldestChild: 'No children',
                     clergyLiaison: 'Rev. Father Daniel Adebayo',
                     funeralHome: 'Grace & Comfort Funeral Home',
                     funeralPhone: '+234 812 444 1212',
@@ -3226,7 +3304,7 @@
                 restoreAllData(data);
                 localStorage.setItem(SAVE_KEY, JSON.stringify(data));
                 const indicator = document.getElementById('saveIndicator');
-                indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Sample plan loaded';
+                indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Saved';
                 indicator.className = 'save-indicator saved';
                 document.getElementById('plannerStatusChip').textContent = 'Family review';
                 if (typeof updateCompletion === 'function') updateCompletion();
@@ -3242,7 +3320,7 @@
                         restoreAllData(data);
                         const indicator = document.getElementById('saveIndicator');
                         indicator.innerHTML =
-                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Restored from browser';
+                            '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Saved';
                         indicator.className = 'save-indicator saved';
                         if (typeof updateCompletion === 'function') updateCompletion();
                         return true;
@@ -3342,7 +3420,6 @@
                     'Email': document.getElementById('primaryEmail').value,
                     'Spouse/Partner': document.getElementById('spouse').value,
                     'Eldest Child': document.getElementById('eldestChild').value,
-                    'Clergy Liaison': document.getElementById('clergyLiaison').value,
                 };
                 const funeral = {
                     'Funeral Home': document.getElementById('funeralHome').value,
@@ -3500,8 +3577,12 @@
                 URL.revokeObjectURL(url);
             };
 
-            window.addEventListener('beforeunload', () => {
-                try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectAllData())); } catch (_) {}
+            window.addEventListener('beforeunload', async () => {
+                try {
+                    const data = collectAllData();
+                    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                    await savePlannerToServer(data);
+                } catch (_) {}
             });
 
             // ----- Attach events -----
@@ -3527,12 +3608,20 @@
             });
 
             // ----- Initial load -----
-            const hasSaved = loadSavedData();
-            if (!hasSaved) {
-                applySamplePlanner();
-            } else {
-                setTimeout(updateCharts, 500);
+            async function initializePlannerState() {
+                const remoteLoaded = await loadPlannerFromServer();
+                if (!remoteLoaded) {
+                    const hasSaved = loadSavedData();
+                    if (!hasSaved) {
+                        applySamplePlanner();
+                    } else {
+                        setTimeout(updateCharts, 500);
+                    }
+                } else {
+                    setTimeout(updateCharts, 500);
+                }
             }
+            initializePlannerState();
 
             // ----- PROFESSIONAL PRINT SUITE -----
             const printModeSelect = document.getElementById('printMode');

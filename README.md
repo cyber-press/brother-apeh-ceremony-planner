@@ -59,6 +59,26 @@ This version has no server-side backend or shared database. Planner information 
 - Data entered on one device will not automatically appear on another device.
 - Clearing browser storage may remove locally saved planner data.
 
+## Shared backend option (FastAPI + SQLite)
+
+This project can also run behind a small Python API so the same planner data is shared across devices instead of remaining browser-local only.
+
+### Run locally
+
+```bash
+python -m pip install -r requirements.txt
+python app.py
+```
+
+The app serves the planner on `http://localhost:8000` and keeps a shared SQLite file at `planner.db`.
+
+### API contract
+
+- `GET /api/planner/default` returns the latest saved planner payload
+- `POST /api/planner/default` stores the current planner state as JSON
+
+This keeps the static planner UI while allowing a shared backend for family or team access.
+
 ## Deploy with GitHub Pages
 
 1. Create a GitHub repository named `brother-apeh-planner`.
