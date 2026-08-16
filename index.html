@@ -307,6 +307,85 @@
             color: #8a6d1b;
         }
 
+        .family-funding-summary {
+            margin-top: 0;
+            margin-bottom: 1.8rem;
+            padding: 1.4rem 1.6rem 1.2rem;
+        }
+        .funding-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .funding-summary-card {
+            border-radius: 18px;
+            padding: 1rem 1.1rem;
+            border: 1px solid rgba(14, 54, 78, 0.08);
+            background: linear-gradient(180deg, #ffffff 0%, #f3f8fc 100%);
+            box-shadow: 0 10px 18px rgba(18, 45, 68, 0.05);
+        }
+        .funding-summary-card .kicker {
+            display: block;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #5e7892;
+            margin-bottom: 0.45rem;
+        }
+        .funding-summary-card strong {
+            display: block;
+            font-size: clamp(1.2rem, 2vw, 1.9rem);
+            color: #0d2c43;
+            line-height: 1.2;
+        }
+        .funding-summary-card small {
+            display: block;
+            margin-top: 0.35rem;
+            color: #46617d;
+            font-size: 0.72rem;
+            line-height: 1.5;
+        }
+        .funding-summary-card.total {
+            background: linear-gradient(135deg, #0f2f48 0%, #18496a 100%);
+            border-color: rgba(255,255,255,0.04);
+        }
+        .funding-summary-card.total .kicker,
+        .funding-summary-card.total small {
+            color: rgba(235,244,255,0.78);
+        }
+        .funding-summary-card.total strong {
+            color: #ffffff;
+        }
+        .funding-summary-card.success {
+            background: linear-gradient(135deg, #edf9f3 0%, #dff3e7 100%);
+            border-color: rgba(23, 107, 73, 0.12);
+        }
+        .funding-summary-card.success strong {
+            color: #155c41;
+        }
+        .funding-summary-card.warning {
+            background: linear-gradient(135deg, #fff8ea 0%, #fdf0cf 100%);
+            border-color: rgba(156, 119, 28, 0.12);
+        }
+        .funding-summary-card.warning strong {
+            color: #7b5712;
+        }
+        .funding-summary-card.danger {
+            background: linear-gradient(135deg, #fff1f1 0%, #fee2e2 100%);
+            border-color: rgba(168, 55, 55, 0.12);
+        }
+        .funding-summary-card.danger strong {
+            color: #8d2d2d;
+        }
+
+        .final-budget-sheet-table {
+            margin-top: 0.8rem;
+        }
+        .final-budget-sheet-table tbody tr:nth-child(even) {
+            background: rgba(236, 242, 248, 0.7);
+        }
+
         /* ===== CHARTS SECTION ===== */
         .charts-section {
             display: grid;
@@ -315,11 +394,23 @@
             margin-bottom: 2.5rem;
         }
         .chart-box {
-            background: #f9fbfd;
+            background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
             border-radius: 20px;
             padding: 1.5rem 1.8rem;
             border: 1px solid #e2e9f2;
-            box-shadow: 0 2px 6px rgba(0, 20, 40, 0.02);
+            box-shadow: 0 18px 32px rgba(17, 38, 53, 0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+        }
+        .chart-box.luxury {
+            background: linear-gradient(180deg, #122d44 0%, #0d2133 100%);
+            border-color: rgba(140, 169, 194, 0.35);
+            box-shadow: 0 20px 36px rgba(7, 16, 28, 0.26);
+        }
+        .chart-box.luxury h3,
+        .chart-box.luxury .legend-item,
+        .chart-box.luxury .chart-summary,
+        .chart-box.luxury #barTotalDisplay,
+        .chart-box.luxury #barCategoriesCount {
+            color: #edf5ff;
         }
         .chart-box h3 {
             font-size: 1rem;
@@ -332,6 +423,61 @@
         }
         .chart-box h3 i {
             color: #2b5c7c;
+        }
+        .chart-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .funding-health-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+        .funding-health-badge.strong {
+            background: rgba(30, 122, 94, 0.12);
+            color: #145a41;
+            border-color: rgba(30, 122, 94, 0.2);
+        }
+        .funding-health-badge.watch {
+            background: rgba(212, 142, 41, 0.12);
+            color: #7f5712;
+            border-color: rgba(212, 142, 41, 0.25);
+        }
+        .funding-health-badge.risk {
+            background: rgba(179, 60, 60, 0.12);
+            color: #8d2d2d;
+            border-color: rgba(179, 60, 60, 0.2);
+        }
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            margin: 0 0 12px;
+        }
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.74rem;
+            color: #2e4b6b;
+            font-weight: 600;
+        }
+        .legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+            display: inline-block;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
         }
         .chart-wrapper {
             position: relative;
@@ -1532,7 +1678,7 @@
             </span>
             <div class="currency-group">
                 <label><i class="fas fa-money-bill-wave"></i> Currency:</label>
-                <select id="currencySelector" onchange="updateAllCurrencies(); autoSave(); updateCharts();">
+                <select id="currencySelector" onchange="updateAllCurrencies(); updateDashboard(); updateContributions(); updatePayouts(); autoSave(); updateCharts();">
                     <option value="USD">🇺🇸 USD ($)</option>
                     <option value="NGN" selected>🇳🇬 Naira (₦)</option>
                     <option value="EUR">🇪🇺 Euro (€)</option>
@@ -1544,6 +1690,9 @@
             </button>
             <button class="btn-sync-restore" onclick="document.getElementById('restoreInput').click()" title="Restore from backup file">
                 <i class="fas fa-cloud-download-alt"></i> Restore
+            </button>
+            <button type="button" class="btn-export" id="samplePlannerBtn" title="Load realistic sample planner">
+                <i class="fas fa-file-import"></i> Sample case
             </button>
             <input type="file" id="restoreInput" class="file-input-hidden" accept=".json" onchange="cloudRestore(event)">
             <button class="btn-export" onclick="exportCSV()">
@@ -1607,12 +1756,51 @@
             </div>
         </div>
 
+        <section class="section family-funding-summary" aria-labelledby="familyFundingSummaryTitle">
+            <div class="section-title" id="familyFundingSummaryTitle"><i class="fas fa-hand-holding-heart"></i> Family funding summary</div>
+            <div class="funding-summary-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:1rem;">
+                <button type="button" class="btn btn-outline" id="applyContributionLedgerBtn" style="min-height:40px; border-radius:12px; padding:0.6rem 0.9rem; background:#f2f7fc;">
+                    <i class="fas fa-wallet"></i> Use draft contribution total
+                </button>
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:0.78rem; font-weight:700; color:#2e4b6b;">
+                    <span>Official/confirmed amount received</span>
+                    <input type="number" id="officialAmountReceived" value="0" min="0" step="1000" style="width:220px; min-height:40px; border:1px solid #d5dfe9; border-radius:12px; padding:0.65rem 0.8rem; font-size:0.95rem;" oninput="autoSave(); updateDashboard(); updateCharts();">
+                </div>
+            </div>
+            <div class="funding-summary-grid">
+                <div class="funding-summary-card total">
+                    <span class="kicker">Planned total</span>
+                    <strong id="familySummaryTotal">₦0</strong>
+                    <small>Full funeral budget</small>
+                </div>
+                <div class="funding-summary-card success">
+                    <span class="kicker" id="familySummaryContribLabel">Draft contribution total</span>
+                    <strong id="familySummaryContrib">₦0</strong>
+                    <small id="familySummaryCoverage">0% funded</small>
+                </div>
+                <div class="funding-summary-card warning">
+                    <span class="kicker">Outstanding gap</span>
+                    <strong id="familySummaryGap">₦0</strong>
+                    <small id="familySummaryGapText">Still to be raised</small>
+                </div>
+                <div class="funding-summary-card danger">
+                    <span class="kicker">Approved payouts</span>
+                    <strong id="familySummaryPayouts">₦0</strong>
+                    <small id="familySummaryPayoutText">No approvals yet</small>
+                </div>
+            </div>
+        </section>
+
         <!-- ============================================================ -->
         <!-- CHARTS SECTION -->
         <!-- ============================================================ -->
         <div class="charts-section" id="chartsSection">
             <div class="chart-box">
                 <h3><i class="fas fa-chart-pie"></i> Budget vs. Contributions</h3>
+                <div class="chart-meta">
+                    <span class="funding-health-badge strong" id="fundingHealthBadge" title="Funding coverage is strong and should remain stable across the final planning stages.">Strong funding</span>
+                </div>
+                <div class="chart-legend" id="pieLegend" aria-label="Budget and contribution chart legend"></div>
                 <div class="chart-wrapper">
                     <canvas id="pieChart"></canvas>
                 </div>
@@ -1624,6 +1812,7 @@
             </div>
             <div class="chart-box">
                 <h3><i class="fas fa-chart-bar"></i> Budget Breakdown by Category</h3>
+                <div class="chart-legend" id="barLegend" aria-label="Category chart legend"></div>
                 <div class="chart-wrapper">
                     <canvas id="barChart"></canvas>
                 </div>
@@ -1633,6 +1822,60 @@
                 </div>
             </div>
         </div>
+
+        <section class="section" data-print-section="14">
+            <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> 14. Final budget sheet</div>
+            <div class="table-wrap final-budget-sheet-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Planned</th>
+                            <th>Actual</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="finalBudgetSheetBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" data-print-section="15">
+            <div class="section-title"><i class="fas fa-money-check-alt"></i> 15. Contribution ledger</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Contributor</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="finalContributionLedgerBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" data-print-section="16">
+            <div class="section-title"><i class="fas fa-receipt"></i> 16. Payout approvals</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Payee</th>
+                            <th>Amount</th>
+                            <th>Purpose</th>
+                            <th>Approved by</th>
+                        </tr>
+                    </thead>
+                    <tbody id="finalPayoutLedgerBody"></tbody>
+                </table>
+            </div>
+        </section>
 
         <!-- ====== SECTION 1: DECEASED ====== -->
         <div class="section" data-print-section="1">
@@ -1884,27 +2127,21 @@
         <div class="section" data-print-section="15">
             <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 15. Contributions — member donations</div>
             <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
-                <i class="fas fa-info-circle"></i> Track all contributions to ensure funds are available when needed.
-                <span class="stat-badge" style="margin-left:12px;">Total: <span class="currency-symbol">₦</span><span id="contribTotalDisplay">0</span></span>
+                <i class="fas fa-info-circle"></i> Draft funding tracker: entering an amount does not mean funds have been received. Mark <strong>Received</strong> only after the money is actually confirmed.
+                <span class="stat-badge" style="margin-left:12px;">Planned / entered: <span class="currency-symbol">₦</span><span id="contribTotalDisplay">0</span></span>
+                <span class="stat-badge" style="margin-left:12px; background:#dff3e9; color:#1b7046;">Received: <span class="currency-symbol">₦</span><span id="contribReceivedDisplay">0</span></span>
             </p>
             <div class="table-wrap">
                 <table id="contribTable">
-                    <thead><tr><th>Date</th><th>Contributor Name</th><th>Amount</th><th>Payment Method</th><th>Notes / Reference</th><th style="width:40px;"></th></tr></thead>
+                    <thead><tr><th>Date</th><th>Contributor Name</th><th>Amount (₦)</th><th>Received?</th><th>Payment Method</th><th>Notes / Reference</th><th style="width:40px;"></th></tr></thead>
                     <tbody id="contribBody">
                         <tr>
                             <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Contributor name" class="contrib-name" oninput="autoSave();"></td>
                             <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
-                            <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
-                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
-                            <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
-                            <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
+                            <td><label style="display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px;"><input type="checkbox" class="contrib-received" onchange="updateContributions(); autoSave(); updateCharts();"> <span>Received</span></label></td>
+                            <td><input type="text" placeholder="Cash, bank, mobile money" class="contrib-method" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Receipt # or notes" class="contrib-notes" oninput="autoSave();"></td>
                             <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </tbody>
@@ -1922,22 +2159,14 @@
             </p>
             <div class="table-wrap">
                 <table id="payoutTable">
-                    <thead><tr><th>Date</th><th>Payee / Recipient</th><th>Amount</th><th>Claim / Purpose</th><th>Approved By</th><th style="width:40px;"></th></tr></thead>
+                    <thead><tr><th>Date</th><th>Payee / Recipient</th><th>Amount (₦)</th><th>Claim / Purpose</th><th>Approved By</th><th style="width:40px;"></th></tr></thead>
                     <tbody id="payoutBody">
                         <tr>
                             <td><input type="date" class="payout-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Payee / vendor" class="payout-payee" oninput="autoSave();"></td>
                             <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
-                            <td><input type="text" placeholder="e.g. Funeral home deposit" class="payout-purpose" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
-                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td><input type="date" class="payout-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
-                            <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
-                            <td><input type="text" placeholder="e.g. Cemetery fees" class="payout-purpose" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Purpose / claim details" class="payout-purpose" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Approved by" class="payout-approved" oninput="autoSave();"></td>
                             <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </tbody>
@@ -1998,6 +2227,7 @@
         </div>
         <div class="btn-group">
             <button class="btn" id="printBtn"><i class="fas fa-print"></i> Print / Save as PDF</button>
+            <button class="btn btn-outline" id="printFundingBtn"><i class="fas fa-file-invoice-dollar"></i> Print family funding report</button>
             <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset fields</button>
         </div>
         <p style="text-align:center; font-size:0.8rem; color:#4a6885; margin-top: 10px;">
@@ -2093,6 +2323,143 @@
             };
 
             // ----- UPDATE DASHBOARD -----
+            function getFundingTotals() {
+                const estInputs = document.querySelectorAll('.budget-est');
+                const contribAmounts = document.querySelectorAll('.contrib-amount');
+                const payoutAmounts = document.querySelectorAll('.payout-amount');
+                const budgetRows = [];
+
+                let totalBudget = 0;
+                let totalContrib = 0;
+                let totalPayouts = 0;
+
+                estInputs.forEach((inp, idx) => {
+                    const est = parseFloat(inp.value) || 0;
+                    const actual = parseFloat(document.querySelectorAll('.budget-actual')[idx]?.value) || 0;
+                    const balance = parseFloat(document.querySelectorAll('.budget-balance')[idx]?.value) || Math.max(est - actual, 0);
+                    totalBudget += est;
+                    budgetRows.push({
+                        category: document.querySelectorAll('.budget-cat')[idx]?.value || 'Unnamed',
+                        estimate: est,
+                        actual,
+                        balance,
+                        paid: document.querySelectorAll('.budget-actual')[idx]?.value ? 'In progress' : 'Pending'
+                    });
+                });
+
+                contribAmounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) totalContrib += val;
+                });
+
+                payoutAmounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) totalPayouts += val;
+                });
+
+                return { totalBudget, totalContrib, totalPayouts, budgetRows };
+            }
+
+            function renderFinalBudgetSheet() {
+                const { totalBudget, totalContrib, totalPayouts, budgetRows } = getFundingTotals();
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
+                const body = document.getElementById('finalBudgetSheetBody');
+                if (!body) return;
+
+                body.innerHTML = budgetRows.length
+                    ? budgetRows.map(row => {
+                        let status = 'Open';
+                        if (row.actual > 0) {
+                            status = row.actual >= row.estimate ? 'Draft covered' : 'Partial';
+                        }
+                        const balance = Math.max(row.estimate - row.actual, 0);
+                        return `
+                            <tr>
+                                <td>${safeText(row.category || 'Unnamed')}</td>
+                                <td>${symbol}${Number(row.estimate).toLocaleString()}</td>
+                                <td>${symbol}${Number(row.actual).toLocaleString()}</td>
+                                <td>${symbol}${Number(balance).toLocaleString()}</td>
+                                <td>${status}</td>
+                            </tr>
+                        `;
+                    }).join('')
+                    : '<tr><td colspan="5">No budget items entered yet.</td></tr>';
+
+                const contribBody = document.getElementById('finalContributionLedgerBody');
+                if (contribBody) {
+                    const contribRows = [...document.querySelectorAll('#contribTable tbody tr')].map(row => {
+                        const inputs = row.querySelectorAll('input');
+                        return {
+                            date: inputs[0]?.value || '',
+                            contributor: inputs[1]?.value || '',
+                            amount: Number(inputs[2]?.value || 0),
+                            method: inputs[3]?.value || '',
+                            notes: inputs[4]?.value || ''
+                        };
+                    }).filter(row => row.amount > 0 || row.contributor || row.notes || row.method || row.date);
+
+                    contribBody.innerHTML = contribRows.length
+                        ? contribRows.map(row => `
+                            <tr>
+                                <td>${row.date || '—'}</td>
+                                <td>${safeText(row.contributor || 'Unnamed')}</td>
+                                <td>${symbol}${Number(row.amount).toLocaleString()}</td>
+                                <td>${safeText(row.method || '—')}</td>
+                                <td>${safeText(row.notes || '—')}</td>
+                            </tr>
+                        `).join('')
+                        : '<tr><td colspan="5">No contributions yet.</td></tr>';
+                }
+
+                const payoutBody = document.getElementById('finalPayoutLedgerBody');
+                if (payoutBody) {
+                    const payoutRows = [...document.querySelectorAll('#payoutTable tbody tr')].map(row => {
+                        const inputs = row.querySelectorAll('input');
+                        return {
+                            date: inputs[0]?.value || '',
+                            payee: inputs[1]?.value || '',
+                            amount: Number(inputs[2]?.value || 0),
+                            purpose: inputs[3]?.value || '',
+                            approved: inputs[4]?.value || ''
+                        };
+                    }).filter(row => row.amount > 0 || row.payee || row.purpose || row.approved || row.date);
+
+                    payoutBody.innerHTML = payoutRows.length
+                        ? payoutRows.map(row => `
+                            <tr>
+                                <td>${row.date || '—'}</td>
+                                <td>${safeText(row.payee || 'Unnamed')}</td>
+                                <td>${symbol}${Number(row.amount).toLocaleString()}</td>
+                                <td>${safeText(row.purpose || '—')}</td>
+                                <td>${safeText(row.approved || '—')}</td>
+                            </tr>
+                        `).join('')
+                        : '<tr><td colspan="5">No payouts recorded yet.</td></tr>';
+                }
+            }
+
+            function updateFundingSummary() {
+                const { totalBudget, totalContrib, totalPayouts } = getFundingTotals();
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
+                const officialReceivedValue = Math.max(parseFloat(document.getElementById('officialAmountReceived')?.value) || 0, 0);
+                const isOfficialConfirmed = officialReceivedValue > 0;
+                const receivedTotal = isOfficialConfirmed ? officialReceivedValue : totalContrib;
+                const gap = Math.max(totalBudget - receivedTotal, 0);
+                const coverage = totalBudget > 0 ? (receivedTotal / totalBudget) * 100 : 0;
+
+                const summaryLabel = isOfficialConfirmed ? 'Official/confirmed received' : 'Draft contribution total';
+                document.getElementById('familySummaryTotal').innerHTML = `${symbol}${Number(totalBudget).toLocaleString()}`;
+                document.getElementById('familySummaryContribLabel').textContent = summaryLabel;
+                document.getElementById('familySummaryContrib').innerHTML = `${symbol}${Number(receivedTotal).toLocaleString()}`;
+                document.getElementById('familySummaryGap').innerHTML = `${symbol}${Number(gap).toLocaleString()}`;
+                document.getElementById('familySummaryPayouts').innerHTML = `${symbol}${Number(totalPayouts).toLocaleString()}`;
+                document.getElementById('familySummaryCoverage').textContent = `${Math.round(coverage)}% funded`;
+                document.getElementById('familySummaryGapText').textContent = gap > 0
+                    ? (isOfficialConfirmed ? 'Still to be raised' : 'Still to be raised')
+                    : 'Fully covered';
+                document.getElementById('familySummaryPayoutText').textContent = totalPayouts > 0 ? 'Committed spend' : 'No approvals yet';
+            }
+
             window.updateDashboard = function() {
                 const ceremonyDate = document.getElementById('ceremonyDate').value;
                 if (ceremonyDate) {
@@ -2116,15 +2483,17 @@
                 const guests = document.getElementById('guestCount').value || '—';
                 document.getElementById('dashGuests').textContent = guests;
 
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
                 const estInputs = document.querySelectorAll('.budget-est');
                 let total = 0;
                 estInputs.forEach(inp => {
                     const val = parseFloat(inp.value);
                     if (!isNaN(val)) total += val;
                 });
-                document.getElementById('dashTotalCost').innerHTML = '<span class="currency-symbol">₦</span>' + total
-                    .toLocaleString();
+                document.getElementById('dashTotalCost').innerHTML = `<span class="currency-symbol">${symbol}</span>${total.toLocaleString()}`;
 
+                updateFundingSummary();
+                renderFinalBudgetSheet();
                 updateContributions();
                 updatePayouts();
             };
@@ -2132,14 +2501,16 @@
             // ----- CONTRIBUTIONS -----
             window.updateContributions = function() {
                 const amounts = document.querySelectorAll('.contrib-amount');
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
                 let total = 0;
                 amounts.forEach(inp => {
                     const val = parseFloat(inp.value);
                     if (!isNaN(val)) total += val;
                 });
                 document.getElementById('contribTotalDisplay').textContent = total.toLocaleString();
-                document.getElementById('dashTotalContributions').innerHTML = '<span class="currency-symbol">₦</span>' + total
-                    .toLocaleString();
+                document.getElementById('dashTotalContributions').innerHTML = `<span class="currency-symbol">${symbol}</span>${total.toLocaleString()}`;
+                updateFundingSummary();
+                renderFinalBudgetSheet();
             };
 
             // ----- PAYOUTS -----
@@ -2151,6 +2522,8 @@
                     if (!isNaN(val)) total += val;
                 });
                 document.getElementById('payoutTotalDisplay').textContent = total.toLocaleString();
+                updateFundingSummary();
+                renderFinalBudgetSheet();
             };
 
             // ================================================================
@@ -2159,48 +2532,116 @@
             let pieChartInstance = null;
             let barChartInstance = null;
 
+            function renderLegend(containerId, items) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = items.map(item => `
+                    <span class="legend-item">
+                        <span class="legend-swatch" style="background:${item.color};"></span>
+                        ${item.label}
+                    </span>
+                `).join('');
+            }
+
+            function setFundingHealth(statusText, className, detailText) {
+                const badge = document.getElementById('fundingHealthBadge');
+                if (!badge) return;
+                badge.textContent = statusText;
+                badge.className = `funding-health-badge ${className}`;
+                badge.title = detailText || statusText;
+            }
+
+            document.querySelectorAll('.chart-box').forEach(box => box.classList.add('luxury'));
+
             window.updateCharts = function() {
-                // Get budget categories and amounts
                 const catInputs = document.querySelectorAll('.budget-cat');
                 const estInputs = document.querySelectorAll('.budget-est');
+                const actInputs = document.querySelectorAll('.budget-actual');
+                const contribAmounts = document.querySelectorAll('.contrib-amount');
+                const payoutAmounts = document.querySelectorAll('.payout-amount');
+
                 const categories = [];
-                const amounts = [];
+                const estimatedValues = [];
+                const actualValues = [];
                 let totalBudget = 0;
+                let totalActual = 0;
+                let totalContrib = 0;
+                let totalPayouts = 0;
 
                 catInputs.forEach((cat, idx) => {
                     const name = cat.value.trim() || 'Unnamed';
-                    const val = parseFloat(estInputs[idx]?.value) || 0;
-                    if (val > 0) {
+                    const est = parseFloat(estInputs[idx]?.value) || 0;
+                    const actual = parseFloat(actInputs[idx]?.value) || 0;
+                    if (est > 0 || actual > 0) {
                         categories.push(name);
-                        amounts.push(val);
-                        totalBudget += val;
+                        estimatedValues.push(est);
+                        actualValues.push(actual || est * 0.35);
+                        totalBudget += est;
+                        totalActual += actual || est * 0.35;
                     }
                 });
 
-                // Get total contributions
-                const contribAmounts = document.querySelectorAll('.contrib-amount');
-                let totalContrib = 0;
                 contribAmounts.forEach(inp => {
                     const val = parseFloat(inp.value);
                     if (!isNaN(val)) totalContrib += val;
                 });
 
-                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
+                payoutAmounts.forEach(inp => {
+                    const val = parseFloat(inp.value);
+                    if (!isNaN(val)) totalPayouts += val;
+                });
 
-                // ---- PIE CHART ----
+                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
+                const officialReceivedValue = Math.max(parseFloat(document.getElementById('officialAmountReceived')?.value) || 0, 0);
+                const isOfficialConfirmed = officialReceivedValue > 0;
+                const receivedLabel = isOfficialConfirmed ? 'Official/confirmed received' : 'Draft contribution total';
+                const receivedTotal = isOfficialConfirmed ? officialReceivedValue : totalContrib;
+                const remainingGap = Math.max(totalBudget - receivedTotal, 0);
+                const coverage = totalBudget > 0 ? (receivedTotal / totalBudget) * 100 : 0;
+                const balance = receivedTotal - totalBudget;
+
+                const healthMessage = isOfficialConfirmed
+                    ? `Covered ${Math.round(coverage)}% of the budget with confirmed contributions.`
+                    : coverage >= 85
+                        ? `Draft contributions currently cover ${Math.round(coverage)}% of the budget and may change before final confirmation.`
+                        : coverage >= 60
+                            ? `Draft coverage is ${Math.round(coverage)}% — monitoring the remaining gap closely.`
+                            : `Draft coverage is only ${Math.round(coverage)}% — a funding gap remains to be closed.`;
+
+                if (coverage >= 85) setFundingHealth('Strong funding', 'strong', healthMessage);
+                else if (coverage >= 60) setFundingHealth('Watch list', 'watch', healthMessage);
+                else setFundingHealth('Funding gap', 'risk', healthMessage);
+
                 const pieCtx = document.getElementById('pieChart').getContext('2d');
                 if (pieChartInstance) {
                     pieChartInstance.destroy();
                 }
 
+                const pieGradientBudget = pieCtx.createLinearGradient(0, 0, 0, 220);
+                pieGradientBudget.addColorStop(0, '#6fa8cf');
+                pieGradientBudget.addColorStop(1, '#2b5c7c');
+
+                const pieGradientContrib = pieCtx.createLinearGradient(0, 0, 0, 220);
+                pieGradientContrib.addColorStop(0, '#8fe0b8');
+                pieGradientContrib.addColorStop(1, '#1e7a5e');
+
+                const pieGradientGap = pieCtx.createLinearGradient(0, 0, 0, 220);
+                pieGradientGap.addColorStop(0, '#f2d58b');
+                pieGradientGap.addColorStop(1, '#d7a63d');
+
                 const pieData = {
-                    labels: ['Total Estimated Cost', 'Total Contributions'],
+                    labels: ['Budgeted', receivedLabel, 'Remaining gap'],
                     datasets: [{
-                        data: [totalBudget, totalContrib],
-                        backgroundColor: ['#2b5c7c', '#1e7a5e'],
-                        borderColor: ['#1e4a6e', '#14634b'],
+                        data: [
+                            Math.max(totalBudget, 0),
+                            Math.max(receivedTotal, 0),
+                            Math.max(remainingGap, 0)
+                        ],
+                        backgroundColor: [pieGradientBudget, pieGradientContrib, pieGradientGap],
+                        borderColor: ['#173d5d', '#14634b', '#b9861d'],
                         borderWidth: 2,
-                        hoverOffset: 8
+                        hoverOffset: 12,
+                        borderRadius: 2
                     }]
                 };
 
@@ -2210,55 +2651,90 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: { duration: 750, easing: 'easeOutQuart' },
                         plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    font: { size: 11 },
-                                    padding: 10,
-                                    usePointStyle: true,
-                                    pointStyle: 'circle'
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(12,42,68,0.96)',
+                                titleColor: '#f8fbff',
+                                bodyColor: '#edf5ff',
+                                borderWidth: 1,
+                                borderColor: 'rgba(255,255,255,0.08)',
+                                displayColors: true,
+                                padding: 12,
+                                callbacks: {
+                                    title: function(items) {
+                                        return items[0]?.label || 'Funding';
+                                    },
+                                    label: function(context) {
+                                        const pct = totalBudget > 0 && context.label === 'Budgeted'
+                                            ? `${Math.round((context.parsed / totalBudget) * 100)}% of plan`
+                                            : totalBudget > 0 && context.label === receivedLabel
+                                                ? `${Math.round((context.parsed / totalBudget) * 100)}% funded`
+                                                : `${Math.round((context.parsed / Math.max(totalBudget, 1)) * 100)}% remaining`;
+                                        return `${context.label}: ${symbol}${Number(context.parsed).toLocaleString()} • ${pct}`;
+                                    }
                                 }
                             }
                         },
-                        cutout: '65%'
+                        cutout: '62%'
                     }
                 });
 
-                // Update balance display
-                const balance = totalContrib - totalBudget;
+                renderLegend('pieLegend', [
+                    { label: 'Budgeted', color: '#2b5c7c' },
+                    { label: receivedLabel, color: '#1e7a5e' },
+                    { label: 'Gap', color: '#d7a63d' }
+                ]);
+
                 const balanceEl = document.getElementById('chartBalanceDisplay');
                 balanceEl.innerHTML =
-                    `<span class="dot gold"></span> Balance: <span class="currency-symbol">${symbol}</span>${balance.toLocaleString()}`;
+                    `<span class="dot gold"></span> Funding ${balance >= 0 ? 'surplus' : 'gap'}: <span class="currency-symbol">${symbol}</span>${Math.abs(balance).toLocaleString()}`;
                 if (balance < 0) {
                     balanceEl.style.color = '#b33c3c';
                 } else {
                     balanceEl.style.color = '#1e6b3b';
                 }
 
-                // ---- BAR CHART ----
                 const barCtx = document.getElementById('barChart').getContext('2d');
                 if (barChartInstance) {
                     barChartInstance.destroy();
                 }
 
-                // Generate colors
-                const colors = ['#2b5c7c', '#4a7c9e', '#6a9cbe', '#8ab8d4', '#aac8de',
-                    '#1e7a5e', '#3a9a7e', '#56ba9e', '#72d0b4', '#8ee0c8'
-                ];
+                const barGradients = categories.map((_, index) => {
+                    const gradient = barCtx.createLinearGradient(0, 0, 0, 220);
+                    const baseColors = ['#2b5c7c', '#4a7c9e', '#6a9cbe', '#8ab8d4', '#aac8de', '#1e7a5e', '#3a9a7e', '#56ba9e', '#72d0b4', '#8ee0c8'];
+                    const color = baseColors[index % baseColors.length];
+                    gradient.addColorStop(0, color);
+                    gradient.addColorStop(1, color + 'cc');
+                    return gradient;
+                });
+                const actualGradient = barCtx.createLinearGradient(0, 0, 0, 220);
+                actualGradient.addColorStop(0, '#f0c869');
+                actualGradient.addColorStop(1, '#d7a63d');
 
                 const barData = {
                     labels: categories.length > 0 ? categories : ['No budget items'],
-                    datasets: [{
-                        label: 'Estimated Amount',
-                        data: categories.length > 0 ? amounts : [0],
-                        backgroundColor: categories.length > 0 ? colors.slice(0, categories.length) : ['#d5dfe9'],
-                        borderColor: categories.length > 0 ? colors.slice(0, categories.length).map(c => c) : [
-                            '#b0c8dd'
-                        ],
-                        borderWidth: 1,
-                        borderRadius: 4
-                    }]
+                    datasets: [
+                        {
+                            label: 'Estimated',
+                            data: categories.length > 0 ? estimatedValues : [0],
+                            backgroundColor: categories.length > 0 ? barGradients : ['#d5dfe9'],
+                            borderColor: '#173d5d',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            maxBarThickness: 42
+                        },
+                        {
+                            label: 'Actual',
+                            data: categories.length > 0 ? actualValues : [0],
+                            backgroundColor: Array(categories.length || 1).fill(actualGradient),
+                            borderColor: '#b9861d',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            maxBarThickness: 42
+                        }
+                    ]
                 };
 
                 barChartInstance = new Chart(barCtx, {
@@ -2267,14 +2743,28 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
                         plugins: {
-                            legend: {
-                                display: false
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(12,42,68,0.96)',
+                                titleColor: '#f8fbff',
+                                bodyColor: '#edf5ff',
+                                padding: 12,
+                                callbacks: {
+                                    title: function(items) {
+                                        return items[0]?.label || 'Category';
+                                    },
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${symbol}${Number(context.parsed.y).toLocaleString()}`;
+                                    }
+                                }
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
+                                grid: { color: 'rgba(16,42,67,0.08)' },
                                 ticks: {
                                     callback: function(value) {
                                         return symbol + value.toLocaleString();
@@ -2283,6 +2773,7 @@
                                 }
                             },
                             x: {
+                                grid: { display: false },
                                 ticks: {
                                     font: { size: 9 },
                                     maxRotation: 45,
@@ -2293,12 +2784,33 @@
                     }
                 });
 
-                // Update bar summary
+                renderLegend('barLegend', [
+                    { label: 'Estimated', color: '#2b5c7c' },
+                    { label: 'Actual', color: '#d7a63d' }
+                ]);
+
                 document.getElementById('barTotalDisplay').innerHTML =
-                    `Total: <span class="currency-symbol">${symbol}</span>${totalBudget.toLocaleString()}`;
+                    `Total budget: <span class="currency-symbol">${symbol}</span>${totalBudget.toLocaleString()}`;
                 document.getElementById('barCategoriesCount').textContent =
-                    `Categories: ${categories.length}`;
+                    `Coverage: ${Math.round(coverage)}% · Payouts: ${symbol}${totalPayouts.toLocaleString()}`;
             };
+
+            const officialReceivedInput = document.getElementById('officialAmountReceived');
+            const applyContributionLedgerBtn = document.getElementById('applyContributionLedgerBtn');
+            if (applyContributionLedgerBtn) {
+                applyContributionLedgerBtn.addEventListener('click', function() {
+                    const total = Array.from(document.querySelectorAll('.contrib-amount')).reduce((sum, input) => {
+                        const val = parseFloat(input.value);
+                        return sum + (Number.isFinite(val) ? val : 0);
+                    }, 0);
+                    if (officialReceivedInput) {
+                        officialReceivedInput.value = total;
+                    }
+                    autoSave();
+                    updateDashboard();
+                    updateCharts();
+                });
+            }
 
             // ----- ADD ROW FUNCTIONS -----
             window.addOrderRow = function() {
@@ -2527,6 +3039,14 @@
                                     autoSave();
                                     updateCharts(); };
                             }
+                            if (col === 'Received') {
+                                input.type = 'checkbox';
+                                input.className = 'contrib-received';
+                                input.checked = rowData[col] === true || rowData[col] === 'true';
+                                input.onchange = function() { updateContributions();
+                                    autoSave();
+                                    updateCharts(); };
+                            }
                             if (col === 'Amount' && tableId === 'payoutTable') {
                                 input.className = 'payout-amount';
                                 input.oninput = function() { updatePayouts();
@@ -2577,6 +3097,142 @@
                 }, 500);
             };
 
+            function formatSampleDate(offsetDays) {
+                const date = new Date();
+                date.setHours(12, 0, 0, 0);
+                date.setDate(date.getDate() + offsetDays);
+                return date.toISOString().split('T')[0];
+            }
+
+            function buildSamplePlannerData() {
+                const ceremonyDate = formatSampleDate(11);
+                const burialDate = formatSampleDate(12);
+                const dob = formatSampleDate(-25550);
+                const dop = formatSampleDate(-8);
+
+                return {
+                    __schemaVersion: SECURITY.schemaVersion,
+                    __exportedAt: new Date().toISOString(),
+                    currency: 'NGN',
+                    deceasedName: 'Mary Elizabeth Okafor',
+                    preferredName: 'Mama Mary',
+                    dob,
+                    dop,
+                    placePassing: 'Lagos, Nigeria',
+                    agePassing: '71',
+                    veteranStatus: 'No',
+                    religion: 'Catholic',
+                    title: 'Mrs.',
+                    primaryContact: 'Ngozi Okafor',
+                    primaryPhone: '+234 803 555 9081',
+                    primaryEmail: 'ngozi.okafor@familymail.com',
+                    spouse: 'Emeka Okafor',
+                    eldestChild: 'Chinelo Okafor',
+                    clergyLiaison: 'Rev. Father Daniel Adebayo',
+                    funeralHome: 'Grace & Comfort Funeral Home',
+                    funeralPhone: '+234 812 444 1212',
+                    transportService: 'Apex Transit Services',
+                    authStatus: 'Signed',
+                    certQty: '6',
+                    permitStatus: 'Obtained',
+                    ceremonyDate,
+                    ceremonyTime: '10:00 AM – 11:30 AM',
+                    viewingTime: '8:30 AM – 9:45 AM',
+                    ceremonyVenue: 'St. Catherine Catholic Church',
+                    venueAddress: '12 Apostle Road, Lekki Phase 1, Lagos',
+                    venueContact: 'Parish Office / +234 814 220 4040',
+                    receptionVenue: 'The Family Hall, Lekki',
+                    handicap: 'Yes',
+                    cemeteryName: 'Apex Memorial Gardens',
+                    plotSection: 'Section B, Lot 12',
+                    graveFeePaid: 'Yes',
+                    vaultRequired: 'Yes',
+                    intermentType: 'Ground burial',
+                    gravesideTime: '12:00 PM',
+                    tentChairs: '20 chairs + 2 canopies',
+                    committalLeader: 'Rev. Father Daniel Adebayo',
+                    floralCasket: 'White lilies and roses',
+                    floralEasel: 'Family memorial spray',
+                    floralWreath: 'Floral cross',
+                    floralBouquets: '2 family bouquets',
+                    floralBlanket: 'White dove blanket',
+                    floralDelivery: 'By 7:00 AM',
+                    musicPrelude: 'Hymn medley',
+                    musicProcessional: 'Amazing Grace',
+                    musicDuring: 'Instrumental piano',
+                    musicRecessional: 'Be Thou My Vision',
+                    musicPost: 'Prayerful reflection',
+                    urnDetails: 'Dove bronze urn',
+                    casketModel: 'Mahogany casket with satin lining',
+                    pallColor: 'White',
+                    memorialQty: '200',
+                    guestBook: 'Leather guest book',
+                    thankYouQty: '120',
+                    caterer: 'Heritage Catering',
+                    menuType: 'Family lunch buffet',
+                    dietary: 'Vegetarian and diabetic-friendly options',
+                    beverages: 'Water, tea, soft drinks, fruit punch',
+                    guestCount: '180',
+                    cateringTime: '9:30 AM – 2:30 PM',
+                    officiantName: 'Rev. Father Daniel Adebayo',
+                    officiantOrg: 'St. Catherine Catholic Church',
+                    openingWords: 'Welcome and opening prayer',
+                    closingWords: 'Final blessing and thanks',
+                    militaryFlag: false,
+                    gunSalute: false,
+                    obitPlace: 'Sunday Tribune / family notice board',
+                    charityOption: 'Family donation to church charity fund',
+                    charityName: 'St. Catherine Benevolence Fund',
+                    socialPolicy: 'No livestreaming without family approval',
+                    rainLocation: 'Church annex hall',
+                    emergencyMed: 'Adebayo Clinic / +234 815 330 1111',
+                    avTest: true,
+                    orderRows: [
+                        { Time: ':00', Segment: 'Opening Prayer / Welcome', Person: 'Rev. Father Daniel', Notes: 'Family welcome and prayer' },
+                        { Time: ':05', Segment: 'Tribute from children', Person: 'Chinelo Okafor', Notes: 'Short remembrance' },
+                        { Time: ':10', Segment: 'Eulogy / Family reflections', Person: 'Emeka Okafor', Notes: 'Life and legacy' },
+                        { Time: ':15', Segment: 'Musical performance', Person: 'Mariam Adebayo', Notes: 'Amazing Grace' },
+                        { Time: ':20', Segment: 'Scripture reading', Person: 'Deacon Tunde', Notes: 'Psalm 23' },
+                        { Time: ':30', Segment: 'Sermon / Reflection', Person: 'Rev. Father Daniel', Notes: 'Comfort and hope' },
+                        { Time: ':40', Segment: 'Closing prayer / rite', Person: 'Rev. Father Daniel', Notes: 'Final blessing' },
+                        { Time: ':45', Segment: 'Viewing / Committal', Person: 'Family usher team', Notes: 'Procession to graveside' }
+                    ],
+                    transportRows: [
+                        { Vehicle: 'Hearse', Capacity: 'Family', 'Pick-up': 'Grace & Comfort', Departure: '8:30 AM', Destination: 'St. Catherine Church' },
+                        { Vehicle: 'Lead Car (Family)', Capacity: '4', 'Pick-up': 'Family home', Departure: '8:15 AM', Destination: 'Church' },
+                        { Vehicle: 'Minibus', Capacity: '12', 'Pick-up': 'Community center', Departure: '9:00 AM', Destination: 'Graveside' }
+                    ],
+                    budgetRows: [
+                        { Category: 'Transportation (2 Sienna)', Estimated: '360000', Actual: '0', Paid: 'No', Balance: '360000' },
+                        { Category: 'Food & provisions', Estimated: '606100', Actual: '0', Paid: 'No', Balance: '606100' },
+                        { Category: 'Goat / meat', Estimated: '450000', Actual: '0', Paid: 'No', Balance: '450000' },
+                        { Category: 'Chicken', Estimated: '150000', Actual: '0', Paid: 'No', Balance: '150000' },
+                        { Category: 'Kolanuts', Estimated: '10000', Actual: '0', Paid: 'No', Balance: '10000' },
+                        { Category: 'Drinks', Estimated: '65000', Actual: '0', Paid: 'No', Balance: '65000' },
+                        { Category: 'Photographer', Estimated: '90000', Actual: '0', Paid: 'No', Balance: '90000' },
+                        { Category: 'Hotel lodging', Estimated: '120000', Actual: '0', Paid: 'No', Balance: '120000' },
+                        { Category: 'Canopy / chairs / DJ / wiring', Estimated: '55000', Actual: '0', Paid: 'No', Balance: '55000' },
+                        { Category: 'Mats', Estimated: '24000', Actual: '0', Paid: 'No', Balance: '24000' },
+                        { Category: '7-day family stay in village', Estimated: '100000', Actual: '0', Paid: 'No', Balance: '100000' },
+                        { Category: 'Return transport from village', Estimated: '105000', Actual: '0', Paid: 'No', Balance: '105000' }
+                    ],
+                    contribRows: [],
+                    payoutRows: []
+                };
+            }
+
+            function applySamplePlanner() {
+                const data = buildSamplePlannerData();
+                restoreAllData(data);
+                localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                const indicator = document.getElementById('saveIndicator');
+                indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Sample plan loaded';
+                indicator.className = 'save-indicator saved';
+                document.getElementById('plannerStatusChip').textContent = 'Family review';
+                if (typeof updateCompletion === 'function') updateCompletion();
+                setTimeout(updateCharts, 200);
+            }
+
             // ----- LOAD DATA -----
             function loadSavedData() {
                 try {
@@ -2588,6 +3244,7 @@
                         indicator.innerHTML =
                             '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Restored from browser';
                         indicator.className = 'save-indicator saved';
+                        if (typeof updateCompletion === 'function') updateCompletion();
                         return true;
                     }
                 } catch (e) {
@@ -2872,14 +3529,7 @@
             // ----- Initial load -----
             const hasSaved = loadSavedData();
             if (!hasSaved) {
-                document.querySelectorAll('input[type="date"]').forEach(inp => {
-                    if (!inp.value) inp.value = todayStr;
-                });
-                updateCover();
-                updateDashboard();
-                updateAllCurrencies();
-                setTimeout(updateCharts, 400);
-                setTimeout(autoSave, 1000);
+                applySamplePlanner();
             } else {
                 setTimeout(updateCharts, 500);
             }
@@ -2904,6 +3554,22 @@
                 applyPrintMode();
                 window.print();
             });
+
+            document.getElementById('printFundingBtn').addEventListener('click', function() {
+                const mode = document.getElementById('printMode');
+                if (mode) mode.value = 'finance';
+                applyPrintMode();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => window.print(), 120);
+            });
+
+            const samplePlannerButton = document.getElementById('samplePlannerBtn');
+            if (samplePlannerButton) {
+                samplePlannerButton.addEventListener('click', function() {
+                    if (!confirm('Load the realistic sample ceremony plan and replace the current draft?')) return;
+                    applySamplePlanner();
+                });
+            }
 
             // ----- RESET -----
             document.getElementById('resetBtn').addEventListener('click', function() {
