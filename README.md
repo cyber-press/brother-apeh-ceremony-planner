@@ -51,13 +51,65 @@ When updating cached application files, increment the `VERSION` constant in `ser
 
 ## Privacy model
 
-This version has no server-side backend or shared database. Planner information is stored in the browser on the device where it is entered.
+The app supports both local-only and shared-server save modes. Browser storage remains the fallback for offline editing, but the recommended production setup keeps planner data in a shared backend with restricted access.
 
 - Do not commit completed backup files, family contact details, contribution records, passwords, tokens, or API keys.
-- Do not use a public or shared computer for private ceremony records.
+- Use a private deployment or trusted family workspace for live ceremony records.
 - Download JSON backups regularly and store them in a protected location.
-- Data entered on one device will not automatically appear on another device.
+- Local browser data can still be used when the server is offline or unavailable.
 - Clearing browser storage may remove locally saved planner data.
+
+## Shared backend option (FastAPI + SQLite/Postgres)
+
+This project can run behind a small Python API so the same planner data is shared across devices instead of remaining browser-local only.
+
+### Run locally
+
+```bash
+python -m pip install -r requirements.txt
+python app.py
+```
+
+The app serves the planner on `http://localhost:8000` and keeps a shared SQLite file at `planner.db` by default.
+
+### API contract
+
+- `GET /api/planner/{planner_id}` returns the latest saved planner payload
+- `POST /api/planner/{planner_id}` stores the current planner state as JSON
+- `GET /api/planners` lists available planner records
+
+This keeps the static planner UI while allowing a shared backend for family or team access.
+
+## Production deployment
+
+The repository includes deployment scaffolding for hosted Python services:
+
+- `render.yaml` for Render
+- `railway.json` for Railway
+- `database.py` for SQLite or Postgres-ready data access
+- `auth.py` for optional API-key protection
+- `.env.example` for local environment variables
+
+### Environment variables
+
+```bash
+DATABASE_URL=sqlite:///planner.db
+API_KEYS=
+DEFAULT_PLANNER_ID=default
+```
+
+For Postgres deployments, set `DATABASE_URL` to a PostgreSQL connection string such as:
+
+```bash
+DATABASE_URL=postgresql://user:password@host:5432/planner
+```
+
+### Deployment notes
+
+- Render and Railway can both run the FastAPI app with `uvicorn app:app --host 0.0.0.0 --port $PORT`.
+- Use SQLite for a lightweight single-instance deployment, or Postgres for a more durable production setup.
+- If you want access restrictions, define a comma-separated `API_KEYS` value and send `X-API-Key` in requests.
+- Multi-plan support is available through planner IDs such as `default`, `family-1`, or a per-family key.
 
 ## Deploy with GitHub Pages
 
