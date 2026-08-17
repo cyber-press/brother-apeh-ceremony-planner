@@ -1,6 +1,22 @@
-# Brother Apeh Ceremony Planner — v3.4.2 UI Repair
+# Brother Apeh Planner v3.4.4.9 — Data Integrity Pass
 
-This build repairs malformed section-title markup that caused sections to nest inside one another, producing narrow tables, missing headings, excessive whitespace, and command-center overflow.
+Verified provisional budget arithmetic and all summary calculations; removed unsupported sample numbers and auto-filled dates; neutralized unconfirmed status defaults; made the draft-total badge dynamic; fixed Received-state CSV export; locked the working draft to Nigerian Naira to prevent symbol-only currency relabeling.
+
+# Brother Apeh Planner v3.4.4.3
+
+Draft Funding Status release: planned contributions are separate from officially received funds. Only rows marked Received count toward Amount Received in dashboard, charts, print summary, backups, and CSV.
+
+# Brother Apeh Planner v3.4.4.2 — Budget & Vendor Import
+
+Imports the 12-line provisional burial budget draft (₦2,135,100) and adds business/vendor, phone, and optional portfolio/reference tracking to every budget row.
+
+# Brother Apeh Ceremony Planner — v3.4.4.1 Layout Stabilization
+
+This release repairs all 18 section heading elements, prevents nested/contracted sections, contains wide finance tables inside their section cards, preserves horizontal table scrolling, and keeps the v3.4.4 dark-mode contrast improvements.
+
+# Brother Apeh Ceremony Planner — v3.4.4 Deployment Repair
+
+This release restores the canonical `assets/icons/` PWA structure, installs the static GitHub Pages workflow at `.github/workflows/pages.yml`, and deploys the v3.4.4 Dark Mode Polish build.
 
 # Brother Apeh Ceremony Planner
 
@@ -96,19 +112,84 @@ Replace `index.html` with the newer approved build, commit the change, and push 
 A private authenticated backend should be introduced before adding multi-user collaboration, online contribution processing, or centralized family records.
 
 
-## Mobile-first iPhone experience
+## v3.4.4.9 Live Financial Dashboard
+Dashboard metrics recalculate from live budget estimates, actual costs, contribution entries, received toggles, and payouts.
 
-Version 3.3 adds safe-area support, 44–48 px touch targets, 16 px form controls to prevent Safari zoom, a five-action bottom navigation bar, compact dashboard cards, swipeable utility controls, and improved table scrolling.
+
+## v3.4.4.9 Identity details
+- Religious affiliation: Pentecostal
+- Requested title: Mr.
 
 
-## Version 3.4 — Professional Print & PDF Suite
+## v3.4.4.9 Editable Profile + Auto-save
+Section 1 remains fully editable. Changes are saved in browser localStorage after input and are flushed immediately on completed changes, page hide, refresh, or close. The supplied Brother Apeh values are starting defaults, not locked fields.
 
-- Cover prints as a dedicated first page.
-- Executive dashboard and charts print as a structured summary page.
-- Dove artwork is resized and kept clear of the confidentiality footer.
-- Ceremony and burial dates use consistent full-date formatting.
-- Print controls support Full Planner, Executive Summary, Ceremony-Day Brief, and Finance reports.
-- Tables repeat headings and avoid splitting individual rows where supported.
-- Mobile, PWA, navigation, and interactive controls are hidden in PDF output.
 
-For clean PDF output in Chrome or Edge, open **More settings**, turn off **Headers and footers**, and turn on **Background graphics**.
+## v3.4.4.10 — Family / Next of Kin
+- Section 2 populated with verified family/contact information.
+- All Section 2 fields remain editable and auto-save locally.
+- One-time browser migration replaces legacy/sample family values with the verified starting data without repeatedly overriding later edits.
+
+
+## v3.5.0 — Multi-User Shared Master Sync
+
+This build adds a FastAPI + SQLite synchronization layer while keeping the existing browser autosave as an offline fallback.
+
+### Architecture
+
+- Frontend: static planner (`index.html`) — suitable for GitHub Pages.
+- Backend: FastAPI REST API.
+- Database: SQLite in WAL mode on a persistent disk/volume.
+- Shared planner ID: `brother-apeh-master`.
+- Protection: server-side `PLANNER_ACCESS_KEY`, entered by each authorized family member and stored only in that browser's localStorage.
+- Concurrency: optimistic version numbers. A stale browser receives HTTP 409 instead of silently overwriting a newer family edit.
+- Offline behavior: localStorage continues to save changes immediately. When the API is reachable, the browser pushes the latest state after a debounce.
+
+### Local test
+
+1. Backend:
+   ```bash
+   cd backend
+   python -m venv .venv
+   # Windows: .venv\Scripts\activate
+   # macOS/Linux: source .venv/bin/activate
+   pip install -r requirements.txt
+   set PLANNER_ACCESS_KEY=your-test-key
+   # macOS/Linux: export PLANNER_ACCESS_KEY=your-test-key
+   uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+   ```
+
+2. Frontend (do not open with `file://` for API testing):
+   ```bash
+   cd ..
+   python -m http.server 5500
+   ```
+   Open `http://127.0.0.1:5500`.
+
+3. Click **Shared sync**, enter the same access key, optionally enter your name, and approve creation of the first shared master.
+
+### GitHub Pages + hosted API
+
+1. Deploy `/backend` to one persistent FastAPI host.
+2. Configure a persistent disk/volume for SQLite.
+3. Set:
+   - `PLANNER_ACCESS_KEY`
+   - `PLANNER_DB_PATH` (for example `/data/planner.db`)
+   - `PLANNER_ALLOWED_ORIGINS=https://cyber-press.github.io`
+4. Edit `sync-config.js`:
+   ```js
+   window.PLANNER_SYNC_CONFIG = Object.freeze({
+     enabled: true,
+     apiBaseUrl: "https://YOUR-API-HOST.example.com",
+     plannerId: "brother-apeh-master"
+   });
+   ```
+5. Deploy the static files to GitHub Pages.
+
+### Important security boundary
+
+The shared access key is a family-wide gate, not per-user authentication. It is intentionally a lightweight next step. For individual accounts, roles, audit history, password recovery, or multiple planner workspaces, migrate the backend to Postgres/Supabase or add a full authentication layer.
+
+### SQLite deployment rule
+
+Run **one FastAPI application instance** against the SQLite file. Do not horizontally scale multiple containers against separate ephemeral SQLite files. If multi-instance scaling is required, move the store to Postgres.

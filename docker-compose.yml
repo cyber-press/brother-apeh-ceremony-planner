@@ -1,0 +1,12 @@
+services:
+  planner-api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      PLANNER_ACCESS_KEY: ${PLANNER_ACCESS_KEY:-change-me-before-production}
+      PLANNER_DB_PATH: /data/planner.db
+      PLANNER_ALLOWED_ORIGINS: http://127.0.0.1:5500,http://localhost:5500,https://cyber-press.github.io
+    volumes:
+      - ./backend/data:/data
+    restart: unless-stopped

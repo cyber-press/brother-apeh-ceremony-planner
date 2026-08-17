@@ -2,49 +2,21 @@
   "id": "./",
   "name": "Brother Apeh Ceremony Planner",
   "short_name": "Apeh Planner",
-  "description": "A private, offline-ready ceremony planning dashboard with professional PDF reporting for the Brother Apeh family.",
+  "description": "A private, offline-ready ceremony planning dashboard for the Brother Apeh family.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui"
-  ],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#e8edf2",
   "theme_color": "#0b2a44",
   "orientation": "any",
   "lang": "en-US",
-  "categories": [
-    "productivity",
-    "utilities",
-    "lifestyle"
-  ],
+  "categories": ["productivity", "utilities", "lifestyle"],
   "icons": [
-    {
-      "src": "./assets/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./assets/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./assets/icons/icon-maskable-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./assets/icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    {"src": "./assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "./assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "./assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "./assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ],
   "shortcuts": [
     {
@@ -52,12 +24,7 @@
       "short_name": "Planner",
       "description": "Open the ceremony planning dashboard",
       "url": "./",
-      "icons": [
-        {
-          "src": "./assets/icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
+      "icons": [{"src": "./assets/icons/icon-192.png", "sizes": "192x192"}]
     }
   ]
 }

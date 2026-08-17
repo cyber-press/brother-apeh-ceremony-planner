@@ -15,12 +15,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-32.png">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
-    <title>Burial Ceremony Planner · Professional Print Suite</title>
+    <title>Burial Ceremony Planner · Professional Command Center v3.5.0</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
     </script>
+    <script src="./sync-config.js"></script>
     <style>
         * {
             margin: 0;
@@ -307,85 +308,6 @@
             color: #8a6d1b;
         }
 
-        .family-funding-summary {
-            margin-top: 0;
-            margin-bottom: 1.8rem;
-            padding: 1.4rem 1.6rem 1.2rem;
-        }
-        .funding-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
-        }
-        .funding-summary-card {
-            border-radius: 18px;
-            padding: 1rem 1.1rem;
-            border: 1px solid rgba(14, 54, 78, 0.08);
-            background: linear-gradient(180deg, #ffffff 0%, #f3f8fc 100%);
-            box-shadow: 0 10px 18px rgba(18, 45, 68, 0.05);
-        }
-        .funding-summary-card .kicker {
-            display: block;
-            font-size: 0.68rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #5e7892;
-            margin-bottom: 0.45rem;
-        }
-        .funding-summary-card strong {
-            display: block;
-            font-size: clamp(1.2rem, 2vw, 1.9rem);
-            color: #0d2c43;
-            line-height: 1.2;
-        }
-        .funding-summary-card small {
-            display: block;
-            margin-top: 0.35rem;
-            color: #46617d;
-            font-size: 0.72rem;
-            line-height: 1.5;
-        }
-        .funding-summary-card.total {
-            background: linear-gradient(135deg, #0f2f48 0%, #18496a 100%);
-            border-color: rgba(255,255,255,0.04);
-        }
-        .funding-summary-card.total .kicker,
-        .funding-summary-card.total small {
-            color: rgba(235,244,255,0.78);
-        }
-        .funding-summary-card.total strong {
-            color: #ffffff;
-        }
-        .funding-summary-card.success {
-            background: linear-gradient(135deg, #edf9f3 0%, #dff3e7 100%);
-            border-color: rgba(23, 107, 73, 0.12);
-        }
-        .funding-summary-card.success strong {
-            color: #155c41;
-        }
-        .funding-summary-card.warning {
-            background: linear-gradient(135deg, #fff8ea 0%, #fdf0cf 100%);
-            border-color: rgba(156, 119, 28, 0.12);
-        }
-        .funding-summary-card.warning strong {
-            color: #7b5712;
-        }
-        .funding-summary-card.danger {
-            background: linear-gradient(135deg, #fff1f1 0%, #fee2e2 100%);
-            border-color: rgba(168, 55, 55, 0.12);
-        }
-        .funding-summary-card.danger strong {
-            color: #8d2d2d;
-        }
-
-        .final-budget-sheet-table {
-            margin-top: 0.8rem;
-        }
-        .final-budget-sheet-table tbody tr:nth-child(even) {
-            background: rgba(236, 242, 248, 0.7);
-        }
-
         /* ===== CHARTS SECTION ===== */
         .charts-section {
             display: grid;
@@ -394,23 +316,11 @@
             margin-bottom: 2.5rem;
         }
         .chart-box {
-            background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+            background: #f9fbfd;
             border-radius: 20px;
             padding: 1.5rem 1.8rem;
             border: 1px solid #e2e9f2;
-            box-shadow: 0 18px 32px rgba(17, 38, 53, 0.06), inset 0 1px 0 rgba(255,255,255,0.7);
-        }
-        .chart-box.luxury {
-            background: linear-gradient(180deg, #122d44 0%, #0d2133 100%);
-            border-color: rgba(140, 169, 194, 0.35);
-            box-shadow: 0 20px 36px rgba(7, 16, 28, 0.26);
-        }
-        .chart-box.luxury h3,
-        .chart-box.luxury .legend-item,
-        .chart-box.luxury .chart-summary,
-        .chart-box.luxury #barTotalDisplay,
-        .chart-box.luxury #barCategoriesCount {
-            color: #edf5ff;
+            box-shadow: 0 2px 6px rgba(0, 20, 40, 0.02);
         }
         .chart-box h3 {
             font-size: 1rem;
@@ -423,61 +333,6 @@
         }
         .chart-box h3 i {
             color: #2b5c7c;
-        }
-        .chart-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .funding-health-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 12px;
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            border: 1px solid transparent;
-        }
-        .funding-health-badge.strong {
-            background: rgba(30, 122, 94, 0.12);
-            color: #145a41;
-            border-color: rgba(30, 122, 94, 0.2);
-        }
-        .funding-health-badge.watch {
-            background: rgba(212, 142, 41, 0.12);
-            color: #7f5712;
-            border-color: rgba(212, 142, 41, 0.25);
-        }
-        .funding-health-badge.risk {
-            background: rgba(179, 60, 60, 0.12);
-            color: #8d2d2d;
-            border-color: rgba(179, 60, 60, 0.2);
-        }
-        .chart-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 14px;
-            margin: 0 0 12px;
-        }
-        .legend-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.74rem;
-            color: #2e4b6b;
-            font-weight: 600;
-        }
-        .legend-swatch {
-            width: 12px;
-            height: 12px;
-            border-radius: 4px;
-            display: inline-block;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
         }
         .chart-wrapper {
             position: relative;
@@ -1285,60 +1140,27 @@
 
     </style>
 
-
-    <style id="ui-repair-v342">
-        /* V3.4.2 structural and responsive repair */
-        .command-center, .section, .table-wrap { min-width: 0; }
-        .command-row > * { min-width: 0; }
-        .command-center .command-row:nth-child(2) {
-            display: grid;
-            grid-template-columns: minmax(220px, 1.5fr) minmax(190px, 1fr) auto auto auto;
-            align-items: center;
-        }
-        #sectionJump, #sectionSearch { width: 100%; max-width: 100%; }
-        .table-wrap { width: 100%; max-width: 100%; }
-        .table-wrap table { width: 100%; min-width: 760px; }
-        .section > .grid-2, .section > .grid-3, .section > .table-wrap { width: 100%; }
-        @media (max-width: 980px) {
-            .command-center .command-row:nth-child(2) {
-                grid-template-columns: minmax(0, 1fr) minmax(180px, .75fr) auto;
-            }
-            #expandAllBtn, #collapseAllBtn { display: none; }
-        }
-        @media (max-width: 700px) {
-            .command-center .command-row:nth-child(2) {
-                display: grid;
-                grid-template-columns: 1fr 48px;
-            }
-            #sectionSearch, #sectionJump { grid-column: 1 / -1; }
-            #reviewMissingBtn { grid-column: 2; grid-row: 3; }
-            .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .table-wrap table { min-width: 720px; }
-        }
-    </style>
-
-    <style id="print-suite-v341">
-        /* ===== V3.4.1 CLEAN PRINT & PDF LAYOUT ===== */
+    <style id="print-suite-v34">
+        /* ===== V3.4 PROFESSIONAL PRINT & PDF SUITE ===== */
         .print-document-header,
         .print-overview-title { display: none; }
-
         .print-suite-controls {
             max-width: 760px;
-            margin: 1rem auto .4rem;
-            padding: .85rem 1rem;
+            margin: 1.25rem auto .35rem;
+            padding: .9rem 1rem;
             display: grid;
-            grid-template-columns: auto minmax(210px, 1fr);
-            gap: .4rem .8rem;
+            grid-template-columns: auto minmax(190px, 1fr);
+            gap: .35rem .8rem;
             align-items: center;
-            background: #f4f7fa;
-            border: 1px solid #d9e2ea;
-            border-radius: 14px;
+            background: #eef4fa;
+            border: 1px solid #d5e1ec;
+            border-radius: 16px;
         }
         .print-suite-controls label { font-weight: 800; color: #173b59; }
         .print-suite-controls select {
             min-height: 44px;
-            border: 1px solid #becbd7;
-            border-radius: 10px;
+            border: 1px solid #bdccda;
+            border-radius: 12px;
             padding: .55rem .75rem;
             background: #fff;
             color: #102a43;
@@ -1347,7 +1169,7 @@
         }
         .print-suite-controls span {
             grid-column: 1 / -1;
-            color: #607487;
+            color: #526b80;
             font-size: .78rem;
             line-height: 1.45;
         }
@@ -1356,242 +1178,193 @@
             .print-suite-controls span { grid-column: auto; }
         }
 
-        @page { size: Letter portrait; margin: .5in; }
-
+        @page { size: Letter portrait; margin: .48in .48in .55in; }
         @media print {
-            *, *::before, *::after {
+            html, body { width: auto !important; min-height: auto !important; }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                background: #fff !important;
+                color: #142b3d !important;
+                font-size: 9.5pt;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
-            html, body {
-                width: auto !important;
-                min-height: auto !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: #fff !important;
-            }
-
-            body {
-                display: block !important;
-                color: #172b3a !important;
-                font-size: 9pt !important;
-                line-height: 1.35 !important;
-            }
-
             .planner-container {
-                width: 100% !important;
                 max-width: none !important;
+                width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                background: #fff !important;
                 border: 0 !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
+                background: #fff !important;
             }
-
             .top-actions, .command-center, .completion-panel, .mobile-nav,
             .btn-group, .print-suite-controls, .pwa-install-btn,
             .connection-status, .pwa-update-banner, .back-to-top-v3,
             .toast-stack, .skip-link, .section-toggle, .btn-add-row,
-            .btn-remove-row, body > .mobile-nav {
-                display: none !important;
-            }
+            .btn-remove-row, body > .mobile-nav { display: none !important; }
 
-            /* Page 1: restrained cover */
             .cover-page {
                 display: flex !important;
-                flex-direction: column !important;
-                min-height: 9.3in !important;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                min-height: 9.05in;
                 margin: 0 !important;
-                padding: .62in !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
+                padding: .58in .58in .48in !important;
                 overflow: hidden !important;
-                background: #0b2a44 !important;
-                break-after: page !important;
-                page-break-after: always !important;
+                border-radius: 24px !important;
+                break-after: page;
+                page-break-after: always;
+                box-shadow: none !important;
+                background: radial-gradient(circle at 20% 25%, #1e4a6e, #082034 72%) !important;
             }
-            .cover-page::after { display: none !important; content: none !important; }
-            .cover-decoration {
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 0 .3in !important;
-                border-bottom: 1px solid rgba(255,255,255,.22) !important;
+            .cover-page > * { position: relative; z-index: 2; }
+            .cover-page::after {
+                content: "🕊️" !important;
+                right: .38in !important;
+                bottom: .78in !important;
+                font-size: 4.6rem !important;
+                line-height: 1 !important;
+                opacity: .12 !important;
+                transform: rotate(5deg) !important;
+                z-index: 1 !important;
             }
-            .cover-title h1 {
-                margin: 0 !important;
-                font-size: 31pt !important;
-                line-height: 1.02 !important;
-                letter-spacing: .02em !important;
-            }
-            .cover-title h1 span {
-                margin-top: .08in !important;
-                font-size: 24pt !important;
-                letter-spacing: .12em !important;
-            }
-            .cover-title .sub {
-                margin-top: .16in !important;
-                font-size: 9pt !important;
-                letter-spacing: .08em !important;
-                opacity: .82 !important;
-            }
-            .cover-badge {
-                display: inline-flex !important;
-                width: fit-content !important;
-                margin-top: .24in !important;
-                padding: .09in .18in !important;
-                border-radius: 999px !important;
-                font-size: 7.5pt !important;
-                text-align: left !important;
-            }
-            .cover-meta-grid {
-                display: grid !important;
-                grid-template-columns: 1fr !important;
-                gap: .22in !important;
-                margin: auto 0 !important;
-                max-width: 5.8in !important;
-            }
-            .cover-meta-item {
-                padding-left: .16in !important;
-                border-left: 2px solid rgba(255,255,255,.3) !important;
-            }
-            .cover-meta-item .label { font-size: 7pt !important; }
-            .cover-meta-item .value { margin-top: .03in !important; font-size: 13pt !important; }
+            .cover-decoration { margin-bottom: .35in !important; padding-bottom: .28in !important; }
+            .cover-title h1 { font-size: 30pt !important; line-height: 1.02 !important; }
+            .cover-title h1 span { font-size: 25pt !important; }
+            .cover-title .sub { font-size: 9pt !important; }
+            .cover-badge { font-size: 8pt !important; padding: .1in .2in !important; }
+            .cover-meta-grid { margin-top: auto !important; margin-bottom: auto !important; }
+            .cover-meta-item .value { font-size: 12pt !important; }
             .cover-footer {
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                gap: .2in !important;
-                margin: 0 !important;
+                margin-top: .35in !important;
                 padding-top: .18in !important;
-                border-top: 1px solid rgba(255,255,255,.18) !important;
-                font-size: 7.5pt !important;
-                opacity: .82 !important;
+                font-size: 8pt !important;
+                opacity: .88 !important;
+                gap: .15in;
             }
 
-            /* Page 2: planning overview */
             .print-document-header {
                 display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                margin: 0 0 .12in !important;
-                padding-bottom: .08in !important;
-                border-bottom: 1px solid #c9d5df !important;
-                color: #5b6f80 !important;
-                font-size: 7pt !important;
-                text-transform: uppercase !important;
-                letter-spacing: .08em !important;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0 0 .18in;
+                padding-bottom: .08in;
+                border-bottom: 1px solid #cbd7e2;
+                color: #4d6578;
+                font-size: 7.5pt;
+                text-transform: uppercase;
+                letter-spacing: .08em;
             }
             .print-overview-title {
                 display: block !important;
-                margin: 0 0 .16in !important;
+                margin: 0 0 .2in;
             }
             .print-overview-title p {
-                margin: 0 0 .03in !important;
-                color: #4b718d !important;
-                font-size: 7pt !important;
-                font-weight: 800 !important;
-                letter-spacing: .12em !important;
-                text-transform: uppercase !important;
+                margin: 0 0 .03in;
+                color: #4b718d;
+                font-size: 7.5pt;
+                font-weight: 800;
+                letter-spacing: .12em;
+                text-transform: uppercase;
             }
             .print-overview-title h2 {
-                margin: 0 !important;
-                color: #0b2a44 !important;
-                font-size: 18pt !important;
-                line-height: 1.15 !important;
+                margin: 0;
+                color: #0b2a44;
+                font-size: 19pt;
+                line-height: 1.15;
             }
-            .print-overview-title span { color: #687b8a !important; font-size: 8pt !important; }
+            .print-overview-title span { color: #5f7283; font-size: 8.5pt; }
 
             #dashboard {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: .12in !important;
+                grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+                gap: .09in !important;
                 margin: 0 0 .18in !important;
-                break-inside: avoid !important;
+                break-inside: avoid;
             }
             .dash-card {
                 min-width: 0 !important;
-                padding: .14in .16in !important;
-                border-radius: 9px !important;
+                padding: .13in .12in !important;
+                border-radius: 10px !important;
                 box-shadow: none !important;
             }
-            .dash-card:last-child { grid-column: 1 / -1 !important; }
-            .dash-card .dash-label { font-size: 6.6pt !important; line-height: 1.25 !important; }
-            .dash-card .dash-value { margin-top: .03in !important; font-size: 12pt !important; overflow-wrap: anywhere !important; }
+            .dash-card .dash-label { font-size: 6.5pt !important; line-height: 1.25; }
+            .dash-card .dash-value { font-size: 12pt !important; overflow-wrap: anywhere; }
 
             #chartsSection {
                 display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
-                gap: .15in !important;
+                gap: .16in !important;
                 margin: 0 !important;
-                break-after: page !important;
-                page-break-after: always !important;
+                break-after: page;
+                page-break-after: always;
             }
             .chart-box {
-                padding: .14in !important;
-                border-radius: 10px !important;
+                padding: .15in !important;
+                border-radius: 12px !important;
                 box-shadow: none !important;
-                break-inside: avoid !important;
+                break-inside: avoid;
             }
-            .chart-box h3 { margin-bottom: .06in !important; font-size: 8.5pt !important; }
-            .chart-wrapper { height: 2.05in !important; }
-            .chart-wrapper canvas { width: 100% !important; max-height: 2.05in !important; }
-            .chart-summary { margin-top: .05in !important; font-size: 6.8pt !important; }
+            .chart-box h3 { font-size: 9pt !important; margin-bottom: .05in !important; }
+            .chart-wrapper { height: 2.15in !important; }
+            .chart-wrapper canvas { max-height: 2.15in !important; }
+            .chart-summary { font-size: 7pt !important; }
 
-            /* Planner content */
             .section {
                 display: block !important;
-                margin: 0 0 .14in !important;
-                padding: .16in .18in !important;
-                border: 1px solid #d2dbe3 !important;
-                border-radius: 8px !important;
+                margin: 0 0 .18in !important;
+                padding: .18in .2in !important;
+                border: 1px solid #cfd9e2 !important;
+                border-radius: 12px !important;
                 box-shadow: none !important;
-                background: #fff !important;
-                break-inside: auto !important;
-                page-break-inside: auto !important;
+                background: #fbfcfe !important;
+                break-inside: auto;
+                page-break-inside: auto;
             }
             .section.is-collapsed > :not(.section-header-v3),
             .section.is-filtered { display: block !important; }
             .section-header-v3, .section-title {
-                break-after: avoid !important;
-                page-break-after: avoid !important;
+                break-after: avoid;
+                page-break-after: avoid;
             }
             .section-title {
-                margin-bottom: .1in !important;
-                padding-left: .1in !important;
-                border-left-width: 3px !important;
-                font-size: 11pt !important;
+                margin-bottom: .12in !important;
+                padding-left: .12in !important;
+                border-left-width: 4px !important;
+                font-size: 12pt !important;
             }
-            .grid-2 { grid-template-columns: 1fr 1fr !important; gap: .08in .16in !important; }
-            .grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: .08in .12in !important; }
-            .field-group { gap: 2px !important; margin-bottom: .035in !important; break-inside: avoid !important; }
-            .field-group label { font-size: 6.6pt !important; }
+            .grid-2 { grid-template-columns: 1fr 1fr !important; gap: .09in .18in !important; }
+            .grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: .09in .14in !important; }
+            .field-group { gap: 2px !important; margin-bottom: .04in !important; break-inside: avoid; }
+            .field-group label { font-size: 6.8pt !important; }
             .field-group input, .field-group select, .field-group textarea,
             td input, td select {
                 min-height: 0 !important;
-                padding: .045in .06in !important;
-                border: 1px solid #b8c4ce !important;
-                border-radius: 4px !important;
+                padding: .045in .07in !important;
+                border: 1px solid #aebdca !important;
+                border-radius: 5px !important;
                 background: #fff !important;
-                color: #172b3a !important;
-                font-size: 7.6pt !important;
+                color: #132b3d !important;
+                font-size: 8pt !important;
                 box-shadow: none !important;
             }
-            .field-group textarea { min-height: .38in !important; }
-            .checkbox-group { gap: .05in .12in !important; }
-            .checkbox-group label { font-size: 7.4pt !important; }
-            .table-wrap { overflow: visible !important; border-radius: 6px !important; break-inside: auto !important; }
-            table { width: 100% !important; table-layout: fixed !important; font-size: 6.8pt !important; }
-            thead { display: table-header-group !important; }
-            tr { break-inside: avoid !important; page-break-inside: avoid !important; }
-            th { padding: .055in .04in !important; font-size: 6.5pt !important; }
-            td { padding: .04in !important; }
-            .signature-area { break-inside: avoid !important; }
+            .field-group textarea { min-height: .42in !important; }
+            .table-wrap { overflow: visible !important; border-radius: 8px !important; break-inside: auto; }
+            table { font-size: 7.2pt !important; table-layout: fixed; }
+            thead { display: table-header-group; }
+            tr { break-inside: avoid; page-break-inside: avoid; }
+            th { padding: .06in .05in !important; }
+            td { padding: .045in !important; }
+            .signature-area { break-inside: avoid; }
 
-            /* Report visibility */
+            /* Report-specific visibility */
             body[data-print-mode="overview"] .section { display: none !important; }
-            body[data-print-mode="overview"] #chartsSection { break-after: auto !important; page-break-after: auto !important; }
+            body[data-print-mode="overview"] #chartsSection { break-after: auto; page-break-after: auto; }
 
             body[data-print-mode="finance"] .section { display: none !important; }
             body[data-print-mode="finance"] .section[data-print-section="14"],
@@ -1599,7 +1372,7 @@
             body[data-print-mode="finance"] .section[data-print-section="16"] { display: block !important; }
 
             body[data-print-mode="ceremony"] #chartsSection { display: none !important; }
-            body[data-print-mode="ceremony"] #dashboard { break-after: page !important; page-break-after: always !important; }
+            body[data-print-mode="ceremony"] #dashboard { break-after: page; page-break-after: always; }
             body[data-print-mode="ceremony"] .section { display: none !important; }
             body[data-print-mode="ceremony"] .section[data-print-section="1"],
             body[data-print-mode="ceremony"] .section[data-print-section="2"],
@@ -1609,9 +1382,227 @@
             body[data-print-mode="ceremony"] .section[data-print-section="8"],
             body[data-print-mode="ceremony"] .section[data-print-section="12"],
             body[data-print-mode="ceremony"] .section[data-print-section="17"] { display: block !important; }
+
+            body[data-print-mode="finance"] .cover-page,
+            body[data-print-mode="overview"] .cover-page,
+            body[data-print-mode="ceremony"] .cover-page { display: flex !important; }
         }
     </style>
 
+
+<style id="dark-mode-polish-v344">
+/* v3.4.4.1 Layout Stabilization */
+body.theme-dark{color-scheme:dark;}
+body.theme-dark .planner-container,body.theme-dark .section,body.theme-dark .chart-box,body.theme-dark .completion-stat,body.theme-dark .command-center,body.theme-dark .completion-panel,body.theme-dark .print-suite-controls,body.theme-dark .dash-card,body.theme-dark .table-wrap{border-color:rgba(152,190,214,.22)!important;box-shadow:none;}
+body.theme-dark .dash-card{background:#112c40!important;}
+body.theme-dark .dash-card.total{background:#0b2436!important;border-color:#28516c!important;}
+body.theme-dark .dash-card.success{background:#112f2b!important;border-color:#235b4f!important;}
+body.theme-dark .dash-card.warning{background:#3a3015!important;border-color:#755d1c!important;}
+body.theme-dark .command-control,body.theme-dark input,body.theme-dark select,body.theme-dark textarea,body.theme-dark td input,body.theme-dark td select,body.theme-dark .print-suite-controls select,body.theme-dark .top-actions .currency-group select{background:#0f2a3d!important;color:#eef5fb!important;border-color:#3b617d!important;}
+body.theme-dark input::placeholder,body.theme-dark textarea::placeholder,body.theme-dark td input::placeholder,body.theme-dark .command-search::placeholder{color:#9fb5c7!important;opacity:1;}
+body.theme-dark select option,body.theme-dark select optgroup{background:#15344a!important;color:#eef5fb!important;}
+body.theme-dark .command-btn,body.theme-dark .section-toggle,body.theme-dark .btn-outline{background:#10283a!important;color:#eef5fb!important;border-color:#3a5f79!important;}
+body.theme-dark .command-btn:hover,body.theme-dark .section-toggle:hover,body.theme-dark .btn-outline:hover,body.theme-dark .btn-add-row:hover{background:#17384f!important;border-color:#6bbadf!important;color:#fff!important;}
+body.theme-dark .command-btn.primary,body.theme-dark .btn-export,body.theme-dark .btn-sync{background:#1a5573!important;color:#fff!important;border-color:transparent!important;}
+body.theme-dark .btn-sync-restore,body.theme-dark .pwa-install-btn{background:#7a5a12!important;color:#fff!important;border-color:transparent!important;}
+body.theme-dark .btn-add-row{background:rgba(101,184,223,.10)!important;border:2px dashed #5ea7cf!important;color:#d9f1ff!important;}
+body.theme-dark .btn-remove-row{color:#ff7f7f!important;}
+body.theme-dark .btn-remove-row:hover{background:rgba(255,127,127,.12)!important;}
+body.theme-dark .save-indicator{background:rgba(101,184,223,.10)!important;color:#d9eefb!important;}
+body.theme-dark .save-indicator.saved,body.theme-dark .connection-status,body.theme-dark .status-chip{background:rgba(110,211,168,.16)!important;color:#baf2d8!important;}
+body.theme-dark .connection-status.offline{background:rgba(224,186,96,.18)!important;color:#f6df9d!important;}
+body.theme-dark .completion-track{background:#244257!important;}
+body.theme-dark .completion-fill{background:linear-gradient(90deg,#5db8de,#6ed3a8)!important;}
+body.theme-dark table,body.theme-dark td,body.theme-dark .table-wrap{background:#10283a!important;color:#eef5fb!important;}
+body.theme-dark th{background:#17384f!important;color:#fff!important;border-bottom-color:#3a5f79!important;}
+body.theme-dark .section-title,body.theme-dark .section-title i,body.theme-dark .field-group label,body.theme-dark .field-group label i,body.theme-dark .chart-box h3,body.theme-dark .chart-box h3 i,body.theme-dark .command-title,body.theme-dark .command-title i,body.theme-dark .dash-card .dash-value,body.theme-dark .completion-stat strong,body.theme-dark .checkbox-group label,body.theme-dark .signature-item label{color:#eef5fb!important;}
+body.theme-dark .command-title small,body.theme-dark .completion-label,body.theme-dark .dash-card .dash-label,body.theme-dark .chart-summary,body.theme-dark .print-suite-controls span,body.theme-dark .cover-meta-item .label{color:#a8bac9!important;}
+body.theme-dark .print-suite-controls{background:#133145!important;}
+body.theme-dark .mobile-nav{background:rgba(8,25,35,.98)!important;border-color:rgba(152,190,214,.18)!important;}
+body.theme-dark .mobile-nav button{color:#dcebf6!important;}
+body.theme-dark .mobile-nav button.is-active{background:rgba(101,184,223,.16)!important;color:#fff!important;}
+</style>
+
+<style id="layout-stabilization-v3441">
+/* ===== V3.4.4.1 LAYOUT STABILIZATION ===== */
+.planner-container,
+#plannerApp,
+.section,
+.section-header-v3,
+.section > *,
+.grid-2,
+.grid-3,
+.table-wrap,
+.charts-section,
+.chart-box,
+.dashboard,
+.command-center,
+.completion-panel {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.section {
+    width: 100%;
+    overflow: hidden;
+}
+
+.section-header-v3,
+.section-title {
+    min-width: 0;
+}
+
+.section-title {
+    overflow-wrap: anywhere;
+}
+
+.grid-2,
+.grid-3 {
+    width: 100%;
+}
+
+.field-group {
+    min-width: 0;
+}
+
+.table-wrap {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap table {
+    width: 100%;
+    max-width: none;
+}
+
+#budgetTable,
+#contribTable,
+#payoutTable,
+#orderTable,
+#transportTable {
+    min-width: 760px;
+}
+
+.section .btn-add-row {
+    max-width: 100%;
+    margin-left: 0;
+    align-self: flex-start;
+}
+
+.section[data-print-section="14"] > p,
+.section[data-print-section="15"] > p,
+.section[data-print-section="16"] > p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 701px) {
+    .section[data-print-section="14"],
+    .section[data-print-section="15"],
+    .section[data-print-section="16"] {
+        display: block;
+    }
+    .section[data-print-section="14"] .table-wrap,
+    .section[data-print-section="15"] .table-wrap,
+    .section[data-print-section="16"] .table-wrap {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .section {
+        overflow: visible;
+    }
+    .table-wrap {
+        max-width: 100vw;
+    }
+    .section .btn-add-row {
+        width: 100%;
+    }
+}
+
+@media print {
+    .section {
+        overflow: visible !important;
+    }
+    .table-wrap {
+        overflow: visible !important;
+        max-width: none !important;
+    }
+}
+</style>
+
+
+<style id="budget-vendor-tracker-v3442">
+/* ===== V3.4.4.2 PROVISIONAL BUDGET + VENDOR TRACKING ===== */
+.budget-provisional-note{margin:0 0 .9rem;padding:.8rem .9rem;border:1px solid var(--line);border-radius:14px;background:var(--surface-soft);color:var(--muted);font-size:.86rem;line-height:1.45;}
+.budget-provisional-note strong{color:var(--ink);}
+.budget-provisional-note .stat-badge{margin-left:.5rem;white-space:nowrap;}
+#budgetTable{min-width:1480px;}
+#budgetTable th:nth-child(1){min-width:190px;}
+#budgetTable th:nth-child(2){min-width:330px;}
+#budgetTable th:nth-child(3),#budgetTable th:nth-child(4),#budgetTable th:nth-child(9){min-width:120px;}
+#budgetTable th:nth-child(5){min-width:180px;}
+#budgetTable th:nth-child(6){min-width:150px;}
+#budgetTable th:nth-child(7){min-width:220px;}
+#budgetTable th:nth-child(8){min-width:85px;}
+#budgetTable textarea{width:100%;min-height:58px;resize:vertical;padding:8px 10px;border:1px solid #d5dfe9;border-radius:10px;font:inherit;background:white;}
+body.theme-dark #budgetTable textarea{background:#0f2a3d!important;color:#eef5fb!important;border-color:#3b617d!important;}
+body.theme-dark .budget-provisional-note{background:#133145!important;color:#b9ccda!important;border-color:#315168!important;}
+@media(max-width:700px){.budget-provisional-note .stat-badge{display:inline-block;margin:.45rem 0 0;}.budget-table-wrap{margin-inline:0!important;}}
+@media print{#budgetTable{min-width:0!important;font-size:6.3pt!important;}#budgetTable th,#budgetTable td{padding:.045in!important;}#budgetTable textarea{min-height:.34in!important;font-size:6.3pt!important;}#budgetTable th:nth-child(7),#budgetTable td:nth-child(7){display:none!important;}.budget-provisional-note{font-size:7pt!important;padding:.08in!important;margin-bottom:.08in!important;}}
+</style>
+
+
+<style id="funding-status-v3443">
+/* ===== V3.4.4.3 DRAFT FUNDING STATUS ===== */
+.dashboard{grid-template-columns:repeat(6,minmax(0,1fr));}
+.received-total-badge{margin-left:.45rem;background:#e6f4ea;color:#176536;}
+.received-cell{min-width:116px;text-align:center;}
+.received-toggle{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;}
+.received-toggle input{position:absolute;opacity:0;pointer-events:none;}
+.received-toggle span{display:inline-flex;align-items:center;gap:.38rem;min-height:38px;padding:.45rem .7rem;border:1px solid #b9cbd9;border-radius:999px;background:#f3f7fa;color:#516b7f;font-size:.78rem;font-weight:750;white-space:nowrap;transition:.15s ease;}
+.received-toggle span i{opacity:.45;}
+.received-toggle input:checked + span{background:#e6f4ea;border-color:#78b99c;color:#176536;box-shadow:0 0 0 2px rgba(35,122,87,.08);}
+.received-toggle input:checked + span i{opacity:1;}
+.received-toggle input:focus-visible + span{outline:3px solid rgba(11,118,183,.28);outline-offset:2px;}
+body.theme-dark .received-total-badge{background:rgba(110,211,168,.16)!important;color:#baf2d8!important;}
+body.theme-dark .received-toggle span{background:#10283a;border-color:#3a5f79;color:#b9ccda;}
+body.theme-dark .received-toggle input:checked + span{background:rgba(110,211,168,.18);border-color:#6ed3a8;color:#c8f8e2;}
+#contribTable{min-width:900px;}
+@media(max-width:1100px){.dashboard{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:700px){.dashboard{grid-template-columns:1fr 1fr!important;}.dash-card:nth-child(5),.dash-card:nth-child(6){grid-column:auto;}.received-total-badge{display:inline-block;margin:.45rem 0 0;}}
+@media print{#dashboard{grid-template-columns:repeat(3,minmax(0,1fr))!important;}.received-toggle span{padding:.03in .08in!important;min-height:0!important;font-size:6.5pt!important;}.received-toggle input:not(:checked)+span{color:#687b88!important;background:#fff!important;}.received-total-badge{background:#e6f4ea!important;color:#176536!important;}}
+
+/* ===== V3.4.4.4 FUNDING STATUS LOGIC ===== */
+.funding-status-card .dash-value{font-size:1.05rem;line-height:1.3;}
+.funding-status-card.status-neutral{background:#f2f7fc;border-color:#d7e4ee;}
+.funding-status-card.status-warning{background:#fff7e8;border-color:#ecd39e;}
+.funding-status-card.status-success{background:#e7f5ed;border-color:#b9ddca;}
+.funding-status-card.status-warning .dash-value{color:#7a5a12;}
+.funding-status-card.status-success .dash-value{color:#176536;}
+body.theme-dark .funding-status-card.status-neutral{background:#112c40!important;border-color:#315168!important;}
+body.theme-dark .funding-status-card.status-warning{background:#3a3015!important;border-color:#755d1c!important;}
+body.theme-dark .funding-status-card.status-success{background:#112f2b!important;border-color:#235b4f!important;}
+body.theme-dark .funding-status-card.status-warning .dash-value{color:#f6df9d!important;}
+body.theme-dark .funding-status-card.status-success .dash-value{color:#baf2d8!important;}
+@media(max-width:700px){#fundingStatusCard{grid-column:1/-1;}}
+@media print{#dashboard{grid-template-columns:repeat(4,minmax(0,1fr))!important;}.funding-status-card .dash-value{font-size:9pt!important;}}
+</style>
+
+
+<style id="editable-autosave-v3449">
+.section-edit-note{display:inline-flex;align-items:center;gap:8px;margin:-.65rem 0 1.15rem 0;padding:7px 11px;border:1px solid #cfe0ed;border-radius:999px;background:#f4f9fc;color:#31566f;font-size:.78rem;font-weight:600;}
+.section-edit-note i{font-size:.72rem;}
+body.theme-dark .section-edit-note{background:#102c40;color:#d9eefb;border-color:#3b617d;}
+#deceasedName,#preferredName,#dob,#dop,#placePassing,#agePassing,#veteranStatus,#religion,#title{cursor:text;}
+#veteranStatus{cursor:pointer;}
+</style>
 </head>
 <body>
     <a class="skip-link" href="#plannerApp">Skip to planner content</a>
@@ -1628,7 +1619,7 @@
                     <div class="sub"><i class="fas fa-leaf"></i> A comprehensive guide for a dignified farewell</div>
                 </div>
                 <div class="cover-badge">
-                    <i class="fas fa-file-alt"></i> Professional Command Center v3.4.2 · UI Repair
+                    <i class="fas fa-file-alt"></i> Professional Command Center v3.4 · Print Suite
                 </div>
             </div>
 
@@ -1676,13 +1667,16 @@
             <span class="save-indicator" id="saveIndicator">
                 <i class="fas fa-circle" style="color:#b0b8c0; font-size:0.5rem;"></i> Auto-saved
             </span>
+            <span class="save-indicator" id="remoteSyncIndicator" role="status" aria-live="polite">
+                <i class="fas fa-cloud" aria-hidden="true"></i> Local only
+            </span>
+            <button class="btn-sync" id="remoteSyncBtn" type="button" onclick="manualRemoteSync()" title="Sync with the shared family master planner">
+                <i class="fas fa-rotate" aria-hidden="true"></i> Shared sync
+            </button>
             <div class="currency-group">
                 <label><i class="fas fa-money-bill-wave"></i> Currency:</label>
-                <select id="currencySelector" onchange="updateAllCurrencies(); updateDashboard(); updateContributions(); updatePayouts(); autoSave(); updateCharts();">
-                    <option value="USD">🇺🇸 USD ($)</option>
+                <select id="currencySelector" onchange="updateAllCurrencies(); autoSave(); updateCharts();" aria-label="Currency (Nigerian Naira)">
                     <option value="NGN" selected>🇳🇬 Naira (₦)</option>
-                    <option value="EUR">🇪🇺 Euro (€)</option>
-                    <option value="GBP">🇬🇧 GBP (£)</option>
                 </select>
             </div>
             <button class="btn-sync" onclick="cloudSave()" title="Download backup file">
@@ -1690,9 +1684,6 @@
             </button>
             <button class="btn-sync-restore" onclick="document.getElementById('restoreInput').click()" title="Restore from backup file">
                 <i class="fas fa-cloud-download-alt"></i> Restore
-            </button>
-            <button type="button" class="btn-export" id="samplePlannerBtn" title="Load realistic sample planner">
-                <i class="fas fa-file-import"></i> Sample case
             </button>
             <input type="file" id="restoreInput" class="file-input-hidden" accept=".json" onchange="cloudRestore(event)">
             <button class="btn-export" onclick="exportCSV()">
@@ -1730,6 +1721,10 @@
         </section>
 
 
+        <div class="data-integrity-note" style="width:100%;margin:0 0 1rem;padding:.8rem 1rem;border:1px solid #d5dfe9;border-radius:14px;background:#f7fafc;color:#2e4b6b;font-size:.88rem;">
+            <i class="fas fa-rotate"></i> <strong>Live financial dashboard:</strong> figures below recalculate automatically from the current Budget, Contributions, Received status, and Payout tables. Draft estimates remain provisional.
+        </div>
+
         <!-- ============================================================ -->
         <!-- DASHBOARD -->
         <!-- ============================================================ -->
@@ -1747,72 +1742,52 @@
                 <div class="dash-value" id="dashGuests">—</div>
             </div>
             <div class="dash-card total">
-                <div class="dash-label"><i class="fas fa-coins"></i> Total Est. Cost</div>
+                <div class="dash-label"><i class="fas fa-coins"></i> Draft Est. Cost</div>
                 <div class="dash-value" id="dashTotalCost"><span class="currency-symbol">₦</span>0</div>
             </div>
-            <div class="dash-card success">
-                <div class="dash-label"><i class="fas fa-hand-holding-heart"></i> Total Contributions</div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-list-check"></i> Draft Items</div>
+                <div class="dash-value" id="dashDraftItems">0</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-receipt"></i> Actual Cost Entered</div>
+                <div class="dash-value" id="dashActualCost"><span class="currency-symbol">₦</span>0</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-hand-holding-heart"></i> Planned / Entered</div>
                 <div class="dash-value" id="dashTotalContributions"><span class="currency-symbol">₦</span>0</div>
             </div>
+            <div class="dash-card success received-card">
+                <div class="dash-label"><i class="fas fa-circle-check"></i> Amount Received</div>
+                <div class="dash-value" id="dashAmountReceived"><span class="currency-symbol">₦</span>0</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-label"><i class="fas fa-money-check-dollar"></i> Total Payouts</div>
+                <div class="dash-value" id="dashTotalPayouts"><span class="currency-symbol">₦</span>0</div>
+            </div>
+            <div class="dash-card funding-status-card status-neutral" id="fundingStatusCard">
+                <div class="dash-label"><i class="fas fa-scale-balanced"></i> Funding Status</div>
+                <div class="dash-value" id="dashFundingStatus">No funding received yet</div>
+            </div>
         </div>
-
-        <section class="section family-funding-summary" aria-labelledby="familyFundingSummaryTitle">
-            <div class="section-title" id="familyFundingSummaryTitle"><i class="fas fa-hand-holding-heart"></i> Family funding summary</div>
-            <div class="funding-summary-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:1rem;">
-                <button type="button" class="btn btn-outline" id="applyContributionLedgerBtn" style="min-height:40px; border-radius:12px; padding:0.6rem 0.9rem; background:#f2f7fc;">
-                    <i class="fas fa-wallet"></i> Use draft contribution total
-                </button>
-                <div style="display:flex; flex-direction:column; gap:4px; font-size:0.78rem; font-weight:700; color:#2e4b6b;">
-                    <span>Official/confirmed amount received</span>
-                    <input type="number" id="officialAmountReceived" value="0" min="0" step="1000" style="width:220px; min-height:40px; border:1px solid #d5dfe9; border-radius:12px; padding:0.65rem 0.8rem; font-size:0.95rem;" oninput="autoSave(); updateDashboard(); updateCharts();">
-                </div>
-            </div>
-            <div class="funding-summary-grid">
-                <div class="funding-summary-card total">
-                    <span class="kicker">Planned total</span>
-                    <strong id="familySummaryTotal">₦0</strong>
-                    <small>Full funeral budget</small>
-                </div>
-                <div class="funding-summary-card success">
-                    <span class="kicker" id="familySummaryContribLabel">Draft contribution total</span>
-                    <strong id="familySummaryContrib">₦0</strong>
-                    <small id="familySummaryCoverage">0% funded</small>
-                </div>
-                <div class="funding-summary-card warning">
-                    <span class="kicker">Outstanding gap</span>
-                    <strong id="familySummaryGap">₦0</strong>
-                    <small id="familySummaryGapText">Still to be raised</small>
-                </div>
-                <div class="funding-summary-card danger">
-                    <span class="kicker">Approved payouts</span>
-                    <strong id="familySummaryPayouts">₦0</strong>
-                    <small id="familySummaryPayoutText">No approvals yet</small>
-                </div>
-            </div>
-        </section>
 
         <!-- ============================================================ -->
         <!-- CHARTS SECTION -->
         <!-- ============================================================ -->
         <div class="charts-section" id="chartsSection">
             <div class="chart-box">
-                <h3><i class="fas fa-chart-pie"></i> Budget vs. Contributions</h3>
-                <div class="chart-meta">
-                    <span class="funding-health-badge strong" id="fundingHealthBadge" title="Funding coverage is strong and should remain stable across the final planning stages.">Strong funding</span>
-                </div>
-                <div class="chart-legend" id="pieLegend" aria-label="Budget and contribution chart legend"></div>
+                <h3><i class="fas fa-chart-pie"></i> Draft Budget vs. Funds Received</h3>
                 <div class="chart-wrapper">
                     <canvas id="pieChart"></canvas>
                 </div>
                 <div class="chart-summary">
-                    <span class="stat-item"><span class="dot blue"></span> Total Est. Cost</span>
-                    <span class="stat-item"><span class="dot green"></span> Total Contributions</span>
-                    <span class="stat-item" id="chartBalanceDisplay"><span class="dot gold"></span> Balance: <span class="currency-symbol">₦</span>0</span>
+                    <span class="stat-item"><span class="dot blue"></span> Draft Estimated Cost</span>
+                    <span class="stat-item"><span class="dot green"></span> Amount Received</span>
+                    <span class="stat-item" id="chartBalanceDisplay"><span class="dot gold"></span> Funding Status: No funding received yet</span>
                 </div>
             </div>
             <div class="chart-box">
                 <h3><i class="fas fa-chart-bar"></i> Budget Breakdown by Category</h3>
-                <div class="chart-legend" id="barLegend" aria-label="Category chart legend"></div>
                 <div class="chart-wrapper">
                     <canvas id="barChart"></canvas>
                 </div>
@@ -1823,88 +1798,36 @@
             </div>
         </div>
 
-        <section class="section" data-print-section="14">
-            <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> 14. Final budget sheet</div>
-            <div class="table-wrap final-budget-sheet-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Planned</th>
-                            <th>Actual</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="finalBudgetSheetBody"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="section" data-print-section="15">
-            <div class="section-title"><i class="fas fa-money-check-alt"></i> 15. Contribution ledger</div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Contributor</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="finalContributionLedgerBody"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="section" data-print-section="16">
-            <div class="section-title"><i class="fas fa-receipt"></i> 16. Payout approvals</div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Payee</th>
-                            <th>Amount</th>
-                            <th>Purpose</th>
-                            <th>Approved by</th>
-                        </tr>
-                    </thead>
-                    <tbody id="finalPayoutLedgerBody"></tbody>
-                </table>
-            </div>
-        </section>
-
         <!-- ====== SECTION 1: DECEASED ====== -->
         <div class="section" data-print-section="1">
             <div class="section-title"><i class="fas fa-user-circle"></i> 1. Deceased information</div>
+            <div class="section-edit-note" aria-live="polite"><i class="fas fa-pen"></i> Editable profile · changes auto-save on this device</div>
             <div class="grid-2">
-                <div class="field-group"><label><i class="far fa-id-card"></i> Full legal name</label><input type="text" id="deceasedName" placeholder="e.g. John Robert Smith" oninput="updateCover(); autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-calendar-day"></i> Preferred name / nickname</label><input type="text" id="preferredName" placeholder="Nickname" oninput="autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-calendar-alt"></i> Date of birth</label><input type="date" id="dob" oninput="autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-calendar-times"></i> Date of passing</label><input type="date" id="dop" oninput="autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-map-pin"></i> Place of passing</label><input type="text" id="placePassing" placeholder="City, State" oninput="autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-venus-mars"></i> Age at passing</label><input type="number" id="agePassing" placeholder="Years" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="far fa-id-card"></i> Full legal name</label><input type="text" id="deceasedName" value="Mathias Apeh" placeholder="Full legal name" oninput="updateCover(); autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-day"></i> Preferred name / nickname</label><input type="text" id="preferredName" value="Apeh the Great" placeholder="Preferred name / nickname" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-alt"></i> Date of birth</label><input type="date" id="dob" value="1963-10-23" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-calendar-times"></i> Date of passing</label><input type="date" id="dop" value="2026-08-03" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-map-pin"></i> Place of passing</label><input type="text" id="placePassing" value="Nasarawa State, Nigeria" placeholder="City, State / Country" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-venus-mars"></i> Age at passing</label><input type="number" id="agePassing" value="63" placeholder="Years" oninput="autoSave();"></div>
                 <div class="field-group"><label><i class="fas fa-shield-alt"></i> Veteran status</label>
-                    <select id="veteranStatus" onchange="autoSave();"><option value="No">No</option><option value="Yes">Yes</option></select>
+                    <select id="veteranStatus" onchange="autoSave();"><option value="" selected>Not set</option><option value="No">No</option><option value="Yes">Yes</option></select>
                 </div>
-                <div class="field-group"><label><i class="fas fa-church"></i> Religious affiliation</label><input type="text" id="religion" placeholder="e.g. Catholic, Baptist, None" oninput="autoSave();"></div>
-                <div class="field-group"><label><i class="fas fa-user-tag"></i> Requested title</label><input type="text" id="title" placeholder="Mr. / Mrs. / Dr. / Rev." oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-church"></i> Religious affiliation</label><input type="text" id="religion" value="Pentecostal" placeholder="e.g. Catholic, Baptist, None" oninput="autoSave();"></div>
+                <div class="field-group"><label><i class="fas fa-user-tag"></i> Requested title</label><input type="text" id="title" value="Mr." placeholder="Mr. / Mrs. / Dr. / Rev." oninput="autoSave();"></div>
             </div>
         </div>
 
         <!-- ====== SECTION 2: FAMILY CONTACT ====== -->
         <div class="section" data-print-section="2">
             <div class="section-title"><i class="fas fa-address-book"></i> 2. Family / Next of kin</div>
+            <div class="section-edit-note" aria-live="polite"><i class="fas fa-pen"></i> Editable family information · changes auto-save on this device</div>
             <div class="grid-3">
-                <div class="field-group"><label>Primary decision maker</label><input type="text" id="primaryContact" placeholder="Full name" oninput="updateCover(); autoSave();"></div>
-                <div class="field-group"><label>Phone</label><input type="text" id="primaryPhone" placeholder="(123) 456-7890" oninput="autoSave();"></div>
-                <div class="field-group"><label>Email</label><input type="email" id="primaryEmail" placeholder="family@example.com" oninput="autoSave();"></div>
-                <div class="field-group"><label>Spouse / partner</label><input type="text" id="spouse" placeholder="Name" oninput="autoSave();"></div>
-                <div class="field-group"><label>Eldest child</label><input type="text" id="eldestChild" placeholder="Name" oninput="autoSave();"></div>
-                <div class="field-group"><label>Clergy / celebrant liaison</label><input type="text" id="clergyLiaison" placeholder="Name" oninput="autoSave();"></div>
+                <div class="field-group"><label>Primary decision maker</label><input type="text" id="primaryContact" value="Mathias Apeh Elijah" placeholder="Full name" oninput="updateCover(); autoSave();"></div>
+                <div class="field-group"><label>Phone</label><input type="tel" id="primaryPhone" value="08104668912" placeholder="Phone number" oninput="autoSave();"></div>
+                <div class="field-group"><label>Email</label><input type="email" id="primaryEmail" value="officialelijahmathiaias@gmail.com" placeholder="Email address" oninput="autoSave();"></div>
+                <div class="field-group"><label>Spouse / partner</label><input type="text" id="spouse" value="Single" placeholder="Name or relationship status" oninput="autoSave();"></div>
+                <div class="field-group"><label>Eldest child</label><input type="text" id="eldestChild" value="No children" placeholder="Name or status" oninput="autoSave();"></div>
+                <div class="field-group"><label>Clergy / celebrant liaison</label><input type="text" id="clergyLiaison" value="Nil" placeholder="Name or Nil" oninput="autoSave();"></div>
             </div>
         </div>
 
@@ -1916,11 +1839,11 @@
                 <div class="field-group"><label>Contact phone</label><input type="text" id="funeralPhone" placeholder="Phone" oninput="autoSave();"></div>
                 <div class="field-group"><label>Transportation service (body)</label><input type="text" id="transportService" placeholder="Company name" oninput="autoSave();"></div>
                 <div class="field-group"><label>Embalming / cremation authorization</label>
-                    <select id="authStatus" onchange="autoSave();"><option value="Signed">Signed</option><option value="Pending">Pending</option></select>
+                    <select id="authStatus" onchange="autoSave();"><option value="" selected>Not set</option><option value="Signed">Signed</option><option value="Pending">Pending</option></select>
                 </div>
-                <div class="field-group"><label>Death certificates ordered (Qty)</label><input type="number" id="certQty" value="5" min="0" oninput="autoSave();"></div>
+                <div class="field-group"><label>Death certificates ordered (Qty)</label><input type="number" id="certQty" placeholder="Quantity" min="0" oninput="autoSave();"></div>
                 <div class="field-group"><label>Permit for burial/disposition</label>
-                    <select id="permitStatus" onchange="autoSave();"><option value="Obtained">Obtained</option><option value="Pending">Pending</option></select>
+                    <select id="permitStatus" onchange="autoSave();"><option value="" selected>Not set</option><option value="Obtained">Obtained</option><option value="Pending">Pending</option></select>
                 </div>
             </div>
         </div>
@@ -1937,7 +1860,7 @@
                 <div class="field-group"><label>Venue contact & phone</label><input type="text" id="venueContact" placeholder="Name / Phone" oninput="autoSave();"></div>
                 <div class="field-group"><label>Reception venue</label><input type="text" id="receptionVenue" placeholder="Name / Address" oninput="autoSave();"></div>
                 <div class="field-group"><label>Handicap accessibility</label>
-                    <select id="handicap" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                    <select id="handicap" onchange="autoSave();"><option value="" selected>Not set</option><option value="Yes">Yes</option><option value="No">No</option></select>
                 </div>
             </div>
         </div>
@@ -1949,14 +1872,14 @@
                 <table id="orderTable">
                     <thead><tr><th>Time</th><th>Segment</th><th>Person responsible</th><th>Notes (music / scripture)</th><th style="width:40px;"></th></tr></thead>
                     <tbody id="orderBody">
-                        <tr><td><input type="text" value=":00" placeholder=":00" class="order-input"></td><td><input type="text" value="Opening Prayer/Words" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="Details" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":05" placeholder=":05" class="order-input"></td><td><input type="text" value="Eulogy / Speaker 1" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":10" placeholder=":10" class="order-input"></td><td><input type="text" value="Eulogy / Speaker 2" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":15" placeholder=":15" class="order-input"></td><td><input type="text" value="Musical performance" class="order-input"></td><td><input type="text" placeholder="Performer" class="order-input"></td><td><input type="text" placeholder="Song title" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":20" placeholder=":20" class="order-input"></td><td><input type="text" value="Scripture / Reading 1" class="order-input"></td><td><input type="text" placeholder="Reader" class="order-input"></td><td><input type="text" placeholder="Reference" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":30" placeholder=":30" class="order-input"></td><td><input type="text" value="Sermon / Reflection" class="order-input"></td><td><input type="text" placeholder="Clergy" class="order-input"></td><td><input type="text" placeholder="Theme" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":40" placeholder=":40" class="order-input"></td><td><input type="text" value="Closing Prayer / Rite" class="order-input"></td><td><input type="text" placeholder="Officiant" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value=":45" placeholder=":45" class="order-input"></td><td><input type="text" value="Viewing / Committal" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":00" class="order-input"></td><td><input type="text" placeholder="Opening Prayer / Words" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="Details" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":05" class="order-input"></td><td><input type="text" placeholder="Eulogy / Speaker 1" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":10" class="order-input"></td><td><input type="text" placeholder="Eulogy / Speaker 2" class="order-input"></td><td><input type="text" placeholder="Name" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":15" class="order-input"></td><td><input type="text" placeholder="Musical performance" class="order-input"></td><td><input type="text" placeholder="Performer" class="order-input"></td><td><input type="text" placeholder="Song title" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":20" class="order-input"></td><td><input type="text" placeholder="Scripture / Reading 1" class="order-input"></td><td><input type="text" placeholder="Reader" class="order-input"></td><td><input type="text" placeholder="Reference" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":30" class="order-input"></td><td><input type="text" placeholder="Sermon / Reflection" class="order-input"></td><td><input type="text" placeholder="Clergy" class="order-input"></td><td><input type="text" placeholder="Theme" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":40" class="order-input"></td><td><input type="text" placeholder="Closing Prayer / Rite" class="order-input"></td><td><input type="text" placeholder="Officiant" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Time" placeholder=":45" class="order-input"></td><td><input type="text" placeholder="Viewing / Committal" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><input type="text" placeholder="" class="order-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1973,17 +1896,17 @@
                 <div class="field-group"><label>Cemetery name</label><input type="text" id="cemeteryName" placeholder="Cemetery name" oninput="autoSave();"></div>
                 <div class="field-group"><label>Plot / section number</label><input type="text" id="plotSection" placeholder="Section, Lot, Grave" oninput="autoSave();"></div>
                 <div class="field-group"><label>Grave opening fee (paid?)</label>
-                    <select id="graveFeePaid" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                    <select id="graveFeePaid" onchange="autoSave();"><option value="" selected>Not set</option><option value="Yes">Yes</option><option value="No">No</option></select>
                 </div>
                 <div class="field-group"><label>Burial vault required?</label>
-                    <select id="vaultRequired" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                    <select id="vaultRequired" onchange="autoSave();"><option value="" selected>Not set</option><option value="Yes">Yes</option><option value="No">No</option></select>
                 </div>
                 <div class="field-group"><label>Interment type</label>
-                    <select id="intermentType" onchange="autoSave();"><option value="In-Ground">In-Ground</option><option value="Mausoleum">Mausoleum</option><option value="Cremains Burial">Cremains Burial</option></select>
+                    <select id="intermentType" onchange="autoSave();"><option value="" selected>Not set</option><option value="In-Ground">In-Ground</option><option value="Mausoleum">Mausoleum</option><option value="Cremains Burial">Cremains Burial</option></select>
                 </div>
                 <div class="field-group"><label>Graveside service time</label><input type="text" id="gravesideTime" placeholder="e.g. 11:45 AM" oninput="updateDashboard(); autoSave();"></div>
                 <div class="field-group"><label>Tent and chairs ordered</label>
-                    <select id="tentChairs" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                    <select id="tentChairs" onchange="autoSave();"><option value="" selected>Not set</option><option value="Yes">Yes</option><option value="No">No</option></select>
                 </div>
                 <div class="field-group"><label>Committal rite leader</label><input type="text" id="committalLeader" placeholder="Name" oninput="autoSave();"></div>
             </div>
@@ -2009,9 +1932,9 @@
                 <table id="transportTable">
                     <thead><tr><th>Vehicle</th><th>Capacity</th><th>Pick-up location</th><th>Departure time</th><th>Destination</th><th style="width:40px;"></th></tr></thead>
                     <tbody id="transportBody">
-                        <tr><td><input type="text" value="Hearse" class="transport-input"></td><td><input type="text" value="-" class="transport-input"></td><td><input type="text" value="Funeral Home" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" value="Cemetery" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Lead Car (Family)" class="transport-input"></td><td><input type="text" value="3-4" class="transport-input"></td><td><input type="text" value="Family Home" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" value="Venue" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Limousine 1" class="transport-input"></td><td><input type="text" value="8" class="transport-input"></td><td><input type="text" placeholder="Location" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" placeholder="Destination" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Hearse / vehicle" class="transport-input"></td><td><input type="text" placeholder="Capacity" class="transport-input"></td><td><input type="text" placeholder="Pick-up location" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" placeholder="Destination" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Lead car / family vehicle" class="transport-input"></td><td><input type="text" placeholder="Capacity" class="transport-input"></td><td><input type="text" placeholder="Pick-up location" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" placeholder="Destination" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr><td><input type="text" placeholder="Vehicle name" class="transport-input"></td><td><input type="text" placeholder="Capacity" class="transport-input"></td><td><input type="text" placeholder="Location" class="transport-input"></td><td><input type="text" placeholder="Time" class="transport-input"></td><td><input type="text" placeholder="Destination" class="transport-input"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2046,11 +1969,11 @@
                 <div class="field-group"><label>Urn (if cremation)</label><input type="text" id="urnDetails" placeholder="Material / inscription" oninput="autoSave();"></div>
                 <div class="field-group"><label>Casket model / style</label><input type="text" id="casketModel" placeholder="Color / material" oninput="autoSave();"></div>
                 <div class="field-group"><label>Pall (cloth over casket)</label><input type="text" id="pallColor" placeholder="Color" oninput="autoSave();"></div>
-                <div class="field-group"><label>Memorial cards / bulletins (Qty)</label><input type="number" id="memorialQty" value="100" oninput="autoSave();"></div>
+                <div class="field-group"><label>Memorial cards / bulletins (Qty)</label><input type="number" id="memorialQty" placeholder="Quantity" oninput="autoSave();"></div>
                 <div class="field-group"><label>Guest register book</label>
-                    <select id="guestBook" onchange="autoSave();"><option value="Provided">Provided</option><option value="Not Needed">Not Needed</option></select>
+                    <select id="guestBook" onchange="autoSave();"><option value="" selected>Not set</option><option value="Provided">Provided</option><option value="Not Needed">Not Needed</option></select>
                 </div>
-                <div class="field-group"><label>Thank you cards (Qty)</label><input type="number" id="thankYouQty" value="50" oninput="autoSave();"></div>
+                <div class="field-group"><label>Thank you cards (Qty)</label><input type="number" id="thankYouQty" placeholder="Quantity" oninput="autoSave();"></div>
             </div>
         </div>
 
@@ -2060,11 +1983,11 @@
             <div class="grid-2">
                 <div class="field-group"><label>Caterer name</label><input type="text" id="caterer" placeholder="Name" oninput="autoSave();"></div>
                 <div class="field-group"><label>Menu type</label>
-                    <select id="menuType" onchange="autoSave();"><option value="Buffet">Buffet</option><option value="Plated">Plated</option><option value="Finger Foods">Finger Foods</option></select>
+                    <select id="menuType" onchange="autoSave();"><option value="" selected>Not set</option><option value="Buffet">Buffet</option><option value="Plated">Plated</option><option value="Finger Foods">Finger Foods</option></select>
                 </div>
                 <div class="field-group"><label>Dietary restrictions</label><input type="text" id="dietary" placeholder="Vegetarian / Gluten-free" oninput="autoSave();"></div>
-                <div class="field-group"><label>Beverages</label><input type="text" id="beverages" value="Coffee, Tea, Water" oninput="autoSave();"></div>
-                <div class="field-group"><label>Estimated guest count</label><input type="number" id="guestCount" value="80" oninput="updateDashboard(); autoSave();"></div>
+                <div class="field-group"><label>Beverages</label><input type="text" id="beverages" placeholder="e.g. Water, soft drinks, tea" oninput="autoSave();"></div>
+                <div class="field-group"><label>Estimated guest count</label><input type="number" id="guestCount" placeholder="Expected guest count" oninput="updateDashboard(); autoSave();"></div>
                 <div class="field-group"><label>Setup / cleanup time</label><input type="text" id="cateringTime" placeholder="Setup 9AM / Cleanup 3PM" oninput="autoSave();"></div>
             </div>
         </div>
@@ -2089,47 +2012,183 @@
             <div class="section-title"><i class="fas fa-newspaper"></i> 13. Press / social media notice</div>
             <div class="grid-2">
                 <div class="field-group"><label>Obituary / death notice</label>
-                    <select id="obitPlace" onchange="autoSave();"><option value="Published in Paper">Published in Paper</option><option value="Online only">Online only</option></select>
+                    <select id="obitPlace" onchange="autoSave();"><option value="" selected>Not set</option><option value="Published in Paper">Published in Paper</option><option value="Online only">Online only</option></select>
                 </div>
                 <div class="field-group"><label>Charity in lieu of flowers</label>
-                    <select id="charityOption" onchange="autoSave();"><option value="Yes">Yes</option><option value="No">No</option></select>
+                    <select id="charityOption" onchange="autoSave();"><option value="" selected>Not set</option><option value="Yes">Yes</option><option value="No">No</option></select>
                 </div>
                 <div class="field-group"><label>Charity name</label><input type="text" id="charityName" placeholder="Organization" oninput="autoSave();"></div>
                 <div class="field-group"><label>Social media policy</label>
-                    <select id="socialPolicy" onchange="autoSave();"><option value="Allow photos">Allow photos</option><option value="No photos">No photos</option><option value="Private ceremony only">Private ceremony only</option></select>
+                    <select id="socialPolicy" onchange="autoSave();"><option value="" selected>Not set</option><option value="Allow photos">Allow photos</option><option value="No photos">No photos</option><option value="Private ceremony only">Private ceremony only</option></select>
                 </div>
             </div>
         </div>
 
         <!-- ====== SECTION 14: BUDGET ====== -->
         <div class="section" data-print-section="14">
-            <div class="section-title"><i class="fas fa-coins"></i> 14. Budget & payment tracker</div>
-            <div class="table-wrap">
+            <div class="section-title"><i class="fas fa-coins"></i> 14. Budget &amp; vendor tracker</div>
+            <p class="budget-provisional-note"><i class="fas fa-info-circle"></i> <strong>Draft master budget — not final:</strong> no funding is assumed received, and every estimate remains editable until actual vendor quotes, family decisions, and final costs are confirmed. The summary uses the Estimated column only; Actual, Paid, and Balance do not change the draft total. <span class="stat-badge">Current draft total: <span class="currency-symbol">₦</span><span id="draftBudgetNoteTotal">2,135,100</span></span></p>
+            <div class="table-wrap budget-table-wrap">
                 <table id="budgetTable">
-                    <thead><tr><th>Category</th><th>Estimated</th><th>Actual</th><th>Paid (Y/N)</th><th>Balance</th><th style="width:40px;"></th></tr></thead>
+                    <thead><tr><th>Item</th><th>Quantity / breakdown</th><th>Estimated (₦)</th><th>Actual (₦)</th><th>Business / vendor</th><th>Phone</th><th>Portfolio / reference</th><th>Paid</th><th>Balance (₦)</th><th style="width:40px;"></th></tr></thead>
                     <tbody id="budgetBody">
-                        <tr><td><input type="text" value="Funeral Home Basic Fee" class="budget-cat"></td><td><input type="number" value="1200" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Cemetery Plot/Grave" class="budget-cat"></td><td><input type="number" value="800" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Casket / Urn" class="budget-cat"></td><td><input type="number" value="1500" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Flowers" class="budget-cat"></td><td><input type="number" value="400" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Venue rental" class="budget-cat"></td><td><input type="number" value="300" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Catering" class="budget-cat"></td><td><input type="number" value="750" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Transportation" class="budget-cat"></td><td><input type="number" value="500" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Memorial cards / printing" class="budget-cat"></td><td><input type="number" value="150" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
-                        <tr><td><input type="text" value="Officiant honorarium" class="budget-cat"></td><td><input type="number" value="200" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td><td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td><td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td><td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td><td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td></tr>
+                        <tr>
+                            <td><input type="text" value="Transportation" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">2 Sienna — one primarily for carrying the corpse; the other for family and loved ones. One-way trip. ₦180,000 per Sienna.</textarea></td>
+                            <td><input type="number" value="360000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Transportation"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Food" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">Rice and swallow — 2 bags of rice; corn and cassava flour (15 mudus each); 30 tubers of yam; beans; oil; palm oil; egusi; ogbono; dawa; millet; etc.</textarea></td>
+                            <td><input type="number" value="606100" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Food"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Goat" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">6 goats — ₦75,000 each.</textarea></td>
+                            <td><input type="number" value="450000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Goat"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Chicken" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">10 chickens — ₦15,000 each.</textarea></td>
+                            <td><input type="number" value="150000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Chicken"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Kolanuts" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">Kolanuts.</textarea></td>
+                            <td><input type="number" value="10000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Kolanuts"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Drinks" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">10 crates — ₦6,500 per crate.</textarea></td>
+                            <td><input type="number" value="65000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Drinks"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Photographer" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">Photography services.</textarea></td>
+                            <td><input type="number" value="90000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Photographer"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Hotel lodging" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">10 rooms — provisional / not conclusive; based on expected turnout. ₦12,000 per night.</textarea></td>
+                            <td><input type="number" value="120000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Hotel lodging"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Canopy, chairs, DJ and wiring" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">Canopy ₦10,000 (2 days); chairs ₦10,000; DJ ₦30,000 (2 days); wiring ₦5,000.</textarea></td>
+                            <td><input type="number" value="55000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Canopy, chairs, DJ and wiring"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Mats" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">3 mats — ₦8,000 per unit.</textarea></td>
+                            <td><input type="number" value="24000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Mats"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="7 days stay at the village for the family after the burial" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">Family village stay for 7 days after burial.</textarea></td>
+                            <td><input type="number" value="100000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove 7 days stay at the village for the family after the burial"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" value="Transportation back from the village for the family" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                            <td><textarea class="budget-breakdown" rows="2" oninput="autoSave();">7 people (6 plus Aunty Mariam) — ₦15,000 per person.</textarea></td>
+                            <td><input type="number" value="105000" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
+                            <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                            <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                            <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                            <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();" aria-label="Remove Transportation back from the village for the family"><i class="fas fa-times"></i></button></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn-add-row" onclick="addBudgetRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add budget item</button>
+            <button class="btn-add-row" onclick="addBudgetRow(); autoSave();"><i class="fas fa-plus-circle"></i> Add budget / vendor item</button>
         </div>
 
         <!-- ====== SECTION 15: CONTRIBUTIONS ====== -->
         <div class="section" data-print-section="15">
             <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 15. Contributions — member donations</div>
             <p style="color:#3a5a7a; margin-bottom:12px; font-size:0.95rem;">
-                <i class="fas fa-info-circle"></i> Draft funding tracker: entering an amount does not mean funds have been received. Mark <strong>Received</strong> only after the money is actually confirmed.
+                <i class="fas fa-info-circle"></i> <strong>Draft funding tracker:</strong> entering an amount does not mean funds have been received. Mark <strong>Received</strong> only after the money is actually confirmed.
                 <span class="stat-badge" style="margin-left:12px;">Planned / entered: <span class="currency-symbol">₦</span><span id="contribTotalDisplay">0</span></span>
-                <span class="stat-badge" style="margin-left:12px; background:#dff3e9; color:#1b7046;">Received: <span class="currency-symbol">₦</span><span id="contribReceivedDisplay">0</span></span>
+                <span class="stat-badge received-total-badge">Received: <span class="currency-symbol">₦</span><span id="contribReceivedDisplay">0</span></span>
             </p>
             <div class="table-wrap">
                 <table id="contribTable">
@@ -2137,11 +2196,20 @@
                     <tbody id="contribBody">
                         <tr>
                             <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Contributor name" class="contrib-name" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
                             <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
-                            <td><label style="display:flex; align-items:center; justify-content:center; gap:6px; min-height:40px;"><input type="checkbox" class="contrib-received" onchange="updateContributions(); autoSave(); updateCharts();"> <span>Received</span></label></td>
-                            <td><input type="text" placeholder="Cash, bank, mobile money" class="contrib-method" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Receipt # or notes" class="contrib-notes" oninput="autoSave();"></td>
+                            <td class="received-cell"><label class="received-toggle" title="Count this amount as officially received"><input type="checkbox" class="contrib-received" onchange="updateContributions(); autoSave(); updateCharts();"><span><i class="fas fa-check"></i> Received</span></label></td>
+                            <td><input type="text" placeholder="Cash, bank transfer, POS" class="contrib-method" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
+                            <td class="received-cell"><label class="received-toggle" title="Count this amount as officially received"><input type="checkbox" class="contrib-received" onchange="updateContributions(); autoSave(); updateCharts();"><span><i class="fas fa-check"></i> Received</span></label></td>
+                            <td><input type="text" placeholder="Cash, bank transfer, POS" class="contrib-method" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
                             <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </tbody>
@@ -2163,10 +2231,18 @@
                     <tbody id="payoutBody">
                         <tr>
                             <td><input type="date" class="payout-date" onchange="autoSave();"></td>
-                            <td><input type="text" placeholder="Payee / vendor" class="payout-payee" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
                             <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
-                            <td><input type="text" placeholder="Purpose / claim details" class="payout-purpose" oninput="autoSave();"></td>
-                            <td><input type="text" placeholder="Approved by" class="payout-approved" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="e.g. Funeral home deposit" class="payout-purpose" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
+                            <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="date" class="payout-date" onchange="autoSave();"></td>
+                            <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
+                            <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
+                            <td><input type="text" placeholder="e.g. Cemetery fees" class="payout-purpose" oninput="autoSave();"></td>
+                            <td><input type="text" placeholder="Name" class="payout-approved" oninput="autoSave();"></td>
                             <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </tbody>
@@ -2227,7 +2303,6 @@
         </div>
         <div class="btn-group">
             <button class="btn" id="printBtn"><i class="fas fa-print"></i> Print / Save as PDF</button>
-            <button class="btn btn-outline" id="printFundingBtn"><i class="fas fa-file-invoice-dollar"></i> Print family funding report</button>
             <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset fields</button>
         </div>
         <p style="text-align:center; font-size:0.8rem; color:#4a6885; margin-top: 10px;">
@@ -2285,10 +2360,8 @@
 
             document.getElementById('coverPreparedDate').textContent = displayDate;
 
-            // Set default dates
-            document.querySelectorAll('input[type="date"]').forEach(inp => {
-                if (!inp.value) inp.value = todayStr;
-            });
+            // Dates remain blank until explicitly entered. The prepared date above may use today's date,
+            // but ceremony, burial, contribution, and payout dates must not be inferred automatically.
 
             // ----- CURRENCY -----
             const currencySymbols = {
@@ -2323,143 +2396,6 @@
             };
 
             // ----- UPDATE DASHBOARD -----
-            function getFundingTotals() {
-                const estInputs = document.querySelectorAll('.budget-est');
-                const contribAmounts = document.querySelectorAll('.contrib-amount');
-                const payoutAmounts = document.querySelectorAll('.payout-amount');
-                const budgetRows = [];
-
-                let totalBudget = 0;
-                let totalContrib = 0;
-                let totalPayouts = 0;
-
-                estInputs.forEach((inp, idx) => {
-                    const est = parseFloat(inp.value) || 0;
-                    const actual = parseFloat(document.querySelectorAll('.budget-actual')[idx]?.value) || 0;
-                    const balance = parseFloat(document.querySelectorAll('.budget-balance')[idx]?.value) || Math.max(est - actual, 0);
-                    totalBudget += est;
-                    budgetRows.push({
-                        category: document.querySelectorAll('.budget-cat')[idx]?.value || 'Unnamed',
-                        estimate: est,
-                        actual,
-                        balance,
-                        paid: document.querySelectorAll('.budget-actual')[idx]?.value ? 'In progress' : 'Pending'
-                    });
-                });
-
-                contribAmounts.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) totalContrib += val;
-                });
-
-                payoutAmounts.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) totalPayouts += val;
-                });
-
-                return { totalBudget, totalContrib, totalPayouts, budgetRows };
-            }
-
-            function renderFinalBudgetSheet() {
-                const { totalBudget, totalContrib, totalPayouts, budgetRows } = getFundingTotals();
-                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
-                const body = document.getElementById('finalBudgetSheetBody');
-                if (!body) return;
-
-                body.innerHTML = budgetRows.length
-                    ? budgetRows.map(row => {
-                        let status = 'Open';
-                        if (row.actual > 0) {
-                            status = row.actual >= row.estimate ? 'Draft covered' : 'Partial';
-                        }
-                        const balance = Math.max(row.estimate - row.actual, 0);
-                        return `
-                            <tr>
-                                <td>${safeText(row.category || 'Unnamed')}</td>
-                                <td>${symbol}${Number(row.estimate).toLocaleString()}</td>
-                                <td>${symbol}${Number(row.actual).toLocaleString()}</td>
-                                <td>${symbol}${Number(balance).toLocaleString()}</td>
-                                <td>${status}</td>
-                            </tr>
-                        `;
-                    }).join('')
-                    : '<tr><td colspan="5">No budget items entered yet.</td></tr>';
-
-                const contribBody = document.getElementById('finalContributionLedgerBody');
-                if (contribBody) {
-                    const contribRows = [...document.querySelectorAll('#contribTable tbody tr')].map(row => {
-                        const inputs = row.querySelectorAll('input');
-                        return {
-                            date: inputs[0]?.value || '',
-                            contributor: inputs[1]?.value || '',
-                            amount: Number(inputs[2]?.value || 0),
-                            method: inputs[3]?.value || '',
-                            notes: inputs[4]?.value || ''
-                        };
-                    }).filter(row => row.amount > 0 || row.contributor || row.notes || row.method || row.date);
-
-                    contribBody.innerHTML = contribRows.length
-                        ? contribRows.map(row => `
-                            <tr>
-                                <td>${row.date || '—'}</td>
-                                <td>${safeText(row.contributor || 'Unnamed')}</td>
-                                <td>${symbol}${Number(row.amount).toLocaleString()}</td>
-                                <td>${safeText(row.method || '—')}</td>
-                                <td>${safeText(row.notes || '—')}</td>
-                            </tr>
-                        `).join('')
-                        : '<tr><td colspan="5">No contributions yet.</td></tr>';
-                }
-
-                const payoutBody = document.getElementById('finalPayoutLedgerBody');
-                if (payoutBody) {
-                    const payoutRows = [...document.querySelectorAll('#payoutTable tbody tr')].map(row => {
-                        const inputs = row.querySelectorAll('input');
-                        return {
-                            date: inputs[0]?.value || '',
-                            payee: inputs[1]?.value || '',
-                            amount: Number(inputs[2]?.value || 0),
-                            purpose: inputs[3]?.value || '',
-                            approved: inputs[4]?.value || ''
-                        };
-                    }).filter(row => row.amount > 0 || row.payee || row.purpose || row.approved || row.date);
-
-                    payoutBody.innerHTML = payoutRows.length
-                        ? payoutRows.map(row => `
-                            <tr>
-                                <td>${row.date || '—'}</td>
-                                <td>${safeText(row.payee || 'Unnamed')}</td>
-                                <td>${symbol}${Number(row.amount).toLocaleString()}</td>
-                                <td>${safeText(row.purpose || '—')}</td>
-                                <td>${safeText(row.approved || '—')}</td>
-                            </tr>
-                        `).join('')
-                        : '<tr><td colspan="5">No payouts recorded yet.</td></tr>';
-                }
-            }
-
-            function updateFundingSummary() {
-                const { totalBudget, totalContrib, totalPayouts } = getFundingTotals();
-                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
-                const officialReceivedValue = Math.max(parseFloat(document.getElementById('officialAmountReceived')?.value) || 0, 0);
-                const isOfficialConfirmed = officialReceivedValue > 0;
-                const receivedTotal = isOfficialConfirmed ? officialReceivedValue : totalContrib;
-                const gap = Math.max(totalBudget - receivedTotal, 0);
-                const coverage = totalBudget > 0 ? (receivedTotal / totalBudget) * 100 : 0;
-
-                const summaryLabel = isOfficialConfirmed ? 'Official/confirmed received' : 'Draft contribution total';
-                document.getElementById('familySummaryTotal').innerHTML = `${symbol}${Number(totalBudget).toLocaleString()}`;
-                document.getElementById('familySummaryContribLabel').textContent = summaryLabel;
-                document.getElementById('familySummaryContrib').innerHTML = `${symbol}${Number(receivedTotal).toLocaleString()}`;
-                document.getElementById('familySummaryGap').innerHTML = `${symbol}${Number(gap).toLocaleString()}`;
-                document.getElementById('familySummaryPayouts').innerHTML = `${symbol}${Number(totalPayouts).toLocaleString()}`;
-                document.getElementById('familySummaryCoverage').textContent = `${Math.round(coverage)}% funded`;
-                document.getElementById('familySummaryGapText').textContent = gap > 0
-                    ? (isOfficialConfirmed ? 'Still to be raised' : 'Still to be raised')
-                    : 'Fully covered';
-                document.getElementById('familySummaryPayoutText').textContent = totalPayouts > 0 ? 'Committed spend' : 'No approvals yet';
-            }
-
             window.updateDashboard = function() {
                 const ceremonyDate = document.getElementById('ceremonyDate').value;
                 if (ceremonyDate) {
@@ -2483,34 +2419,45 @@
                 const guests = document.getElementById('guestCount').value || '—';
                 document.getElementById('dashGuests').textContent = guests;
 
-                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
-                const estInputs = document.querySelectorAll('.budget-est');
-                let total = 0;
-                estInputs.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) total += val;
+                // Financial dashboard is calculated directly from the live audit tables.
+                const budgetRows = Array.from(document.querySelectorAll('#budgetBody tr'));
+                let draftTotal = 0;
+                let actualTotal = 0;
+                let draftItemCount = 0;
+                budgetRows.forEach(row => {
+                    const category = row.querySelector('.budget-cat')?.value.trim() || '';
+                    const est = parseFloat(row.querySelector('.budget-est')?.value) || 0;
+                    const actual = parseFloat(row.querySelector('.budget-actual')?.value) || 0;
+                    if (category || est > 0 || actual > 0) draftItemCount += 1;
+                    draftTotal += est;
+                    actualTotal += actual;
                 });
-                document.getElementById('dashTotalCost').innerHTML = `<span class="currency-symbol">${symbol}</span>${total.toLocaleString()}`;
 
-                updateFundingSummary();
-                renderFinalBudgetSheet();
+                document.getElementById('dashTotalCost').innerHTML = '<span class="currency-symbol">₦</span>' + draftTotal.toLocaleString();
+                document.getElementById('dashDraftItems').textContent = draftItemCount.toLocaleString();
+                document.getElementById('dashActualCost').innerHTML = '<span class="currency-symbol">₦</span>' + actualTotal.toLocaleString();
+                const draftNoteTotal = document.getElementById('draftBudgetNoteTotal');
+                if (draftNoteTotal) draftNoteTotal.textContent = draftTotal.toLocaleString();
+
                 updateContributions();
                 updatePayouts();
             };
 
             // ----- CONTRIBUTIONS -----
             window.updateContributions = function() {
-                const amounts = document.querySelectorAll('.contrib-amount');
-                const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
-                let total = 0;
-                amounts.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) total += val;
+                const rows = document.querySelectorAll('#contribBody tr');
+                let plannedTotal = 0;
+                let receivedTotal = 0;
+                rows.forEach(row => {
+                    const amount = parseFloat(row.querySelector('.contrib-amount')?.value) || 0;
+                    const received = row.querySelector('.contrib-received')?.checked === true;
+                    plannedTotal += amount;
+                    if (received) receivedTotal += amount;
                 });
-                document.getElementById('contribTotalDisplay').textContent = total.toLocaleString();
-                document.getElementById('dashTotalContributions').innerHTML = `<span class="currency-symbol">${symbol}</span>${total.toLocaleString()}`;
-                updateFundingSummary();
-                renderFinalBudgetSheet();
+                document.getElementById('contribTotalDisplay').textContent = plannedTotal.toLocaleString();
+                document.getElementById('contribReceivedDisplay').textContent = receivedTotal.toLocaleString();
+                document.getElementById('dashTotalContributions').innerHTML = '<span class="currency-symbol">₦</span>' + plannedTotal.toLocaleString();
+                document.getElementById('dashAmountReceived').innerHTML = '<span class="currency-symbol">₦</span>' + receivedTotal.toLocaleString();
             };
 
             // ----- PAYOUTS -----
@@ -2522,8 +2469,8 @@
                     if (!isNaN(val)) total += val;
                 });
                 document.getElementById('payoutTotalDisplay').textContent = total.toLocaleString();
-                updateFundingSummary();
-                renderFinalBudgetSheet();
+                const dashPayouts = document.getElementById('dashTotalPayouts');
+                if (dashPayouts) dashPayouts.innerHTML = '<span class="currency-symbol">₦</span>' + total.toLocaleString();
             };
 
             // ================================================================
@@ -2532,116 +2479,48 @@
             let pieChartInstance = null;
             let barChartInstance = null;
 
-            function renderLegend(containerId, items) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-                container.innerHTML = items.map(item => `
-                    <span class="legend-item">
-                        <span class="legend-swatch" style="background:${item.color};"></span>
-                        ${item.label}
-                    </span>
-                `).join('');
-            }
-
-            function setFundingHealth(statusText, className, detailText) {
-                const badge = document.getElementById('fundingHealthBadge');
-                if (!badge) return;
-                badge.textContent = statusText;
-                badge.className = `funding-health-badge ${className}`;
-                badge.title = detailText || statusText;
-            }
-
-            document.querySelectorAll('.chart-box').forEach(box => box.classList.add('luxury'));
-
             window.updateCharts = function() {
+                // Get budget categories and amounts
                 const catInputs = document.querySelectorAll('.budget-cat');
                 const estInputs = document.querySelectorAll('.budget-est');
-                const actInputs = document.querySelectorAll('.budget-actual');
-                const contribAmounts = document.querySelectorAll('.contrib-amount');
-                const payoutAmounts = document.querySelectorAll('.payout-amount');
-
                 const categories = [];
-                const estimatedValues = [];
-                const actualValues = [];
+                const amounts = [];
                 let totalBudget = 0;
-                let totalActual = 0;
-                let totalContrib = 0;
-                let totalPayouts = 0;
 
                 catInputs.forEach((cat, idx) => {
                     const name = cat.value.trim() || 'Unnamed';
-                    const est = parseFloat(estInputs[idx]?.value) || 0;
-                    const actual = parseFloat(actInputs[idx]?.value) || 0;
-                    if (est > 0 || actual > 0) {
+                    const val = parseFloat(estInputs[idx]?.value) || 0;
+                    if (val > 0) {
                         categories.push(name);
-                        estimatedValues.push(est);
-                        actualValues.push(actual || est * 0.35);
-                        totalBudget += est;
-                        totalActual += actual || est * 0.35;
+                        amounts.push(val);
+                        totalBudget += val;
                     }
                 });
 
-                contribAmounts.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) totalContrib += val;
-                });
-
-                payoutAmounts.forEach(inp => {
-                    const val = parseFloat(inp.value);
-                    if (!isNaN(val)) totalPayouts += val;
+                // Get officially received funding only. Entered/pledged contributions are tracked separately.
+                const contribRows = document.querySelectorAll('#contribBody tr');
+                let totalContrib = 0;
+                contribRows.forEach(row => {
+                    const val = parseFloat(row.querySelector('.contrib-amount')?.value) || 0;
+                    if (row.querySelector('.contrib-received')?.checked === true) totalContrib += val;
                 });
 
                 const symbol = currencySymbols[document.getElementById('currencySelector').value] || '₦';
-                const officialReceivedValue = Math.max(parseFloat(document.getElementById('officialAmountReceived')?.value) || 0, 0);
-                const isOfficialConfirmed = officialReceivedValue > 0;
-                const receivedLabel = isOfficialConfirmed ? 'Official/confirmed received' : 'Draft contribution total';
-                const receivedTotal = isOfficialConfirmed ? officialReceivedValue : totalContrib;
-                const remainingGap = Math.max(totalBudget - receivedTotal, 0);
-                const coverage = totalBudget > 0 ? (receivedTotal / totalBudget) * 100 : 0;
-                const balance = receivedTotal - totalBudget;
 
-                const healthMessage = isOfficialConfirmed
-                    ? `Covered ${Math.round(coverage)}% of the budget with confirmed contributions.`
-                    : coverage >= 85
-                        ? `Draft contributions currently cover ${Math.round(coverage)}% of the budget and may change before final confirmation.`
-                        : coverage >= 60
-                            ? `Draft coverage is ${Math.round(coverage)}% — monitoring the remaining gap closely.`
-                            : `Draft coverage is only ${Math.round(coverage)}% — a funding gap remains to be closed.`;
-
-                if (coverage >= 85) setFundingHealth('Strong funding', 'strong', healthMessage);
-                else if (coverage >= 60) setFundingHealth('Watch list', 'watch', healthMessage);
-                else setFundingHealth('Funding gap', 'risk', healthMessage);
-
+                // ---- PIE CHART ----
                 const pieCtx = document.getElementById('pieChart').getContext('2d');
                 if (pieChartInstance) {
                     pieChartInstance.destroy();
                 }
 
-                const pieGradientBudget = pieCtx.createLinearGradient(0, 0, 0, 220);
-                pieGradientBudget.addColorStop(0, '#6fa8cf');
-                pieGradientBudget.addColorStop(1, '#2b5c7c');
-
-                const pieGradientContrib = pieCtx.createLinearGradient(0, 0, 0, 220);
-                pieGradientContrib.addColorStop(0, '#8fe0b8');
-                pieGradientContrib.addColorStop(1, '#1e7a5e');
-
-                const pieGradientGap = pieCtx.createLinearGradient(0, 0, 0, 220);
-                pieGradientGap.addColorStop(0, '#f2d58b');
-                pieGradientGap.addColorStop(1, '#d7a63d');
-
                 const pieData = {
-                    labels: ['Budgeted', receivedLabel, 'Remaining gap'],
+                    labels: ['Draft Estimated Cost', 'Amount Received'],
                     datasets: [{
-                        data: [
-                            Math.max(totalBudget, 0),
-                            Math.max(receivedTotal, 0),
-                            Math.max(remainingGap, 0)
-                        ],
-                        backgroundColor: [pieGradientBudget, pieGradientContrib, pieGradientGap],
-                        borderColor: ['#173d5d', '#14634b', '#b9861d'],
+                        data: [totalBudget, totalContrib],
+                        backgroundColor: ['#2b5c7c', '#1e7a5e'],
+                        borderColor: ['#1e4a6e', '#14634b'],
                         borderWidth: 2,
-                        hoverOffset: 12,
-                        borderRadius: 2
+                        hoverOffset: 8
                     }]
                 };
 
@@ -2651,90 +2530,79 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        animation: { duration: 750, easing: 'easeOutQuart' },
                         plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: 'rgba(12,42,68,0.96)',
-                                titleColor: '#f8fbff',
-                                bodyColor: '#edf5ff',
-                                borderWidth: 1,
-                                borderColor: 'rgba(255,255,255,0.08)',
-                                displayColors: true,
-                                padding: 12,
-                                callbacks: {
-                                    title: function(items) {
-                                        return items[0]?.label || 'Funding';
-                                    },
-                                    label: function(context) {
-                                        const pct = totalBudget > 0 && context.label === 'Budgeted'
-                                            ? `${Math.round((context.parsed / totalBudget) * 100)}% of plan`
-                                            : totalBudget > 0 && context.label === receivedLabel
-                                                ? `${Math.round((context.parsed / totalBudget) * 100)}% funded`
-                                                : `${Math.round((context.parsed / Math.max(totalBudget, 1)) * 100)}% remaining`;
-                                        return `${context.label}: ${symbol}${Number(context.parsed).toLocaleString()} • ${pct}`;
-                                    }
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { size: 11 },
+                                    padding: 10,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
                                 }
                             }
                         },
-                        cutout: '62%'
+                        cutout: '65%'
                     }
                 });
 
-                renderLegend('pieLegend', [
-                    { label: 'Budgeted', color: '#2b5c7c' },
-                    { label: receivedLabel, color: '#1e7a5e' },
-                    { label: 'Gap', color: '#d7a63d' }
-                ]);
-
+                // Funding status is stage-aware: do not show a negative balance before funding begins.
                 const balanceEl = document.getElementById('chartBalanceDisplay');
-                balanceEl.innerHTML =
-                    `<span class="dot gold"></span> Funding ${balance >= 0 ? 'surplus' : 'gap'}: <span class="currency-symbol">${symbol}</span>${Math.abs(balance).toLocaleString()}`;
-                if (balance < 0) {
-                    balanceEl.style.color = '#b33c3c';
-                } else {
+                const fundingStatusEl = document.getElementById('dashFundingStatus');
+                const fundingStatusCard = document.getElementById('fundingStatusCard');
+                let fundingStatusText = 'No funding received yet';
+                let fundingStatusType = 'neutral';
+
+                if (totalContrib > 0 && totalBudget > 0 && totalContrib < totalBudget) {
+                    const gap = totalBudget - totalContrib;
+                    fundingStatusText = `Funding gap: ${symbol}${gap.toLocaleString()}`;
+                    fundingStatusType = 'warning';
+                    balanceEl.innerHTML = `<span class="dot gold"></span> Funding Gap: <span class="currency-symbol">${symbol}</span>${gap.toLocaleString()}`;
+                    balanceEl.style.color = '#8a6d1b';
+                } else if (totalContrib > 0 && totalBudget > 0 && totalContrib >= totalBudget) {
+                    const surplus = totalContrib - totalBudget;
+                    fundingStatusText = `Available surplus: ${symbol}${surplus.toLocaleString()}`;
+                    fundingStatusType = 'success';
+                    balanceEl.innerHTML = `<span class="dot green"></span> Available Surplus: <span class="currency-symbol">${symbol}</span>${surplus.toLocaleString()}`;
                     balanceEl.style.color = '#1e6b3b';
+                } else if (totalContrib > 0 && totalBudget === 0) {
+                    fundingStatusText = 'Funding received — draft budget not set';
+                    fundingStatusType = 'neutral';
+                    balanceEl.innerHTML = `<span class="dot gold"></span> Funding received; draft budget not set`;
+                    balanceEl.style.color = '';
+                } else {
+                    balanceEl.innerHTML = `<span class="dot gold"></span> Funding Status: No funding received yet`;
+                    balanceEl.style.color = '';
                 }
 
+                if (fundingStatusEl) fundingStatusEl.textContent = fundingStatusText;
+                if (fundingStatusCard) {
+                    fundingStatusCard.classList.remove('status-neutral', 'status-warning', 'status-success');
+                    fundingStatusCard.classList.add(`status-${fundingStatusType}`);
+                }
+
+                // ---- BAR CHART ----
                 const barCtx = document.getElementById('barChart').getContext('2d');
                 if (barChartInstance) {
                     barChartInstance.destroy();
                 }
 
-                const barGradients = categories.map((_, index) => {
-                    const gradient = barCtx.createLinearGradient(0, 0, 0, 220);
-                    const baseColors = ['#2b5c7c', '#4a7c9e', '#6a9cbe', '#8ab8d4', '#aac8de', '#1e7a5e', '#3a9a7e', '#56ba9e', '#72d0b4', '#8ee0c8'];
-                    const color = baseColors[index % baseColors.length];
-                    gradient.addColorStop(0, color);
-                    gradient.addColorStop(1, color + 'cc');
-                    return gradient;
-                });
-                const actualGradient = barCtx.createLinearGradient(0, 0, 0, 220);
-                actualGradient.addColorStop(0, '#f0c869');
-                actualGradient.addColorStop(1, '#d7a63d');
+                // Generate colors
+                const colors = ['#2b5c7c', '#4a7c9e', '#6a9cbe', '#8ab8d4', '#aac8de',
+                    '#1e7a5e', '#3a9a7e', '#56ba9e', '#72d0b4', '#8ee0c8'
+                ];
 
                 const barData = {
                     labels: categories.length > 0 ? categories : ['No budget items'],
-                    datasets: [
-                        {
-                            label: 'Estimated',
-                            data: categories.length > 0 ? estimatedValues : [0],
-                            backgroundColor: categories.length > 0 ? barGradients : ['#d5dfe9'],
-                            borderColor: '#173d5d',
-                            borderWidth: 1,
-                            borderRadius: 6,
-                            maxBarThickness: 42
-                        },
-                        {
-                            label: 'Actual',
-                            data: categories.length > 0 ? actualValues : [0],
-                            backgroundColor: Array(categories.length || 1).fill(actualGradient),
-                            borderColor: '#b9861d',
-                            borderWidth: 1,
-                            borderRadius: 6,
-                            maxBarThickness: 42
-                        }
-                    ]
+                    datasets: [{
+                        label: 'Estimated Amount',
+                        data: categories.length > 0 ? amounts : [0],
+                        backgroundColor: categories.length > 0 ? colors.slice(0, categories.length) : ['#d5dfe9'],
+                        borderColor: categories.length > 0 ? colors.slice(0, categories.length).map(c => c) : [
+                            '#b0c8dd'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
                 };
 
                 barChartInstance = new Chart(barCtx, {
@@ -2743,28 +2611,14 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
                         plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: 'rgba(12,42,68,0.96)',
-                                titleColor: '#f8fbff',
-                                bodyColor: '#edf5ff',
-                                padding: 12,
-                                callbacks: {
-                                    title: function(items) {
-                                        return items[0]?.label || 'Category';
-                                    },
-                                    label: function(context) {
-                                        return `${context.dataset.label}: ${symbol}${Number(context.parsed.y).toLocaleString()}`;
-                                    }
-                                }
+                            legend: {
+                                display: false
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: { color: 'rgba(16,42,67,0.08)' },
                                 ticks: {
                                     callback: function(value) {
                                         return symbol + value.toLocaleString();
@@ -2773,7 +2627,6 @@
                                 }
                             },
                             x: {
-                                grid: { display: false },
                                 ticks: {
                                     font: { size: 9 },
                                     maxRotation: 45,
@@ -2784,33 +2637,12 @@
                     }
                 });
 
-                renderLegend('barLegend', [
-                    { label: 'Estimated', color: '#2b5c7c' },
-                    { label: 'Actual', color: '#d7a63d' }
-                ]);
-
+                // Update bar summary
                 document.getElementById('barTotalDisplay').innerHTML =
-                    `Total budget: <span class="currency-symbol">${symbol}</span>${totalBudget.toLocaleString()}`;
+                    `Total: <span class="currency-symbol">${symbol}</span>${totalBudget.toLocaleString()}`;
                 document.getElementById('barCategoriesCount').textContent =
-                    `Coverage: ${Math.round(coverage)}% · Payouts: ${symbol}${totalPayouts.toLocaleString()}`;
+                    `Categories: ${categories.length}`;
             };
-
-            const officialReceivedInput = document.getElementById('officialAmountReceived');
-            const applyContributionLedgerBtn = document.getElementById('applyContributionLedgerBtn');
-            if (applyContributionLedgerBtn) {
-                applyContributionLedgerBtn.addEventListener('click', function() {
-                    const total = Array.from(document.querySelectorAll('.contrib-amount')).reduce((sum, input) => {
-                        const val = parseFloat(input.value);
-                        return sum + (Number.isFinite(val) ? val : 0);
-                    }, 0);
-                    if (officialReceivedInput) {
-                        officialReceivedInput.value = total;
-                    }
-                    autoSave();
-                    updateDashboard();
-                    updateCharts();
-                });
-            }
 
             // ----- ADD ROW FUNCTIONS -----
             window.addOrderRow = function() {
@@ -2846,10 +2678,14 @@
                 const tbody = document.getElementById('budgetBody');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><input type="text" placeholder="Category name" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                    <td><input type="text" placeholder="Item / category" class="budget-cat" oninput="autoSave(); updateCharts();"></td>
+                    <td><textarea placeholder="Quantity and cost breakdown" class="budget-breakdown" rows="2" oninput="autoSave();"></textarea></td>
                     <td><input type="number" placeholder="0" class="budget-est" oninput="updateDashboard(); autoSave(); updateCharts();"></td>
-                    <td><input type="number" placeholder="0" class="budget-actual" oninput="autoSave();"></td>
-                    <td><input type="text" placeholder="Y/N" style="max-width:60px;" oninput="autoSave();"></td>
+                    <td><input type="number" placeholder="0" class="budget-actual" oninput="updateDashboard(); autoSave();"></td>
+                    <td><input type="text" placeholder="Business / supplier" class="budget-vendor" oninput="autoSave();"></td>
+                    <td><input type="tel" placeholder="Phone number" class="budget-phone" oninput="autoSave();"></td>
+                    <td><input type="url" placeholder="Portfolio / website (optional)" class="budget-portfolio" oninput="autoSave();"></td>
+                    <td><input type="text" placeholder="Y/N" class="budget-paid" oninput="autoSave();"></td>
                     <td><input type="number" placeholder="0" class="budget-balance" oninput="autoSave();"></td>
                     <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                 `;
@@ -2863,10 +2699,11 @@
                 const tbody = document.getElementById('contribBody');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><input type="date" class="contrib-date" value="${new Date().toISOString().split('T')[0]}" onchange="autoSave();"></td>
+                    <td><input type="date" class="contrib-date" onchange="autoSave();"></td>
                     <td><input type="text" placeholder="Full name" class="contrib-name" oninput="autoSave();"></td>
                     <td><input type="number" placeholder="0.00" class="contrib-amount" oninput="updateContributions(); autoSave(); updateCharts();"></td>
-                    <td><input type="text" placeholder="Cash, Bank, M-Pesa" class="contrib-method" oninput="autoSave();"></td>
+                    <td class="received-cell"><label class="received-toggle" title="Count this amount as officially received"><input type="checkbox" class="contrib-received" onchange="updateContributions(); autoSave(); updateCharts();"><span><i class="fas fa-check"></i> Received</span></label></td>
+                    <td><input type="text" placeholder="Cash, bank transfer, POS" class="contrib-method" oninput="autoSave();"></td>
                     <td><input type="text" placeholder="Receipt # / notes" class="contrib-notes" oninput="autoSave();"></td>
                     <td><button class="btn-remove-row" onclick="removeRow(this); autoSave();"><i class="fas fa-times"></i></button></td>
                 `;
@@ -2880,7 +2717,7 @@
                 const tbody = document.getElementById('payoutBody');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><input type="date" class="payout-date" value="${new Date().toISOString().split('T')[0]}" onchange="autoSave();"></td>
+                    <td><input type="date" class="payout-date" onchange="autoSave();"></td>
                     <td><input type="text" placeholder="Name / Vendor" class="payout-payee" oninput="autoSave();"></td>
                     <td><input type="number" placeholder="0.00" class="payout-amount" oninput="updatePayouts(); autoSave();"></td>
                     <td><input type="text" placeholder="e.g. Funeral home deposit" class="payout-purpose" oninput="autoSave();"></td>
@@ -2918,6 +2755,58 @@
             // ===== SAVE / LOAD (localStorage) =====
             // ================================================================
             const SAVE_KEY = 'burialPlannerData';
+            const BUDGET_IMPORT_VERSION = 'burial-budget-draft-2026-08-v1';
+            const BUDGET_IMPORT_KEY = 'burialPlannerBudgetImportVersion';
+            const IDENTITY_IMPORT_VERSION = 'brother-apeh-identity-2026-08-v2';
+            const IDENTITY_IMPORT_KEY = 'burialPlannerIdentityImportVersion';
+            const FAMILY_IMPORT_VERSION = 'brother-apeh-family-2026-08-v1';
+            const FAMILY_IMPORT_KEY = 'burialPlannerFamilyImportVersion';
+            const BROTHER_APEH_FAMILY = {
+                primaryContact: 'Mathias Apeh Elijah',
+                primaryPhone: '08104668912',
+                primaryEmail: 'officialelijahmathiaias@gmail.com',
+                spouse: 'Single',
+                eldestChild: 'No children',
+                clergyLiaison: 'Nil'
+            };
+            const BROTHER_APEH_IDENTITY = {
+                deceasedName: 'Mathias Apeh',
+                preferredName: 'Apeh the Great',
+                dob: '1963-10-23',
+                dop: '2026-08-03',
+                placePassing: 'Nasarawa State, Nigeria',
+                agePassing: '63',
+                religion: 'Pentecostal',
+                title: 'Mr.'
+            };
+            const IMPORTED_BUDGET_ROWS = [{"Category": "Transportation", "Breakdown": "2 Sienna — one primarily for carrying the corpse; the other for family and loved ones. One-way trip. ₦180,000 per Sienna.", "Estimated": "360000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Food", "Breakdown": "Rice and swallow — 2 bags of rice; corn and cassava flour (15 mudus each); 30 tubers of yam; beans; oil; palm oil; egusi; ogbono; dawa; millet; etc.", "Estimated": "606100", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Goat", "Breakdown": "6 goats — ₦75,000 each.", "Estimated": "450000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Chicken", "Breakdown": "10 chickens — ₦15,000 each.", "Estimated": "150000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Kolanuts", "Breakdown": "Kolanuts.", "Estimated": "10000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Drinks", "Breakdown": "10 crates — ₦6,500 per crate.", "Estimated": "65000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Photographer", "Breakdown": "Photography services.", "Estimated": "90000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Hotel lodging", "Breakdown": "10 rooms — provisional / not conclusive; based on expected turnout. ₦12,000 per night.", "Estimated": "120000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Canopy, chairs, DJ and wiring", "Breakdown": "Canopy ₦10,000 (2 days); chairs ₦10,000; DJ ₦30,000 (2 days); wiring ₦5,000.", "Estimated": "55000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Mats", "Breakdown": "3 mats — ₦8,000 per unit.", "Estimated": "24000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "7 days stay at the village for the family after the burial", "Breakdown": "Family village stay for 7 days after burial.", "Estimated": "100000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}, {"Category": "Transportation back from the village for the family", "Breakdown": "7 people (6 plus Aunty Mariam) — ₦15,000 per person.", "Estimated": "105000", "Actual": "", "Vendor": "", "Phone": "", "Portfolio": "", "Paid": "", "Balance": ""}];
+            const LEGACY_SAMPLE_BUDGET_CATEGORIES = new Set(['Funeral Home Basic Fee','Cemetery Plot/Grave','Casket / Urn','Flowers','Venue rental','Catering','Transportation','Memorial cards / printing','Officiant honorarium']);
+
+            function applyBudgetDraftMigration(data) {
+                if (localStorage.getItem(BUDGET_IMPORT_KEY) === BUDGET_IMPORT_VERSION) return data;
+                const existing = Array.isArray(data.budgetRows) ? data.budgetRows : [];
+                const isLegacySample = existing.length > 0 && existing.every(row => LEGACY_SAMPLE_BUDGET_CATEGORIES.has(String(row.Category || '').trim()));
+                if (!existing.length || isLegacySample) {
+                    data.budgetRows = IMPORTED_BUDGET_ROWS.map(row => ({...row}));
+                    localStorage.setItem(BUDGET_IMPORT_KEY, BUDGET_IMPORT_VERSION);
+                }
+                return data;
+            }
+
+
+            function applyIdentityMigration(data) {
+                if (localStorage.getItem(IDENTITY_IMPORT_KEY) === IDENTITY_IMPORT_VERSION) return data;
+                Object.assign(data, BROTHER_APEH_IDENTITY);
+                localStorage.setItem(IDENTITY_IMPORT_KEY, IDENTITY_IMPORT_VERSION);
+                return data;
+            }
+
+            function applyFamilyMigration(data) {
+                if (localStorage.getItem(FAMILY_IMPORT_KEY) === FAMILY_IMPORT_VERSION) return data;
+                Object.assign(data, BROTHER_APEH_FAMILY);
+                localStorage.setItem(FAMILY_IMPORT_KEY, FAMILY_IMPORT_VERSION);
+                return data;
+            }
 
             function collectAllData() {
                 const data = { __schemaVersion: SECURITY.schemaVersion, __exportedAt: new Date().toISOString() };
@@ -2936,10 +2825,10 @@
                 data.transportRows = getTableData('transportTable', ['Vehicle', 'Capacity', 'Pick-up', 'Departure',
                     'Destination'
                 ]);
-                data.budgetRows = getTableData('budgetTable', ['Category', 'Estimated', 'Actual', 'Paid', 'Balance']);
-                data.contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Method', 'Notes']);
+                data.budgetRows = getTableData('budgetTable', ['Category', 'Breakdown', 'Estimated', 'Actual', 'Vendor', 'Phone', 'Portfolio', 'Paid', 'Balance']);
+                data.contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Received', 'Method', 'Notes']);
                 data.payoutRows = getTableData('payoutTable', ['Date', 'Payee', 'Amount', 'Purpose', 'Approved By']);
-                data.currency = document.getElementById('currencySelector').value;
+                data.currency = 'NGN';
                 return data;
             }
 
@@ -2948,10 +2837,10 @@
                 const data = [];
                 rows.forEach(row => {
                     const rowData = {};
-                    const inputs = row.querySelectorAll('input');
+                    const inputs = row.querySelectorAll('input, textarea, select');
                     inputs.forEach((input, idx) => {
                         if (idx < columns.length) {
-                            rowData[columns[idx]] = input.value || '';
+                            rowData[columns[idx]] = input.type === 'checkbox' ? input.checked : (input.value || '');
                         }
                     });
                     data.push(rowData);
@@ -2959,8 +2848,11 @@
                 return data;
             }
 
-            function restoreAllData(data) {
+            function restoreAllData(data, applyMigrations = true) {
                 data = validateBackup(data);
+                if (applyMigrations) {
+                    data = applyFamilyMigration(applyIdentityMigration(applyBudgetDraftMigration(data)));
+                }
                 Object.keys(data).forEach(key => {
                     const el = document.getElementById(key);
                     if (el) {
@@ -2971,20 +2863,18 @@
                         }
                     }
                 });
-                if (data.currency) {
-                    document.getElementById('currencySelector').value = data.currency;
-                    updateAllCurrencies();
-                }
+                // This burial draft is denominated in Nigerian Naira. Older backups may contain
+                // another display currency, but amounts are not exchange-rate converted. Keep NGN authoritative.
+                document.getElementById('currencySelector').value = 'NGN';
+                updateAllCurrencies();
                 restoreTableRows('orderTable', 'orderBody', data.orderRows, ['Time', 'Segment', 'Person', 'Notes'],
                 'order-input');
                 restoreTableRows('transportTable', 'transportBody', data.transportRows, ['Vehicle', 'Capacity',
                     'Pick-up', 'Departure', 'Destination'
                 ], 'transport-input');
-                restoreTableRows('budgetTable', 'budgetBody', data.budgetRows, ['Category', 'Estimated', 'Actual',
-                    'Paid', 'Balance'
-                ], null);
+                restoreTableRows('budgetTable', 'budgetBody', data.budgetRows, ['Category', 'Breakdown', 'Estimated', 'Actual', 'Vendor', 'Phone', 'Portfolio', 'Paid', 'Balance'], null);
                 restoreTableRows('contribTable', 'contribBody', data.contribRows, ['Date', 'Contributor', 'Amount',
-                    'Method', 'Notes'
+                    'Received', 'Method', 'Notes'
                 ], null);
                 restoreTableRows('payoutTable', 'payoutBody', data.payoutRows, ['Date', 'Payee', 'Amount', 'Purpose',
                     'Approved By'
@@ -3012,9 +2902,13 @@
                         tr.innerHTML = '';
                         columns.forEach((col, colIdx) => {
                             const td = document.createElement('td');
-                            const input = document.createElement('input');
+                            const input = col === 'Breakdown' ? document.createElement('textarea') : document.createElement('input');
                             if (inputClass) input.className = inputClass;
-                            input.type = 'text';
+                            if (input.tagName === 'INPUT') input.type = 'text';
+                            if (col === 'Breakdown') { input.rows = 2; input.className = 'budget-breakdown'; }
+                            if (col === 'Phone') { input.type = 'tel'; input.className = 'budget-phone'; }
+                            if (col === 'Portfolio') { input.type = 'url'; input.className = 'budget-portfolio'; }
+                            if (col === 'Vendor') input.className = 'budget-vendor';
                             if (col === 'Estimated' || col === 'Actual' || col === 'Amount' || col ===
                                 'Balance') {
                                 input.type = 'number';
@@ -3024,9 +2918,15 @@
                             }
                             if (col === 'Paid') {
                                 input.type = 'text';
-                                input.style.maxWidth = '60px';
+                                input.className = 'budget-paid';
                             }
-                            input.value = safeText(rowData[col]);
+                            if (col === 'Received') {
+                                input.type = 'checkbox';
+                                input.className = 'contrib-received';
+                                input.checked = rowData[col] === true || rowData[col] === 'true' || rowData[col] === 'Yes';
+                            } else {
+                                input.value = safeText(rowData[col]);
+                            }
                             if (col === 'Estimated') {
                                 input.className = 'budget-est';
                                 input.oninput = function() { updateDashboard();
@@ -3036,14 +2936,6 @@
                             if (col === 'Amount' && tableId === 'contribTable') {
                                 input.className = 'contrib-amount';
                                 input.oninput = function() { updateContributions();
-                                    autoSave();
-                                    updateCharts(); };
-                            }
-                            if (col === 'Received') {
-                                input.type = 'checkbox';
-                                input.className = 'contrib-received';
-                                input.checked = rowData[col] === true || rowData[col] === 'true';
-                                input.onchange = function() { updateContributions();
                                     autoSave();
                                     updateCharts(); };
                             }
@@ -3063,9 +2955,32 @@
                                 input.oninput = function() { autoSave();
                                     updateCharts(); };
                             }
-                            input.oninput = autoSave;
-                            input.onchange = autoSave;
-                            td.appendChild(input);
+                            if (col === 'Estimated') {
+                                input.oninput = function() { updateDashboard(); autoSave(); updateCharts(); };
+                            } else if (col === 'Amount' && tableId === 'contribTable') {
+                                input.oninput = function() { updateContributions(); autoSave(); updateCharts(); };
+                            } else if (col === 'Amount' && tableId === 'payoutTable') {
+                                input.oninput = function() { updatePayouts(); autoSave(); };
+                            } else if (col !== 'Received') {
+                                input.oninput = autoSave;
+                            }
+                            input.onchange = function() {
+                                if (col === 'Received') { updateContributions(); updateCharts(); }
+                                autoSave();
+                            };
+                            if (col === 'Received') {
+                                td.className = 'received-cell';
+                                const label = document.createElement('label');
+                                label.className = 'received-toggle';
+                                label.title = 'Count this amount as officially received';
+                                const span = document.createElement('span');
+                                span.innerHTML = '<i class="fas fa-check"></i> Received';
+                                label.appendChild(input);
+                                label.appendChild(span);
+                                td.appendChild(label);
+                            } else {
+                                td.appendChild(input);
+                            }
                             tr.appendChild(td);
                         });
                         const td = document.createElement('td');
@@ -3075,6 +2990,23 @@
                     });
                 }
             }
+
+            // ----- SHARED-SYNC BRIDGE -----
+            window.PlannerBridge = Object.freeze({
+                collect: () => collectAllData(),
+                restoreRemote: (remoteData) => {
+                    const clean = validateBackup(remoteData);
+                    restoreAllData(clean, false);
+                    localStorage.setItem(SAVE_KEY, JSON.stringify(clean));
+                    updateCover();
+                    updateDashboard();
+                    updateAllCurrencies();
+                    updateCharts();
+                },
+                persistLocal: (data) => {
+                    localStorage.setItem(SAVE_KEY, JSON.stringify(validateBackup(data)));
+                }
+            });
 
             // ----- AUTO-SAVE -----
             let saveTimeout = null;
@@ -3088,6 +3020,7 @@
                         indicator.innerHTML =
                             '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Auto-saved';
                         indicator.className = 'save-indicator saved';
+                        if (typeof window.scheduleRemoteSync === 'function') window.scheduleRemoteSync();
                     } catch (e) {
                         console.warn('Auto-save failed:', e);
                         const indicator = document.getElementById('saveIndicator');
@@ -3097,154 +3030,50 @@
                 }, 500);
             };
 
-            function formatSampleDate(offsetDays) {
-                const date = new Date();
-                date.setHours(12, 0, 0, 0);
-                date.setDate(date.getDate() + offsetDays);
-                return date.toISOString().split('T')[0];
-            }
+            // ----- IMMEDIATE SAVE FOR PAGE EXIT / SECTION 1 EDITS -----
+            window.saveNow = function() {
+                try {
+                    clearTimeout(saveTimeout);
+                    const data = collectAllData();
+                    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+                    const indicator = document.getElementById('saveIndicator');
+                    if (indicator) {
+                        indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Saved';
+                        indicator.className = 'save-indicator saved';
+                        if (typeof window.scheduleRemoteSync === 'function') window.scheduleRemoteSync(250);
+                    }
+                } catch (e) {
+                    console.warn('Immediate save failed:', e);
+                }
+            };
 
-            function buildSamplePlannerData() {
-                const ceremonyDate = formatSampleDate(11);
-                const burialDate = formatSampleDate(12);
-                const dob = formatSampleDate(-25550);
-                const dop = formatSampleDate(-8);
+            // Flush any pending edits if the user closes, refreshes, or backgrounds the page.
+            window.addEventListener('pagehide', () => window.saveNow());
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') window.saveNow();
+            });
 
-                return {
-                    __schemaVersion: SECURITY.schemaVersion,
-                    __exportedAt: new Date().toISOString(),
-                    currency: 'NGN',
-                    deceasedName: 'Mary Elizabeth Okafor',
-                    preferredName: 'Mama Mary',
-                    dob,
-                    dop,
-                    placePassing: 'Lagos, Nigeria',
-                    agePassing: '71',
-                    veteranStatus: 'No',
-                    religion: 'Catholic',
-                    title: 'Mrs.',
-                    primaryContact: 'Ngozi Okafor',
-                    primaryPhone: '+234 803 555 9081',
-                    primaryEmail: 'ngozi.okafor@familymail.com',
-                    spouse: 'Emeka Okafor',
-                    eldestChild: 'Chinelo Okafor',
-                    clergyLiaison: 'Rev. Father Daniel Adebayo',
-                    funeralHome: 'Grace & Comfort Funeral Home',
-                    funeralPhone: '+234 812 444 1212',
-                    transportService: 'Apex Transit Services',
-                    authStatus: 'Signed',
-                    certQty: '6',
-                    permitStatus: 'Obtained',
-                    ceremonyDate,
-                    ceremonyTime: '10:00 AM – 11:30 AM',
-                    viewingTime: '8:30 AM – 9:45 AM',
-                    ceremonyVenue: 'St. Catherine Catholic Church',
-                    venueAddress: '12 Apostle Road, Lekki Phase 1, Lagos',
-                    venueContact: 'Parish Office / +234 814 220 4040',
-                    receptionVenue: 'The Family Hall, Lekki',
-                    handicap: 'Yes',
-                    cemeteryName: 'Apex Memorial Gardens',
-                    plotSection: 'Section B, Lot 12',
-                    graveFeePaid: 'Yes',
-                    vaultRequired: 'Yes',
-                    intermentType: 'Ground burial',
-                    gravesideTime: '12:00 PM',
-                    tentChairs: '20 chairs + 2 canopies',
-                    committalLeader: 'Rev. Father Daniel Adebayo',
-                    floralCasket: 'White lilies and roses',
-                    floralEasel: 'Family memorial spray',
-                    floralWreath: 'Floral cross',
-                    floralBouquets: '2 family bouquets',
-                    floralBlanket: 'White dove blanket',
-                    floralDelivery: 'By 7:00 AM',
-                    musicPrelude: 'Hymn medley',
-                    musicProcessional: 'Amazing Grace',
-                    musicDuring: 'Instrumental piano',
-                    musicRecessional: 'Be Thou My Vision',
-                    musicPost: 'Prayerful reflection',
-                    urnDetails: 'Dove bronze urn',
-                    casketModel: 'Mahogany casket with satin lining',
-                    pallColor: 'White',
-                    memorialQty: '200',
-                    guestBook: 'Leather guest book',
-                    thankYouQty: '120',
-                    caterer: 'Heritage Catering',
-                    menuType: 'Family lunch buffet',
-                    dietary: 'Vegetarian and diabetic-friendly options',
-                    beverages: 'Water, tea, soft drinks, fruit punch',
-                    guestCount: '180',
-                    cateringTime: '9:30 AM – 2:30 PM',
-                    officiantName: 'Rev. Father Daniel Adebayo',
-                    officiantOrg: 'St. Catherine Catholic Church',
-                    openingWords: 'Welcome and opening prayer',
-                    closingWords: 'Final blessing and thanks',
-                    militaryFlag: false,
-                    gunSalute: false,
-                    obitPlace: 'Sunday Tribune / family notice board',
-                    charityOption: 'Family donation to church charity fund',
-                    charityName: 'St. Catherine Benevolence Fund',
-                    socialPolicy: 'No livestreaming without family approval',
-                    rainLocation: 'Church annex hall',
-                    emergencyMed: 'Adebayo Clinic / +234 815 330 1111',
-                    avTest: true,
-                    orderRows: [
-                        { Time: ':00', Segment: 'Opening Prayer / Welcome', Person: 'Rev. Father Daniel', Notes: 'Family welcome and prayer' },
-                        { Time: ':05', Segment: 'Tribute from children', Person: 'Chinelo Okafor', Notes: 'Short remembrance' },
-                        { Time: ':10', Segment: 'Eulogy / Family reflections', Person: 'Emeka Okafor', Notes: 'Life and legacy' },
-                        { Time: ':15', Segment: 'Musical performance', Person: 'Mariam Adebayo', Notes: 'Amazing Grace' },
-                        { Time: ':20', Segment: 'Scripture reading', Person: 'Deacon Tunde', Notes: 'Psalm 23' },
-                        { Time: ':30', Segment: 'Sermon / Reflection', Person: 'Rev. Father Daniel', Notes: 'Comfort and hope' },
-                        { Time: ':40', Segment: 'Closing prayer / rite', Person: 'Rev. Father Daniel', Notes: 'Final blessing' },
-                        { Time: ':45', Segment: 'Viewing / Committal', Person: 'Family usher team', Notes: 'Procession to graveside' }
-                    ],
-                    transportRows: [
-                        { Vehicle: 'Hearse', Capacity: 'Family', 'Pick-up': 'Grace & Comfort', Departure: '8:30 AM', Destination: 'St. Catherine Church' },
-                        { Vehicle: 'Lead Car (Family)', Capacity: '4', 'Pick-up': 'Family home', Departure: '8:15 AM', Destination: 'Church' },
-                        { Vehicle: 'Minibus', Capacity: '12', 'Pick-up': 'Community center', Departure: '9:00 AM', Destination: 'Graveside' }
-                    ],
-                    budgetRows: [
-                        { Category: 'Transportation (2 Sienna)', Estimated: '360000', Actual: '0', Paid: 'No', Balance: '360000' },
-                        { Category: 'Food & provisions', Estimated: '606100', Actual: '0', Paid: 'No', Balance: '606100' },
-                        { Category: 'Goat / meat', Estimated: '450000', Actual: '0', Paid: 'No', Balance: '450000' },
-                        { Category: 'Chicken', Estimated: '150000', Actual: '0', Paid: 'No', Balance: '150000' },
-                        { Category: 'Kolanuts', Estimated: '10000', Actual: '0', Paid: 'No', Balance: '10000' },
-                        { Category: 'Drinks', Estimated: '65000', Actual: '0', Paid: 'No', Balance: '65000' },
-                        { Category: 'Photographer', Estimated: '90000', Actual: '0', Paid: 'No', Balance: '90000' },
-                        { Category: 'Hotel lodging', Estimated: '120000', Actual: '0', Paid: 'No', Balance: '120000' },
-                        { Category: 'Canopy / chairs / DJ / wiring', Estimated: '55000', Actual: '0', Paid: 'No', Balance: '55000' },
-                        { Category: 'Mats', Estimated: '24000', Actual: '0', Paid: 'No', Balance: '24000' },
-                        { Category: '7-day family stay in village', Estimated: '100000', Actual: '0', Paid: 'No', Balance: '100000' },
-                        { Category: 'Return transport from village', Estimated: '105000', Actual: '0', Paid: 'No', Balance: '105000' }
-                    ],
-                    contribRows: [],
-                    payoutRows: []
-                };
-            }
-
-            function applySamplePlanner() {
-                const data = buildSamplePlannerData();
-                restoreAllData(data);
-                localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-                const indicator = document.getElementById('saveIndicator');
-                indicator.innerHTML = '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Sample plan loaded';
-                indicator.className = 'save-indicator saved';
-                document.getElementById('plannerStatusChip').textContent = 'Family review';
-                if (typeof updateCompletion === 'function') updateCompletion();
-                setTimeout(updateCharts, 200);
-            }
+            // Section 1 stays fully editable; commit each completed change immediately.
+            document.addEventListener('change', (event) => {
+                if (event.target && ['deceasedName','preferredName','dob','dop','placePassing','agePassing','veteranStatus','religion','title'].includes(event.target.id)) {
+                    window.saveNow();
+                    if (event.target.id === 'deceasedName') updateCover();
+                }
+            });
 
             // ----- LOAD DATA -----
             function loadSavedData() {
                 try {
                     const raw = localStorage.getItem(SAVE_KEY);
                     if (raw) {
-                        const data = validateBackup(JSON.parse(raw));
+                        let data = validateBackup(JSON.parse(raw));
+                        data = applyIdentityMigration(data);
+                        data = applyFamilyMigration(data);
                         restoreAllData(data);
                         const indicator = document.getElementById('saveIndicator');
                         indicator.innerHTML =
                             '<i class="fas fa-circle" style="color:#1e7a5e; font-size:0.5rem;"></i> Restored from browser';
                         indicator.className = 'save-indicator saved';
-                        if (typeof updateCompletion === 'function') updateCompletion();
                         return true;
                     }
                 } catch (e) {
@@ -3314,10 +3143,10 @@
                     const data = [];
                     rows.forEach(row => {
                         const rowData = {};
-                        const inputs = row.querySelectorAll('input');
+                        const inputs = row.querySelectorAll('input, textarea, select');
                         inputs.forEach((input, idx) => {
                             if (idx < columns.length) {
-                                rowData[columns[idx]] = input.value || '';
+                                rowData[columns[idx]] = input.type === 'checkbox' ? input.checked : (input.value || '');
                             }
                         });
                         data.push(rowData);
@@ -3425,14 +3254,33 @@
                 const transportRows = getTableData('transportTable', ['Vehicle', 'Capacity', 'Pick-up', 'Departure',
                     'Destination'
                 ]);
-                const budgetRows = getTableData('budgetTable', ['Category', 'Estimated', 'Actual', 'Paid', 'Balance']);
-                const contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Method', 'Notes']);
+                const budgetRows = getTableData('budgetTable', ['Category', 'Breakdown', 'Estimated', 'Actual', 'Vendor', 'Phone', 'Portfolio', 'Paid', 'Balance']);
+                const contribRows = getTableData('contribTable', ['Date', 'Contributor', 'Amount', 'Received', 'Method', 'Notes']);
                 const payoutRows = getTableData('payoutTable', ['Date', 'Payee', 'Amount', 'Purpose', 'Approved By']);
 
                 let csv = '\uFEFF';
                 csv += '=== BURIAL CEREMONY PLANNER ===\n';
                 csv += 'Currency: ' + currency + ' (' + symbol + ')\n';
-                csv += 'Exported: ' + new Date().toLocaleString() + '\n\n';
+                csv += 'Exported: ' + new Date().toLocaleString() + '\n';
+                const fundingRows = document.querySelectorAll('#contribBody tr');
+                let plannedFunding = 0, receivedFunding = 0;
+                fundingRows.forEach(row => {
+                    const amount = parseFloat(row.querySelector('.contrib-amount')?.value) || 0;
+                    plannedFunding += amount;
+                    if (row.querySelector('.contrib-received')?.checked === true) receivedFunding += amount;
+                });
+                csv += 'Planned / entered funding: ' + symbol + plannedFunding.toLocaleString() + '\n';
+                csv += 'Officially received funding: ' + symbol + receivedFunding.toLocaleString() + '\n';
+                const draftBudgetTotal = budgetRows.reduce((sum, row) => sum + (parseFloat(row.Estimated) || 0), 0);
+                let fundingStatusCsv = 'No funding received yet';
+                if (receivedFunding > 0 && draftBudgetTotal > 0 && receivedFunding < draftBudgetTotal) {
+                    fundingStatusCsv = 'Funding gap: ' + symbol + (draftBudgetTotal - receivedFunding).toLocaleString();
+                } else if (receivedFunding > 0 && draftBudgetTotal > 0 && receivedFunding >= draftBudgetTotal) {
+                    fundingStatusCsv = 'Available surplus: ' + symbol + (receivedFunding - draftBudgetTotal).toLocaleString();
+                } else if (receivedFunding > 0 && draftBudgetTotal === 0) {
+                    fundingStatusCsv = 'Funding received — draft budget not set';
+                }
+                csv += 'Funding status: ' + fundingStatusCsv + '\n\n';
 
                 function addSection(title, data) {
                     csv += title + '\n';
@@ -3469,21 +3317,21 @@
                 csv += '\n';
 
                 csv += 'BUDGET & PAYMENT TRACKER (' + currency + ')\n';
-                csv += '"Category","Estimated","Actual","Paid","Balance"\n';
+                csv += '"Item","Quantity / Breakdown","Estimated (NGN)","Actual (NGN)","Business / Vendor","Phone","Portfolio / Reference","Paid","Balance (NGN)"\n';
                 budgetRows.forEach(row => {
-                    csv += [row.Category, row.Estimated, row.Actual, row.Paid, row.Balance].map(csvCell).join(',') + '\n';
+                    csv += [row.Category, row.Breakdown, row.Estimated, row.Actual, row.Vendor, row.Phone, row.Portfolio, row.Paid, row.Balance].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'CONTRIBUTIONS (' + currency + ')\n';
-                csv += '"Date","Contributor","Amount","Method","Notes"\n';
+                csv += '"Date","Contributor","Amount (NGN)","Received","Method","Notes"\n';
                 contribRows.forEach(row => {
-                    csv += [row.Date, row.Contributor, row.Amount, row.Method, row.Notes].map(csvCell).join(',') + '\n';
+                    csv += [row.Date, row.Contributor, row.Amount, row.Received ? 'Yes' : 'No', row.Method, row.Notes].map(csvCell).join(',') + '\n';
                 });
                 csv += '\n';
 
                 csv += 'PAYOUT RECORD (' + currency + ')\n';
-                csv += '"Date","Payee","Amount","Purpose","Approved By"\n';
+                csv += '"Date","Payee","Amount (NGN)","Purpose","Approved By"\n';
                 payoutRows.forEach(row => {
                     csv += [row.Date, row.Payee, row.Amount, row.Purpose, row['Approved By']].map(csvCell).join(',') + '\n';
                 });
@@ -3529,7 +3377,13 @@
             // ----- Initial load -----
             const hasSaved = loadSavedData();
             if (!hasSaved) {
-                applySamplePlanner();
+                localStorage.setItem(BUDGET_IMPORT_KEY, BUDGET_IMPORT_VERSION);
+                // Leave ceremony, transaction, and planning dates blank until a user enters them.
+                updateCover();
+                updateDashboard();
+                updateAllCurrencies();
+                setTimeout(updateCharts, 400);
+                setTimeout(autoSave, 1000);
             } else {
                 setTimeout(updateCharts, 500);
             }
@@ -3554,22 +3408,6 @@
                 applyPrintMode();
                 window.print();
             });
-
-            document.getElementById('printFundingBtn').addEventListener('click', function() {
-                const mode = document.getElementById('printMode');
-                if (mode) mode.value = 'finance';
-                applyPrintMode();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setTimeout(() => window.print(), 120);
-            });
-
-            const samplePlannerButton = document.getElementById('samplePlannerBtn');
-            if (samplePlannerButton) {
-                samplePlannerButton.addEventListener('click', function() {
-                    if (!confirm('Load the realistic sample ceremony plan and replace the current draft?')) return;
-                    applySamplePlanner();
-                });
-            }
 
             // ----- RESET -----
             document.getElementById('resetBtn').addEventListener('click', function() {
@@ -3783,6 +3621,251 @@
         window.setTimeout(updateCompletion, 700);
     })();
     </script>
+
+
+    <script>
+    (() => {
+        'use strict';
+
+        const cfg = window.PLANNER_SYNC_CONFIG || {};
+        const indicator = document.getElementById('remoteSyncIndicator');
+        const button = document.getElementById('remoteSyncBtn');
+        const KEY_STORAGE = 'burialPlannerRemoteAccessKey';
+        const CLIENT_STORAGE = 'burialPlannerRemoteClientName';
+
+        const state = {
+            version: null,
+            saving: false,
+            saveTimer: null,
+            initialized: false,
+            reachable: false
+        };
+
+        function cleanBaseUrl(value) {
+            return String(value || '').trim().replace(/\/+$/, '');
+        }
+
+        function setStatus(text, mode = 'neutral') {
+            if (!indicator) return;
+            const icon = mode === 'ok' ? 'fa-cloud-arrow-up'
+                : mode === 'error' ? 'fa-triangle-exclamation'
+                : mode === 'busy' ? 'fa-rotate fa-spin'
+                : 'fa-cloud';
+            indicator.innerHTML = `<i class="fas ${icon}" aria-hidden="true"></i> ${text}`;
+            indicator.classList.toggle('saved', mode === 'ok');
+            indicator.title = text;
+        }
+
+        function enabled() {
+            return Boolean(cfg.enabled && cleanBaseUrl(cfg.apiBaseUrl) && cfg.plannerId);
+        }
+
+        function getKey(promptUser = false) {
+            let key = localStorage.getItem(KEY_STORAGE) || '';
+            if (!key && promptUser) {
+                key = (window.prompt('Enter the shared family planner access key:') || '').trim();
+                if (key) localStorage.setItem(KEY_STORAGE, key);
+            }
+            return key;
+        }
+
+        function getClientName(promptUser = false) {
+            let name = localStorage.getItem(CLIENT_STORAGE) || '';
+            if (!name && promptUser) {
+                name = (window.prompt('Your name for shared-sync history (optional):') || '').trim();
+                if (name) localStorage.setItem(CLIENT_STORAGE, name);
+            }
+            return name || null;
+        }
+
+        async function api(path, options = {}, requireKey = true) {
+            const base = cleanBaseUrl(cfg.apiBaseUrl);
+            const headers = new Headers(options.headers || {});
+            headers.set('Content-Type', 'application/json');
+            if (requireKey) {
+                const key = getKey(false);
+                if (!key) {
+                    const error = new Error('Shared access key required.');
+                    error.code = 'KEY_REQUIRED';
+                    throw error;
+                }
+                headers.set('X-Planner-Key', key);
+            }
+            return fetch(base + path, { ...options, headers });
+        }
+
+        async function health() {
+            try {
+                const response = await api('/health', { method: 'GET' }, false);
+                state.reachable = response.ok;
+                return response.ok;
+            } catch (_) {
+                state.reachable = false;
+                return false;
+            }
+        }
+
+        async function pullRemote({ promptForKey = false, silent = false } = {}) {
+            if (!enabled()) return false;
+            if (!(await health())) {
+                if (!silent) setStatus('Shared server unavailable', 'error');
+                return false;
+            }
+
+            if (!getKey(promptForKey)) {
+                setStatus('Shared sync needs key');
+                return false;
+            }
+
+            setStatus('Loading shared master…', 'busy');
+            const response = await api(`/api/planners/${encodeURIComponent(cfg.plannerId)}`, { method: 'GET' });
+
+            if (response.status === 404) {
+                state.version = 0;
+                setStatus('Shared master not created yet');
+                return false;
+            }
+            if (response.status === 401) {
+                localStorage.removeItem(KEY_STORAGE);
+                setStatus('Shared key rejected', 'error');
+                return false;
+            }
+            if (!response.ok) {
+                setStatus(`Shared load failed (${response.status})`, 'error');
+                return false;
+            }
+
+            const payload = await response.json();
+            state.version = Number(payload.version);
+            window.PlannerBridge.restoreRemote(payload.data);
+            setStatus(`Shared master v${state.version}`, 'ok');
+            return true;
+        }
+
+        async function pushRemote({ promptForKey = false } = {}) {
+            if (!enabled() || state.saving) return false;
+            if (!(await health())) {
+                setStatus('Saved locally · server offline', 'error');
+                return false;
+            }
+            if (!getKey(promptForKey)) {
+                setStatus('Saved locally · shared key needed');
+                return false;
+            }
+
+            // If this browser does not yet know the server version, discover it first.
+            if (state.version === null) {
+                const pulled = await pullRemote({ promptForKey, silent: true });
+                if (pulled) return true;
+                if (state.version === null) state.version = 0;
+            }
+
+            state.saving = true;
+            setStatus('Saving shared master…', 'busy');
+            try {
+                const response = await api(`/api/planners/${encodeURIComponent(cfg.plannerId)}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        expected_version: state.version,
+                        data: window.PlannerBridge.collect(),
+                        client_name: getClientName(false)
+                    })
+                });
+
+                if (response.status === 401) {
+                    localStorage.removeItem(KEY_STORAGE);
+                    setStatus('Shared key rejected', 'error');
+                    return false;
+                }
+
+                if (response.status === 409) {
+                    const conflict = await response.json().catch(() => ({}));
+                    const current = conflict?.detail?.current;
+                    if (current && Number.isFinite(Number(current.version))) {
+                        state.version = Number(current.version);
+                    }
+                    setStatus('Sync conflict · newer shared copy exists', 'error');
+                    return false;
+                }
+
+                if (!response.ok) {
+                    setStatus(`Shared save failed (${response.status})`, 'error');
+                    return false;
+                }
+
+                const payload = await response.json();
+                state.version = Number(payload.version);
+                setStatus(`Shared master saved · v${state.version}`, 'ok');
+                return true;
+            } catch (error) {
+                console.warn('Shared save failed:', error);
+                setStatus('Saved locally · shared server unavailable', 'error');
+                return false;
+            } finally {
+                state.saving = false;
+            }
+        }
+
+        window.scheduleRemoteSync = function(delay = 1400) {
+            if (!enabled() || !getKey(false)) return;
+            clearTimeout(state.saveTimer);
+            state.saveTimer = setTimeout(() => pushRemote(), Math.max(250, Number(delay) || 1400));
+        };
+
+        window.manualRemoteSync = async function() {
+            if (!enabled()) {
+                alert('Shared synchronization is disabled in sync-config.js.');
+                return;
+            }
+
+            if (!getKey(true)) {
+                setStatus('Shared sync cancelled');
+                return;
+            }
+            getClientName(true);
+
+            const loaded = await pullRemote({ promptForKey: true });
+            if (!loaded && state.version === 0) {
+                const seed = window.confirm(
+                    'No shared master exists yet. Create it from the data currently shown on this device?'
+                );
+                if (seed) await pushRemote({ promptForKey: true });
+                return;
+            }
+
+            if (loaded) {
+                setStatus(`Shared master v${state.version}`, 'ok');
+            }
+        };
+
+        window.addEventListener('online', () => {
+            if (enabled() && getKey(false)) {
+                window.setTimeout(() => pushRemote(), 800);
+            }
+        });
+
+        window.addEventListener('load', async () => {
+            if (!enabled()) {
+                setStatus('Shared sync disabled');
+                if (button) button.disabled = true;
+                return;
+            }
+
+            if (!(await health())) {
+                setStatus('Local mode · shared server offline', 'error');
+                return;
+            }
+
+            if (!getKey(false)) {
+                setStatus('Local mode · click Shared sync');
+                return;
+            }
+
+            await pullRemote({ silent: true });
+        });
+    })();
+    </script>
+
 
     <div class="pwa-update-banner" id="pwaUpdateBanner" role="status" aria-live="polite">
         <span><strong>Update available.</strong> Reload to use the newest planner version.</span>
